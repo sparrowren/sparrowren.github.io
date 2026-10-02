@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>缓存模型即资源：面向空天地一体化网络边缘智能的大语言模型智能体供给（中文精译）</title>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true,
+    tags: 'none'
+  },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+  startup: { typeset: false }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  :root{
+    --ink:#1b1f24; --ink2:#3d4650; --muted:#6b7684; --line:#dfe4ea;
+    --green-bg:#eefaf0; --green-bd:#5aa96b; --green-ink:#205c2d;
+    --blue-bg:#eef3fd; --blue-bd:#5b84d6; --blue-ink:#1d3f85;
+    --flag-bg:#fff8e6; --flag-bd:#d9a021; --flag-ink:#7a5206;
+    --box-bg:#f7f9fb;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; padding:0 0 80px;
+    font-family:"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;
+    color:var(--ink); background:#fff;
+    line-height:1.85; font-size:16.5px;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 26px}
+  header.title{border-bottom:3px solid var(--ink);padding:38px 0 20px;margin-bottom:8px}
+  h1{font-size:27px;line-height:1.4;margin:0 0 6px}
+  .subtitle{font-size:17px;color:var(--ink2);margin:0 0 16px;font-weight:600}
+  .meta{font-size:14px;color:var(--muted);line-height:1.9}
+  h2{font-size:22px;margin:44px 0 14px;padding-bottom:7px;border-bottom:2px solid var(--line)}
+  h3{font-size:18.5px;margin:30px 0 10px;color:#111}
+  h4{font-size:16.5px;margin:22px 0 8px;color:#222}
+  p{margin:12px 0}
+  ul,ol{margin:12px 0;padding-left:26px}
+  li{margin:6px 0}
+  code{font-family:ui-monospace,Consolas,"Cascadia Mono",monospace;font-size:14.5px;
+       background:#f2f4f7;padding:1px 5px;border-radius:4px}
+  pre{background:#f7f9fb;border:1px solid var(--line);border-radius:8px;padding:14px 16px;
+      overflow-x:auto;font-family:ui-monospace,Consolas,"Cascadia Mono",monospace;
+      font-size:14px;line-height:1.62}
+  pre.pseudo{background:#fbfcfe;border-left:4px solid #7a8ba6}
+  a{color:#1a5fb4}
+
+  /* layered annotations */
+  .note{margin:16px 0;padding:12px 16px;border-radius:8px;border-left:4px solid;font-size:15.6px;line-height:1.8}
+  .note .tag{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.4px;
+             padding:1px 8px;border-radius:99px;margin-right:8px;vertical-align:1px}
+  .narr{background:var(--green-bg);border-color:var(--green-bd);color:var(--green-ink)}
+  .narr .tag{background:var(--green-bd);color:#fff}
+  .math{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue-ink)}
+  .math .tag{background:var(--blue-bd);color:#fff}
+  .flag{background:var(--flag-bg);border-color:var(--flag-bd);color:var(--flag-ink)}
+  .flag .tag{background:var(--flag-bd);color:#fff}
+
+  /* equations */
+  .eq{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
+      margin:16px 0;padding:8px 6px;background:#fcfdfe;border-radius:6px}
+  .eq .body{overflow-x:auto;padding:2px 4px}
+  .eq .eqno{color:var(--muted);font-size:14.5px;white-space:nowrap;padding-right:6px}
+  .eq.multi .body{display:flex;flex-direction:column;gap:4px}
+  .m,.M{font-family:ui-monospace,Consolas,"Cascadia Mono",monospace;font-size:14.5px;color:#2b3440}
+  html.mathjax-ok .m,html.mathjax-ok .M{font-family:inherit;font-size:inherit;color:inherit}
+  html.mathjax-ok .eq .body{overflow-x:auto}
+  .mathwarn{display:none;margin:14px 0;padding:11px 15px;border-radius:8px;
+            background:#fff4f4;border-left:4px solid #d9534f;color:#7d2b28;font-size:15px}
+  html.no-mathjax .mathwarn{display:block}
+
+  /* tables */
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:15px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f2f5f8;font-weight:700}
+  tbody tr:nth-child(even){background:#fafbfc}
+  .glossary td:first-child{white-space:nowrap;font-weight:600}
+
+  .toc{background:var(--box-bg);border:1px solid var(--line);border-radius:10px;padding:18px 24px;margin:22px 0}
+  .toc ol{margin:6px 0;padding-left:22px}
+  .toc a{text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .kv{font-size:15px}
+  .kv td:first-child{width:190px;color:var(--muted)}
+  blockquote{margin:16px 0;padding:10px 18px;border-left:4px solid #cfd6de;background:#fafbfc;color:#39424d}
+  .small{font-size:14.5px;color:var(--muted)}
+  hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+  .algobox{border:1px solid #c8d2de;border-radius:10px;margin:18px 0;overflow:hidden}
+  .algobox .hd{background:#eef2f7;padding:9px 15px;font-weight:700;font-size:15.5px;border-bottom:1px solid #c8d2de}
+  .algobox .bd{padding:14px 16px}
+  .badge{display:inline-block;font-size:12.5px;font-weight:700;padding:1px 8px;border-radius:99px;
+         background:#dfe7f1;color:#2c3e55;margin-left:8px;vertical-align:1px}
+  .badge.warn{background:#f6dfae;color:#6b4a05}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <h1>缓存模型即资源：在空天地一体化网络中为大语言模型智能体提供边缘智能服务</h1>
+  <p class="subtitle">Cached Model-as-a-Resource: Provisioning Large Language Model Agents for Edge Intelligence in Space–Air–Ground Integrated Networks</p>
+  <p class="meta">
+    Minrui Xu, Dusit Niyato, Hongliang Zhang, Jiawen Kang, Zehui Xiong, Shiwen Mao, Zhu Han<br>
+    <em>IEEE Transactions on Networking</em>, Vol. 34, 2026（2024-05-31 投稿；2025-07-27 修回；2025-11-08 录用；2026-01-14 在线发表）<br>
+    DOI: 10.1109/TON.2025.3649068 · 中文精译稿
+  </p>
+</header>
+
+<div class="mathwarn">
+  <strong>公式渲染提示：</strong>本页公式由 MathJax（CDN）排版。当前未能加载 MathJax，因此下方公式以
+  <strong>LaTeX 源码</strong>形式原样显示——内容完整、可逐字符核对，只是没有排版美化。联网后刷新页面即可正常渲染。
+</div>
+
+<div class="toc">
+  <strong>目录</strong>
+  <ol>
+    <li><a href="#howto">阅读说明：保真原则、分层注释与工具来源</a></li>
+    <li><a href="#abstract">摘要与关键词</a></li>
+    <li><a href="#glossary">术语表与风格约定</a></li>
+    <li><a href="#sec1">第一节 引言</a></li>
+    <li><a href="#sec2">第二节 相关工作</a></li>
+    <li><a href="#sec3">第三节 系统模型（式 1–20，含定理 1 与引理 1）</a></li>
+    <li><a href="#sec4">第四节 问题建模、缓存算法与市场设计（式 21–30，算法 1）</a></li>
+    <li><a href="#sec5">第五节 基于 DQN 的修正第二价格投标拍卖（式 31–35，算法 2，定理 2）</a></li>
+    <li><a href="#sec6">第六节 实验结果</a></li>
+    <li><a href="#sec7">第七节 结论</a></li>
+    <li><a href="#refs">参考文献</a></li>
+    <li><a href="#deepdive">附录 A：算法由浅入深讲解（重点）</a></li>
+    <li><a href="#issues">附录 B：需要读者留意的推导衔接与疑点清单</a></li>
+    <li><a href="#method">附录 C：翻译方法、校验与工具来源说明</a></li>
+  </ol>
+</div>
+
+<h2 id="howto">阅读说明：保真原则、分层注释与工具来源</h2>
+
+<p>本译稿的目标是<strong>先保真，再讲明白</strong>。具体做法：</p>
+<ul>
+  <li><strong>公式、符号、结构一律保留。</strong>原文<strong>共 35 组编号公式</strong>——(1)–(27) 为单式，(28)(29)(30) 为带字母子式（28a–28e、29a–29d、30a–30d）的优化问题，(31)–(35) 为单式。译文用 LaTeX 重排、MathJax 显示，编号与原文一一对应，不使用公式截图。</li>
+  <li><strong>不替作者“补成正确结论”。</strong>原文若跳步、条件未交代清楚或前后不一致，我<strong>标注疑点</strong>而<em>不</em>静默改写。全部疑点汇总在 <a href="#issues">附录 B</a>。</li>
+  <li><strong>术语统一。</strong>见 <a href="#glossary">术语表</a>；同一概念在全篇使用同一译法。</li>
+  <li><strong>注释分层。</strong>
+    <span class="tag" style="background:#5aa96b;color:#fff;display:inline-block;font-size:12.5px;font-weight:700;padding:1px 8px;border-radius:99px">绿</span>
+    叙述性背景与直觉解释；
+    <span class="tag" style="background:#5b84d6;color:#fff;display:inline-block;font-size:12.5px;font-weight:700;padding:1px 8px;border-radius:99px">蓝</span>
+    公式、证明与算法的详细推导；
+    <span class="tag" style="background:#d9a021;color:#fff;display:inline-block;font-size:12.5px;font-weight:700;padding:1px 8px;border-radius:99px">琥珀</span>
+    需要读者留意的疑点/衔接问题（第三类是为了满足“标出疑点”的要求而增设，原文并无此分类）。
+  </li>
+</ul>
+
+<div class="flag">
+  <span class="tag">工具来源（如实说明）</span>
+  <p style="margin:6px 0 0"><strong>【重要更正】</strong>我先前在本稿中写过“本机不存在 <code>article_translator</code>”。<strong>该结论是错的。</strong>
+  实际情况是：该 Skill <strong>一直存在于</strong> <code>C:\Users\25307\.codex\skills\article_translator</code>（文件时间 2026-10-01，
+  含 <code>SKILL.md</code> 23,645 字节、<code>README.md</code>、<code>README.zh-CN.md</code>、<code>agents/openai.yaml</code>、
+  <code>scripts/verify_translation_project.py</code> 等）。当时的会话处于受限文件沙箱，该目录对我的检索<strong>不可见</strong>，
+  且 <code>-ErrorAction SilentlyContinue</code> 吞掉了拒绝信息，导致我误判为“不存在”。切换到完整文件权限后我已复核并在此更正。</p>
+  <p style="margin:6px 0 0"><strong>来源现已确认：</strong>上游为
+  <a href="https://github.com/waiwaifeng/codex-skill-article-translator">waiwaifeng/codex-skill-article-translator</a>（<code>main</code> 分支）。
+  我逐文件比对了 SHA-256：<code>SKILL.md</code>、<code>README.md</code>、<code>README.zh-CN.md</code>、<code>agents/openai.yaml</code>、
+  <code>scripts/verify_translation_project.py</code>、<code>scripts/test_verify_translation_project.py</code>
+  <strong>六个文件全部与上游逐字节相同</strong>（例如 <code>SKILL.md</code> = <code>0FE20A9A528EF328…</code>）。</p>
+  <p style="margin:6px 0 0"><strong>它为什么此前在本会话不可用：</strong>该 Skill 装在 Codex 的根目录下，而
+  <strong>DSH 不扫描 <code>~/.codex/skills</code></strong>。DSH 的本地 Skill 根是
+  <code>&lt;项目根&gt;/.dsh/skills</code>、<code>&lt;项目根&gt;/.agents/skills</code>、<code>~/.dsh/skills</code>、
+  <code>~/.agents/skills</code> 以及内置根。另外 <strong>DSH 要求 Skill 名为 kebab-case</strong>
+  （正则 <code>/^[a-z0-9]+(?:-[a-z0-9]+)*$/</code>），而该 Skill 的 frontmatter 名是 <code>article_translator</code>（含下划线），
+  <strong>即使放进 DSH 的根目录也会被静默跳过</strong>。</p>
+  <p style="margin:6px 0 0"><strong>已完成的安装：</strong>把从 GitHub 下载、并与 Codex 副本逐字节核对一致的整套文件安装到
+  <code>C:\Users\25307\.dsh\skills\article-translator</code>；<strong>唯一的内容改动</strong>是把 frontmatter 的
+  <code>name: article_translator</code> 改成 <code>name: article-translator</code>（kebab-case），并同步更新 <code>SKILL.md</code> 中一处示例路径；
+  其余文件哈希与上游完全一致。Codex 原副本<strong>保持不动</strong>。适配原因写在同目录 <code>DSH-INSTALL-NOTES.md</code>。安装后该 Skill 已出现在本会话目录中。</p>
+  <p style="margin:6px 0 0"><strong>对本稿的影响：</strong>本译稿是在该 Skill 尚不可加载时<strong>手工</strong>完成的，
+  因此<strong>未</strong>套用它的项目式产出规范（<code>glossary.md</code>／<code>style-guide.md</code>／<code>chapter-index.md</code>／
+  <code>translation/</code>／<code>alignment.json</code>／<code>figure-map.json</code>／左原文右译文的 reader HTML／
+  <code>verification-report.md</code>）。本次也没有使用任何外部翻译服务插件。若需要，我可以按该 Skill 的规范把本稿迁移成完整翻译项目，
+  并运行它自带的 <code>verify_translation_project.py</code> 出具验证报告。</p>
+  <p style="margin:6px 0 0"><code>pdf</code> Skill 确实存在（<code>.codex\plugins\cache\openai-primary-runtime\pdf\...\skills\pdf\SKILL.md</code>
+  与 <code>.codex\vendor_imports\skills\skills\.curated\pdf\SKILL.md</code>），我读取并按其“先渲染成图、再目视核对、不依赖纯文本抽取判断版式”的要求执行——但由于本会话模型不支持读图，
+  图形核对改用<strong>程序化栅格化 + 字形轮廓解码 + OCR</strong> 完成。详见 <a href="#method">附录 C</a>。</p>
+</div>
+
+<div class="flag">
+  <span class="tag">与预期不符的两处事实</span>
+  <p style="margin:6px 0 0">你在需求中提到“15 个公式”与“算法 1–4”。就<strong>这篇</strong>论文而言：</p>
+  <ul style="margin:6px 0 0">
+    <li>编号公式是 <strong>35 组</strong>（(1)–(35)），不是 15 个；</li>
+    <li>算法是 <strong>2 个</strong>（Algorithm 1 与 Algorithm 2），不是 1–4。</li>
+  </ul>
+  <p style="margin:6px 0 0">我按本篇的真实数字执行，并保留原编号，不做凑数或删减。</p>
+</div>
+
+<div class="note math">
+  <span class="tag">重要</span>
+  <strong>算法 1 与算法 2 的正文在本 PDF 中没有文本层。</strong>这两个算法框是以<strong>矢量字形轮廓</strong>（filled paths）嵌入的，整个 Form XObject 内
+  <em>零个</em>文本绘制算子（无 <code>BT</code>/<code>Tj</code>/<code>TJ</code>/<code>/Font</code>），因此任何 PDF 文本抽取器都取不到内容，OCR 也只能得到部分结果。
+  译文中的两份伪代码是我用三种独立证据交叉重建的（见 <a href="#method">附录 C</a>）：字形轮廓解码、Windows OCR、以及论文自身正文与公式的约束。
+  凡未能确证的记号我都显式标出，<strong>没有把猜测写成原文</strong>。
+</div>
+
+<h2 id="abstract">摘要与关键词</h2>
+
+<p>空天地一体化网络（SAGINs）中的边缘智能可突破地理限制，实现全球网络覆盖，让用户获得泛在、低时延的智能服务。面对 SAGINs 的全球覆盖与复杂环境，边缘智能可以通过地面基站（BS）的边缘服务器、或由卫星中继的云数据中心，为用户供给大语言模型（LLM）智能体。由于具有数十亿参数、并在海量数据集上预训练的 LLM 具备少样本学习能力（例如面向复杂任务的思维链（CoT）提示），这在 SAGINs 中带来了<strong>资源消耗与性能之间的新权衡</strong>。本文提出一个面向边缘智能的<strong>联合缓存与推理框架</strong>，以在 SAGINs 中供给可持续、泛在的 LLM 智能体。我们引入<strong>“缓存模型即资源”（cached model-as-a-resource）</strong>来提供上下文窗口受限的 LLM，并提出一个新颖的优化框架，即<strong>联合模型缓存与推理</strong>，把缓存模型资源与通信、计算、存储资源一并用于供给 LLM 智能体服务。我们设计了考虑 LLM 的 CoT 提示的<strong>“思维年龄”（age of thought, AoT）</strong>，并提出<strong>最小 AoT 缓存模型替换算法</strong>以优化供给成本。我们提出<strong>基于深度 Q 网络的修正第二价格投标（DQMSB）拍卖</strong>，实时激励卫星/地面网络运营商，该方法在保证策略防伪性且免于逆向选择的同时，可将分配效率提升 23%。</p>
+
+<div class="note narr">
+  <span class="tag">绿·背景</span>
+  一句话概括全文主张：LLM 智能体的“上下文窗口”是<em>会被消耗的稀缺品</em>；因此<strong>缓存在边缘的模型本身应当被当作一类一等资源</strong>（与带宽、算力、存储并列）。论文为这种资源造了一个新鲜度指标 AoT，用“最小 AoT 先淘汰”的贪心替换来控成本；再用 DQN 自适应地调拍卖里的价格缩放因子，让卫星与地面基站之间的分配既高效又不被策略操纵。
+</div>
+
+<p><strong>关键词：</strong>空天地一体化网络（SAGINs）、边缘智能、大语言模型（LLM）智能体、拍卖理论、深度强化学习（DRL）。</p>
+
+<h2 id="glossary">术语表与风格约定</h2>
+
+<p>全篇严格沿用下表译法。首次出现时在括号中给出英文原词；此后不再重复标注英文。</p>
+
+<table class="glossary">
+  <thead><tr><th>英文原词</th><th>本译稿译法</th><th>说明 / 约定</th></tr></thead>
+  <tbody>
+    <tr><td>space–air–ground integrated networks (SAGINs)</td><td>空天地一体化网络</td><td>保留缩写 SAGINs</td></tr>
+    <tr><td>edge intelligence</td><td>边缘智能</td><td>—</td></tr>
+    <tr><td>large language model (LLM) agent</td><td>大语言模型智能体 / LLM 智能体</td><td>统一用“LLM 智能体”</td></tr>
+    <tr><td>cached model-as-a-resource</td><td>缓存模型即资源</td><td>论文原创概念，加引号首次出现</td></tr>
+    <tr><td>joint model caching and inference</td><td>联合模型缓存与推理</td><td>框架名</td></tr>
+    <tr><td>model caching / cache replacement</td><td>模型缓存 / 缓存替换</td><td>—</td></tr>
+    <tr><td>age of thought (AoT)</td><td>思维年龄</td><td>论文原创指标，保留缩写 AoT</td></tr>
+    <tr><td>least AoT (LAoT)</td><td>最小思维年龄 / LAoT</td><td>算法名保留 LAoT</td></tr>
+    <tr><td>chain-of-thought (CoT) prompting</td><td>思维链（CoT）提示</td><td>—</td></tr>
+    <tr><td>few-shot learning / in-context learning</td><td>少样本学习 / 上下文学习</td><td>—</td></tr>
+    <tr><td>context window</td><td>上下文窗口</td><td>—</td></tr>
+    <tr><td>ground base station (BS)</td><td>地面基站</td><td>保留 BS</td></tr>
+    <tr><td>Low Earth Orbit (LEO) satellite</td><td>低轨（LEO）卫星</td><td>—</td></tr>
+    <tr><td>network operator</td><td>网络运营商</td><td>指卫星与地面基站</td></tr>
+    <tr><td>provisioning</td><td>供给</td><td>不作“配置/供应”混用</td></tr>
+    <tr><td>offloading</td><td>卸载</td><td>请求卸载 / 计算卸载</td></tr>
+    <tr><td>switching cost / transmission cost</td><td>切换成本 / 传输成本</td><td>—</td></tr>
+    <tr><td>computation cost / accuracy cost</td><td>计算成本 / 精度成本</td><td>—</td></tr>
+    <tr><td>edge inference cost / cloud inference cost</td><td>边缘推理成本 / 云端推理成本</td><td>—</td></tr>
+    <tr><td>modified second-bid (MSB) auction</td><td>修正第二价格投标（MSB）拍卖</td><td>保留 MSB</td></tr>
+    <tr><td>price scaling factor</td><td>价格缩放因子</td><td>符号 ρ</td></tr>
+    <tr><td>DQMSB auction</td><td>DQMSB 拍卖</td><td>基于 DQN 的 MSB</td></tr>
+    <tr><td>strategy-proofness</td><td>策略防伪性</td><td>即“如实投标是占优策略”</td></tr>
+    <tr><td>adverse selection</td><td>逆向选择</td><td>—</td></tr>
+    <tr><td>critical payment</td><td>临界支付</td><td>符号 χ</td></tr>
+    <tr><td>anonymous / false-name proof</td><td>匿名性 / 防伪名</td><td>—</td></tr>
+    <tr><td>homogeneous of degree one</td><td>一次齐次</td><td>—</td></tr>
+    <tr><td>common value / match quality</td><td>共同价值 / 匹配质量</td><td>—</td></tr>
+    <tr><td>surplus</td><td>剩余</td><td>总剩余 = total surplus</td></tr>
+    <tr><td>ambiguity</td><td>歧义度</td><td>符号 ε</td></tr>
+    <tr><td>skewness parameter</td><td>偏斜参数</td><td>符号 γ</td></tr>
+    <tr><td>vanishing factor</td><td>衰减因子</td><td>符号 Δ</td></tr>
+    <tr><td>slot / time slot</td><td>时隙</td><td>—</td></tr>
+    <tr><td>serverless</td><td>无服务器</td><td>—</td></tr>
+    <tr><td>pay-as-you-go</td><td>按量付费</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<p class="small"><strong>风格约定：</strong>(1) 原文第一人称复数 “we” 译为“我们”；(2) 被动语态按中文习惯转为主动或“被……”的弱式；
+(3) 数学符号与变量名<strong>不译</strong>（如 <span class="m">a^t_{n,i,m}</span>、<span class="m">\kappa</span>、<span class="m">\rho</span>），仅翻译其文字解释；
+(4) 原文的“Fig. N”“Eq. (N)”统一译为“图 N”“式 (N)”，编号不变；(5) 作者在正文中的笔误（如 MBS/MSB 混用、图号交叉引用错误）保留原样并在疑点清单中指出，不在正文里悄悄改正。</p>
+
+<h2 id="sec1">第一节　引言</h2>
+
+<p>空天地一体化网络（SAGINs）提供全球网络覆盖，并支撑图像识别、数据分析等实时边缘智能服务 [1]。地面通信系统受限于网络容量与地面基站（BS）覆盖范围，而卫星可以中继来自云数据中心的计算服务，并在海洋、山地等恶劣环境中提供无缝连接 [2]。SAGINs 中的边缘智能支撑着从实时水产养殖监测到为乘客、船员与渔民提供 AI 助手等一系列智慧海洋应用 [3]。大语言模型（LLM）的最新进展 [4], [5], [6] 极大提升了 SAGINs 中边缘智能的能力，使得基于 LLM 的 AI 智能体（即 LLM 智能体）能够处理多种数据模态下<strong>未见过的复杂推理任务</strong> [7]。此外，SAGINs 可以在地面基站的边缘服务器、或由卫星中继的云数据中心处，供给低时延且保护隐私的 LLM 智能体服务 [7]，这些智能体可作为日常生活与工作中的自主助手。</p>
+
+<div class="note narr">
+  <span class="tag">绿·背景</span>
+  第一段确立“为什么要 SAGIN + LLM 智能体”：地面网络覆盖有限 → 卫星补盲；而 LLM 智能体天然是“远程调用”的形态，正好适合“卫星中继 + 云/边混合”的部署。注意原文用词是“供给（provision）”而非“部署（deploy）”，强调的是<em>按需提供算力与模型资源</em>这件事本身。
+</div>
+
+<p>LLM 智能体建立在对互联网规模语料预训练的数十亿参数模型之上，因而具备少样本学习能力 [8], [9]，包括面向未见任务的上下文学习（ICL）、面向复杂推理的思维链（CoT）提示，以及在特定指令下的角色扮演。尽管训练与推理都需要可观的算力资源，但 SAGINs 中使用低端移动设备的用户，仍可从地面基站的边缘服务器、或经卫星回传的云数据中心调用 LLM 服务。因此，在 SAGINs 中异构地部署 LLM 服务能够降低时延并保护用户隐私 [10], [11]。然而，<strong>资源受限的边缘服务器无法同时承载所有模型</strong> [5]。进一步地，少样本性能还受制于由各模型架构决定的<strong>上下文窗口大小</strong> [12]。在推理过程中，累积的 token 起初会提升输出质量，但<strong>一旦窗口被填满</strong> [13]，LLM 回复的质量便会显著下降。</p>
+
+<div class="note narr">
+  <span class="tag">绿·背景</span>
+  这里出现了全文最关键的两个“约束来源”：(1) 边缘显存不足以放下所有模型 → 必须<em>缓存</em>并做替换；(2) 上下文窗口会被 token 填满 → 模型需要“刷新”。<strong>这两个约束叠加，正是“缓存模型即资源”这一概念的立足点。</strong>换言之：不仅显存是资源，<em>窗口里剩余的空间</em>也是资源。
+</div>
+
+<p>由于在供给 LLM 智能体服务的过程中，运行中 LLM 的上下文窗口会被耗尽，地面基站边缘服务器上的<strong>缓存模型应当被视为一类此前未被探讨的资源</strong>，它与传统的通信、计算、存储资源相类似 [5]。为最小化供给成本，网络运营商在调度这些本地 LLM 时，不仅要考虑硬件约束，还必须考虑<strong>上下文的可用性</strong>。类比内容缓存，模型缓存是一种面向边缘智能的优化框架，旨在降低服务时延与运营商的整体资源消耗。不过，面向 LLM 的模型缓存还必须纳入其少样本学习能力 [8]，因为<strong>每增加一个示例（demonstration），都会同时改变资源占用与推理质量</strong>。此外，各运营商获得服务机会的经济价值往往<strong>正相关</strong>。而卫星仅作为终端用户与云数据中心之间的中继，能获得成本/性能反馈有限，因而相对地面基站存在显著的信息不对称。这种不对称会引发<strong>逆向选择</strong> [14]，导致实时机制中的运营商分配无效率。例如，在海事卫星通信中，卫星通常只提供包月（flat-rate）数据套餐，无法直接观测每任务的 GPU 资源消耗；而沿海地面站则能精确监测实时资源使用情况 [1]。</p>
+
+<div class="note narr">
+  <span class="tag">绿·背景</span>
+  “价值正相关 + 信息不对称”是拍卖理论里逆向选择的经典温床：当所有竞标者的估值被同一个未知的公共因子驱动时，谁掌握更多关于该因子的信息，谁就能系统性地占优。这里“共同因子”就是<strong>真实资源消耗</strong>：地面基站看得见，卫星看不见。这一句是第五节设计 DQMSB 的动机来源。
+</div>
+
+<p>为应对上述挑战，本文提出一个<strong>联合模型缓存与推理框架</strong>，在整个 SAGINs 范围内交付可持续、低时延且兼顾隐私的 LLM 智能体服务。依据用户位置与资源状况，LLM 在地面基站同址的边缘服务器上执行，或经卫星/地面中继在云数据中心执行。因此，地面基站为附近用户提供快速响应，卫星则将覆盖延伸至远洋与深山。为提升服务质量，我们<strong>把缓存的 LLM 提升为一等资源</strong>，并形式化一个联合缓存与推理的优化问题。利用 LLM 的少样本能力，我们引入<strong>思维年龄（AoT）</strong>指标，用以刻画中间推理状态的“新鲜度与连贯性”。随后，<strong>最小 AoT（LAoT）缓存替换策略</strong>淘汰 AoT 最大的模型，从而最小化运营商的供给成本。最后，我们把<strong>修正第二价格投标拍卖与深度 Q 网络（DQMSB）</strong>结合，自适应地调节价格缩放因子，在保持策略防伪性的同时消除卫星资源分配中的逆向选择。</p>
+
+<p>我们的主要贡献可概括如下。</p>
+<ul>
+  <li>我们为边缘智能形式化了一个新颖的优化框架，即<strong>联合模型缓存与推理框架</strong>，用 SAGINs 中的卫星与地面基站来供给可持续、泛在的 LLM 智能体。</li>
+  <li>在该框架中，我们<strong>首次</strong>提出<strong>“缓存模型即资源”</strong>的概念来实现边缘智能：把缓存模型视为与通信、计算、存储资源同类的一类资源，位于 SAGINs 中地面基站的边缘服务器与云数据中心。</li>
+  <li>我们形式化了地面基站的 LLM 智能体供给问题：在资源与覆盖约束下最小化系统总成本。为有效求解，我们设计了一个新颖的<strong>最小 AoT 模型缓存算法</strong>，基于 AoT 指标调度 LLM 的加载与淘汰，从而评估上下文窗口中中间思维的<strong>相关性与连贯性</strong>。</li>
+  <li>为最大化网络运营商在供给高质量 LLM 智能体服务中的收益，我们提出 <strong>DQMSB 拍卖</strong>：通过用深度强化学习选择最优定价缩放因子，保证免于逆向选择且完全策略防伪。</li>
+</ul>
+
+<p>本文其余部分组织如下。第二节回顾相关工作；第三节描述 SAGINs 中供给 LLM 智能体的系统模型；第四节形式化问题、提出模型缓存算法并设计市场；第五节提出 DQMSB 拍卖；第六节给出仿真实验；第七节总结全文。</p>
+
+<div class="note math">
+  <span class="tag">蓝·推导导览</span>
+  建议的阅读顺序：若只关心“新指标”，读 <a href="#sec3d">3.4 节</a>的式 (18)(19)(20)；若只关心“成本怎么算”，读 <a href="#sec4a">4.1 节</a>的式 (21)–(27)；若只关心“拍卖为什么可信”，读 <a href="#sec5c">5.3 节</a>的定理 2 证明思路。要理解 AoT 的<strong>理论根据</strong>，必须先读定理 1——它把“CoT 示例越多、越贴近真实分布”这件事量化成了一个<em>几何收敛率</em> <span class="m">\eta\beta^{c_i}</span>，AoT 正是这条收敛率在“被淘汰/被刷新”情形下的近似代理。
+</div>
+
+<h2 id="sec2">第二节　相关工作</h2>
+
+<h3>2.1　空天地一体化网络中的边缘智能</h3>
+
+<p>在 SAGINs 中供给 AI 服务可显著增强 SAGINs 的智能配置与控制能力，使其适应环境，并改善时延、能耗、带宽、实时适应性等多项性能指标 [1]。Xu 等人在 [15] 中提出一种云边聚合的人工智能架构，利用天算星座提供的在轨轻量级 5G 核心网与边缘计算平台。针对任务关键的 6G 服务，Hou 等人在 [16] 中提出 SAGINs 中的三层架构，用于超可靠低时延边缘智能，其中包括基于 unikernel 的超轻量级虚拟化，以及基于微服务的范式，以实现快速响应并提升可靠性。考虑到内容源的时变特性与用户的动态需求，Qin 等人在 [17] 中提出一种面向内容服务的资源分配算法，旨在基于用户偏好为 SAGINs 实现稳定匹配。</p>
+
+<h3>2.2　面向边缘智能的大语言模型</h3>
+
+<p>在已有文献中，LLM 是下一代边缘智能系统的重要组成部分，已被用于设计、分析与优化边缘智能 [18], [19]。例如，Du 等人在 [20] 中研究了 LLM 作为基于 FPGA 的无线系统开发工具的价值。此外，Cui 等人在 [21] 中提出 LLMind，一个将 LLM 与领域专用 AI 模块及 IoT 设备集成以执行复杂任务的 AI 框架。在面向 6G 通信的多智能体系统中，Jiang 等人 [22] 通过一个语义通信案例研究，展示了 LLM 在协同数据检索、规划与反思方面的有效性。针对传统深度卸载架构面临的多重问题——异构约束、部分感知、泛化不确定与缺乏可追溯性——Dong 等人 [23] 提出一种基于 LLM 的卸载框架，用 LLM 做卸载决策，以应对异构约束与泛化不确定等问题。然而，LLM 的执行通常需要巨大的计算资源，这对边缘环境而言并不可行。因此，着眼于 6G 网络中高效的训练与推理架构，Lin 等人在 [24] 中探索了拆分学习/推理、参数高效微调、量化以及参数共享推理等可行技术，以把 LLM 推向边缘。然而，现有研究很少考察<strong>缓存 LLM 的新鲜度如何影响全网成本</strong>；也没有任何工作在统一优化中把新鲜度与频谱、计算、存储约束耦合起来。</p>
+
+<div class="note narr">
+  <span class="tag">绿·背景</span>
+  最后两句是本文的<strong>空白点声明（gap statement）</strong>：别人的工作把“模型”当静态资产，本文把“模型的<em>新鲜度</em>”当动态资源。这就是审稿人最关注的新意所在。
+</div>
+
+<h3>2.3　面向 SAGINs 的拍卖设计</h3>
+
+<p>拍卖是 SAGINs 中实现实时网络资源分配的<strong>高效且有效</strong>的方法 [25], [26], [27]。在民用航空器增强的 SAGINs 中，Chen 等人 [28] 提出面向设备到设备（D2D）通信的真实（truthful）双向拍卖，以及用于频谱共享的逆向拍卖机制。面向轻量级区块链化 SAGINs，Yang 等人在 [29] 中提出一种安全的顺序 Vickrey 拍卖机制，以确保 SAGINs 内安全可靠的频谱共享。<strong>然而，现有拍卖把通信与计算成本视为外生给定，忽略了估值实际上取决于模型新鲜度与 token 级使用统计——而这些只有地面站能观测到，卫星观测不到。</strong>这一空白正是我们设计基于深度 Q 网络的修正第二价格投标（DQMSB）的动因。因此，本文提出 DQMSB，通过基于 DQN 的价格缩放因子选择，缓解逆向选择并提升 SAGINs 的市场效率。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点</span>
+  此处把“估计值取决于模型新鲜度与 token 级使用统计”作为<strong>他人工作的缺陷</strong>来陈述，但本文自己在拍卖中使用的估值是
+  <span class="m">v_n = c_n m_n</span>，其中共同价值 <span class="m">c_n = \mathbb{E}_{t\in T}[L^{total}_n - l^{acc}_n(a^t,b^t)]</span>。
+  这部分<em>直接把真实成本算出来</em>当作估值，而真实成本里同样含 token 级统计量（例如 <span class="m">\delta^t_{n,i,m} = a^t_{n,i,m}(1-b^t_{n,i,m})R^t_{n,i,m}k_i</span>）。
+  也就是说：本文一方面批评卫星“观测不到 token 级统计”，另一方面又假设运营商的估值<strong>就是</strong>这些统计量的期望。两者之间存在张力，详见<a href="#issues">附录 B·第 3 条</a>。
+</div>
+
+<h2 id="sec3">第三节　系统模型</h2>
+
+<p>对于 SAGINs 中的边缘智能，每一组用户都希望使用基于一个或若干个 LLM 的 LLM 智能体。在系统中，每组用户只能把一个 LLM 智能体作为其<strong>活跃助手</strong>，因为受偏好与当前任务影响，他们的注意力是有限的。在 SAGINs 中，一组用户需要选择网络提供方（包括卫星与地面基站）来接入 LLM 智能体服务。如图 1 所示，系统由 <span class="m">N+1</span> 个网络运营商组成，包括在轨的一颗或数颗低轨（LEO）卫星，以及多个配备边缘服务器的地面基站，它们都通过回传链路连接到云数据中心。网络运营商集合记为 <span class="m">\mathcal{N}=\{0,1,\dots,N\}</span>，其中 LEO 卫星用 <span class="m">0</span> 表示，基站集合用 <span class="m">\{1,\dots,N\}</span> 表示。地面基站的边缘服务器可为用户执行 LLM 智能体服务，其余服务则可借助卫星或地面基站的中继卸载到云数据中心。我们用集合 <span class="m">\mathcal{I}=\{1,2,\dots,I\}</span> 表示基于 LLM 集合 <span class="m">\mathcal{M}=\{1,\dots,M\}</span> 的可用 LLM 智能体服务。由于 LLM 能够在 LLM 智能体服务中同时执行多个下游任务，因此认为 LLM 智能体服务的数量远大于 LLM 的数量 [7]，即 <span class="m">I\gg M</span>。在网络运营商 <span class="m">n</span> 覆盖的用户组 <span class="m">\mathcal{U}_n</span> 中，用 <span class="m">R^t_n=\{R^t_{n,i,m}\,|\,i\in\mathcal{I},m\in\mathcal{M}\}</span> 表示 LLM 智能体服务 <span class="m">i</span> 为执行其特定功能（包括规划、记忆、工具使用与具身动作）而对 LLM <span class="m">m</span> 产生的请求数量。初始时，LLM 智能体服务 <span class="m">i</span> 的输入数据量记为 <span class="m">d_i</span>。此外，LLM <span class="m">m</span> 的配置由三部分组成：与模型规模 <span class="m">s_m</span> 成正比的运行时 GPU 显存占用量、每 token 所需的计算量 <span class="m">e_m</span>，以及上下文窗口大小 <span class="m">w_m</span>。</p>
+
+<div class="note math">
+  <span class="tag">蓝·符号表</span>
+  <p style="margin:4px 0 0">先把后面要用到的符号一次性列清（按出现顺序）：</p>
+  <ul style="margin:6px 0 0">
+    <li><span class="m">N+1</span> 个运营商；索引 <span class="m">0</span> 专指卫星，<span class="m">1..N</span> 指地面基站。</li>
+    <li><span class="m">\mathcal{I}</span>：服务集合（<span class="m">I</span> 个服务）；<span class="m">\mathcal{M}</span>：模型集合（<span class="m">M</span> 个模型）。<strong>服务多于模型</strong>（<span class="m">I\gg M</span>）：同一模型被多个服务复用。</li>
+    <li><span class="m">R^t_{n,i,m}</span>：时隙 <span class="m">t</span> 上，基站 <span class="m">n</span>、服务 <span class="m">i</span> 向模型 <span class="m">m</span> 发出的请求数。</li>
+    <li><span class="m">d_i</span>：服务 <span class="m">i</span> 的输入数据量；<span class="m">s_m</span>：模型 <span class="m">m</span> 的显存占用；<span class="m">e_m</span>：每 token 计算量；<span class="m">w_m</span>：上下文窗口大小。</li>
+  </ul>
+</div>
+
+<h3 id="sec3a">3.1　覆盖时间模型</h3>
+
+<p>LEO 卫星网络的覆盖时间模型处理的是卫星相对于用户的动态位置问题。与基础设施静止不动的地面网络不同，LEO 卫星持续运动，因此用户必须依据特定的几何量来建立连接 [2]。这些量包括 LEO 卫星轨道相对移动用户的高度 <span class="m">l</span>、地球半径 <span class="m">E</span>，以及用户到 LEO 卫星的斜距 <span class="m">s</span>。描述移动用户与 LEO 卫星之间视线的仰角 <span class="m">\theta^e</span> 由 <span class="m">\theta^e=\arccos\!\left(\frac{E+l}{s}\right)\cdot\sin\theta^g</span> 确定；其中 <span class="m">\theta^g</span> 表示覆盖 LEO 卫星服务区域的地心角，计算为 <span class="m">\theta^g=\arccos\!\left(\frac{E}{E+l}\right)\cdot\cos\theta^e-\theta^e</span>。设 <span class="m">v^S</span> 表示 LEO 卫星 0 的速度，则移动用户与该 LEO 卫星之间的最大通信时长 <span class="m">T^S_0</span> 为</p>
+
+<div class="eq"><div class="body"><span class="M">T^S_0=\frac{L}{v^S},</span></div><span class="eqno">(1)</span></div>
+
+<p>其中 <span class="m">L=2\theta^g(E+l)</span> 是用户可与该 LEO 卫星通信的弧长。由于卫星作为中继节点这一中介角色，它对云侧资源消耗与服务级指标的<strong>可观测性天然有限</strong>。相反，地面基站直接与计算资源交互，因而能获得精确的实时测量。因此，卫星运营商的估值变得<strong>正相关但各自私有地不确定</strong>，从而增加了资源分配中逆向选择的风险。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 1</span>
+  <span class="m">\theta^e</span> 与 <span class="m">\theta^g</span> 的定义<strong>互相引用</strong>：<span class="m">\theta^e</span> 的式子用到 <span class="m">\theta^g</span>，而 <span class="m">\theta^g</span> 的式子又用到 <span class="m">\theta^e</span>。
+  按常见卫星几何（例如文献 [2] 的写法），标准关系应为
+  <span class="m">\theta^g=\arccos\!\left(\frac{E}{E+l}\cos\theta^e\right)-\theta^e</span>，
+  即 <span class="m">\arccos</span> 的<strong>整个括号</strong>内含乘积，而不是“先取 arccos 再乘 cos”。原文排版把括号位置写成了 <span class="m">\arccos\!\left(\frac{E}{E+l}\right)\cdot\cos\theta^e-\theta^e</span>，这样两式构成隐式方程组、无法直接解出。
+  这是<strong>排版歧义</strong>，我在译文中按原文逐字保留，不擅自改成标准式；读者若需复现几何量，请以上述标准形式回查原文 PDF 的括号位置。
+</div>
+
+<h3 id="sec3b">3.2　通信模型</h3>
+
+<p>为便于与 LLM 智能体交互，网络运营商 <span class="m">n</span> 所覆盖的一组用户（记为 <span class="m">\mathcal{U}_n</span>）可以通过运营商 <span class="m">n</span> 接入服务进行数据传输。这些用户<strong>共享同一频谱资源</strong>，因此彼此之间存在干扰 [3]。从移动用户 <span class="m">u\in\mathcal{U}_n</span> 到 LEO 卫星 0 的信道功率增益（同时考虑大尺度衰落与阴影莱斯（shadowed-Rician）衰落）记为 <span class="m">g_{u,0}</span> [30]。类似地，<span class="m">g_{u,n}</span> 表示从移动用户 <span class="m">u</span> 到地面基站 <span class="m">n=1,\dots,N</span> 的信道功率增益，对地面通信而言包含大尺度衰落与瑞利衰落。卫星 0 与地面基站 <span class="m">n=1,2,\dots,N</span> 所分配的带宽分别记为 <span class="m">B_0</span> 与 <span class="m">B_n</span>。于是，用户 <span class="m">u\in\mathcal{U}_n</span> 把 LLM 智能体服务的输入数据上行传输给网络运营商的速率为</p>
+
+<div class="eq"><div class="body"><span class="M">r_{u,n}=B_n\log_2\!\left(1+\frac{g_{u,n}p_u}{\sum_{j\in\mathcal{U}_n\setminus\{u\}}g_{j,n}p_j+\sigma^2}\right),</span></div><span class="eqno">(2)</span></div>
+
+<p>其中 <span class="m">p_u</span> 是用户 <span class="m">u</span> 的发射功率，<span class="m">\sigma^2</span> 是加性高斯白噪声（AWGN）功率。卫星在移动用户与云数据中心之间充当 LLM 智能体服务的中介，经由卫星骨干网 [31] 传输，其传输速率记为 <span class="m">r^C_0</span>。此外，地面基站 <span class="m">n=1,2,\dots,N</span> 通过地面核心网连接到云数据中心，具有固定传输速率 <span class="m">r^C_n</span>。</p>
+
+<div class="note math">
+  <span class="tag">蓝·推导</span>
+  式 (2) 是标准的<strong>香农容量</strong>形式，关键在分母里的<strong>同信道干扰项</strong>：<span class="m">\sum_{j\in\mathcal{U}_n\setminus\{u\}}g_{j,n}p_j</span>。
+  符号含义：<span class="m">B_n</span> 是带宽（Hz），故 <span class="m">\log_2</span> 给出 bit/s/Hz 再乘带宽得到 bit/s。
+  <span class="m">\setminus\{u\}</span> 只是把“自己”从干扰集合里去掉——即用户不会干扰自己。
+  这一步为什么成立：所有用户共享频谱（原文 “share the same spectral resources”），因此对用户 <span class="m">u</span> 而言，其他用户的发射功率都是噪声。
+  结论能说明什么：<strong>频谱是稀缺的</strong>，用户越多单用户速率越低，这直接决定了式 (22) 中的单位传输成本 <span class="m">l_{n,i}=d_i/\mathbb{E}_{u\in\mathcal{U}_n}[r_{u,n}]</span>：速率越低，把 <span class="m">d_i</span> 比特送上去耗时越长，成本越高。
+</div>
+
+<h3 id="sec3c">3.3　面向 LLM 智能体服务的模型缓存</h3>
+
+<p>为便于在 SAGINs 中供给 LLM 智能体服务，我们引入一个<strong>联合模型缓存与推理框架</strong>，使位于地面基站的边缘服务器能够缓存 LLM 并卸载请求，从而优化边缘计算资源的利用，为用户供给 LLM 智能体服务，如图 2 所示。具体而言，地面基站 <span class="m">n=1,\dots,N</span> 负责确定本地的缓存与卸载策略。这里 <span class="m">a^t_{n,i,m}\in\{0,1\}</span> 是二值变量，表示时隙 <span class="m">t</span> 上模型 <span class="m">m</span>（用于服务 <span class="m">i</span>）是否被缓存在地面基站 <span class="m">n</span>；而 <span class="m">b^t_{n,i,m}\in[0,1]</span> 是连续变量，表示时隙 <span class="m">t</span> 上在地面基站 <span class="m">n</span> 执行的服务 <span class="m">i</span> 的模型 <span class="m">m</span> 所占比例。记 <span class="m">\mathbf{a}^t_n=\{a^t_{n,1,1},\dots,a^t_{n,I,M}\}</span> 为地面基站 <span class="m">n</span> 的模型缓存决策，<span class="m">\mathbf{a}^t=\{\mathbf{a}^t_1,\dots,\mathbf{a}^t_N\}</span> 为全部网络运营商的缓存决策汇总。类似地，地面基站 <span class="m">n</span> 的请求卸载决策记为 <span class="m">\mathbf{b}^t_n=\{b^t_{n,1,1},\dots,b^t_{n,I,M}\}</span>，而 <span class="m">\mathbf{b}^t=\{\mathbf{b}^t_1,\dots,\mathbf{b}^t_N\}</span> 表示地面基站 <span class="m">n=1,\dots,N</span> 的卸载决策整体。为扩展地面通信系统的覆盖，计算与能量资源有限的卫星 0 充当用户与云数据中心之间的中继，其模型缓存决策为 <span class="m">\mathbf{a}^t_0=\mathbf{0}</span>，请求卸载决策为 <span class="m">\mathbf{b}^t_0=\mathbf{0}</span>，即<strong>所有</strong> LLM 智能体服务都由卫星 0 中继卸载到云数据中心远程执行。</p>
+
+<div class="note narr">
+  <span class="tag">绿·直觉</span>
+  请特别注意 <span class="m">\mathbf{a}^t_0=\mathbf{0}</span>、<span class="m">\mathbf{b}^t_0=\mathbf{0}</span> 这一设定：卫星<strong>不缓存、不本地执行</strong>，它只做中继。
+  这解释了后文拍卖的结构为什么是“地面基站之间竞争，若无人胜出则卫星兜底”——卫星不是“算力的竞争者”，而是<strong>保底通道</strong>。
+  也解释了为什么卫星的信息劣势会转化为逆向选择：它从不本地执行，所以拿不到 token 级的实测反馈。
+</div>
+
+<p>对于 SAGINs 中的边缘智能，当所需 LLM 被缓存进 GPU 后，用户请求的 LLM 智能体服务便可在地面基站的边缘服务器上执行。设 <span class="m">G_n</span> 表示地面基站 <span class="m">n</span> 以 GPU 显存计的 GPU 计算容量，则地面基站 <span class="m">n=1,\dots,N</span> 的模型缓存决策 <span class="m">\mathbf{a}^t_n</span> 在时隙 <span class="m">t</span> 上应满足如下约束：</p>
+
+<div class="eq"><div class="body"><span class="M">\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}a^t_{n,i,m}s_m\le G_n,</span></div><span class="eqno">(3)</span></div>
+
+<p>其中 <span class="m">s_m</span> 是模型 <span class="m">m</span> 的运行规模。这表明：由于边缘服务器的计算资源受限，<strong>边缘服务器无法把所有 LLM 都加载进 GPU</strong>。在模型被加载进边缘服务器的 GPU 之后，LLM 智能体服务便可在地面基站执行。因此，地面基站 <span class="m">n=1,\dots,N</span> 上所供给的 LLM 智能体服务的约束表示为</p>
+
+<div class="eq"><div class="body"><span class="M">b^t_{n,i,m}\mathbf{1}(R^t_{n,i,m}\gt 0)\le a^t_{n,i,m},\quad\forall i\in\mathcal{I},\,m\in\mathcal{M},</span></div><span class="eqno">(4)</span></div>
+
+<p>其中 <span class="m">\mathbf{1}(\cdot)</span> 是指示函数，<span class="m">\mathbf{1}(R^t_{n,i,m}\gt 0)</span> 表示基站 <span class="m">n</span> 在时隙 <span class="m">t</span> 上存在对服务 <span class="m">i</span> 的模型 <span class="m">m</span> 的请求。最后，边缘服务器的总计算功率消耗受地面基站 <span class="m">n=1,\dots,N</span> 的 GPU 总计算容量约束：</p>
+
+<div class="eq"><div class="body"><span class="M">\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}e_ma^t_{n,i,m}(1-b^t_{n,i,m})R^t_{n,i,m}\le E_n.</span></div><span class="eqno">(5)</span></div>
+
+<p>不过在云数据中心，可以假设执行 LLM <strong>既没有 GPU 显存约束，也没有计算容量约束</strong>。</p>
+
+<div class="note math">
+  <span class="tag">蓝·推导：三条约束分别在管什么</span>
+  <ul style="margin:6px 0 0">
+    <li>式 (3) 是<strong>显存容量约束</strong>：被缓存的模型 <span class="m">s_m</span> 之和不能超过 <span class="m">G_n</span>。它决定了“能同时放几个模型”。</li>
+    <li>式 (4) 是<strong>因果/一致性约束</strong>：只有当 <span class="m">\mathbf{1}(R\gt 0)=1</span>（确实有请求）时，才要求 <span class="m">b^t_{n,i,m}\le a^t_{n,i,m}</span>；也就是<strong>没缓存就不能本地执行</strong>。这一步为什么成立：<span class="m">b</span> 是“本地执行比例”，若模型未缓存（<span class="m">a=0</span>）则本地能执行的比例只能是 0。</li>
+    <li>式 (5) 是<strong>能耗容量约束</strong>：只有真正在本地执行的部分才耗能。<span class="m">(1-b^t_{n,i,m})</span> 是“留在本地执行的比例”（因为 <span class="m">b</span> 是<em>卸载</em>比例），乘上请求数与每 token 计算量得到总计算量，再与能耗上限 <span class="m">E_n</span> 比较。注意这一步隐含了“能耗 ∝ 计算量”的线性假设，原文未明确写出，但由量纲可推出。</li>
+  </ul>
+  <p style="margin:6px 0 0"><strong>能说明什么：</strong>两个硬约束（显存、能耗）+ 一个逻辑约束，共同把“缓存决策”变成<strong>带容量的组合选择问题</strong>——这正是后文必须用贪心/启发式而非精确求解的原因（式 (28) 是混合整数规划，NP-hard）。</p>
+</div>
+
+<h3 id="sec3d">3.4　思维链推理模型</h3>
+
+<p>为提升 LLM 智能体的相关性与连贯性，LLM 可以利用 CoT 提示在给出最终回复之前进行<strong>逐步推理</strong> [32]。作为一种激发 LLM 涌现能力的先进推理方式，CoT 提示让 LLM 生成一串朝向问题求解或结论的<strong>中间推理步骤</strong>，而不是仅以零样本（zero-shot）方式试图一次性解决整个问题。在 LLM 推理过程中，给定任意任务描述提示 <span class="m">d</span>，LLM <span class="m">m</span> 可以通过从学到的分布 <span class="m">p_m</span> 中<strong>递归地预测下一个 token 序列</strong>来生成回答，其条件为 <span class="m">d</span> 与至今已采样 token 的拼接。对于 LLM 智能体服务 <span class="m">i</span> 中最多 <span class="m">w_m</span> 个 token 的所有消息序列 <span class="m">D_i=\{d_{i,0},\dots,d_{i,k}\}</span>，<span class="m">p_m(D_i)</span> 服从概率的<strong>一般乘积法则</strong> [33]，即</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">p_m(D_i)=p_m(d_{i,0},\dots,d_{i,k})</span>
+  <span class="M">=p_m(d_{i,0})p_m(d_{i,1}|d_{i,0})\cdots p_m(d_{i,k}|d_{i,0},\dots,d_{i,k-1}),</span>
+</div><span class="eqno">(6)</span></div>
+
+<p>它是对真实分布 <span class="m">\hat{q}(D_i)</span> 的一个良好近似。</p>
+
+<div class="note math">
+  <span class="tag">蓝·推导</span>
+  式 (6) 只是把<strong>自回归分解</strong>写出来：联合概率 = 各步条件概率之积。
+  符号：<span class="m">p_m</span> 是<em>模型学到的</em>分布；<span class="m">\hat{q}</span> 是<em>真实</em>分布（带帽子表示“真值/目标”，后文一直沿用）。
+  这一步为什么成立：这是概率论中链式法则的直接结果，不需要任何模型假设。
+  结论能说明什么：<strong>误差是会复合的</strong>——每一步的小偏差在乘积下累积。这为后文用“乘性”形式刻画 CoT 收益（式 (9) 的连乘、式 (15) 的指数衰减）提供了结构基础。
+</div>
+
+<p>对于 LLM 智能体服务 <span class="m">i</span> 中的每个 CoT 提示，LLM <span class="m">m</span> 会被提供 <span class="m">c_i</span> 个长度不一的 CoT 示例 <span class="m">E_i=\{e_{i,0},\dots,e_{i,k}\}</span>，其中 <span class="m">E_i</span> 中的每个思维 <span class="m">e_{i,k}</span> 是一个由 <span class="m">k_i</span> 个 token 组成的序列，代表<strong>一个推理步骤</strong>。这些示例旨在帮助 LLM 通过 CoT 生成给出正确答案；因此对服务 <span class="m">i</span> 而言，<span class="m">E_i</span> 是依<strong>真实意图 <span class="m">\theta^\star</span></strong> 与<strong>真实上下文 <span class="m">c^\star</span></strong> 生成的。为服务 LLM 智能体服务 <span class="m">i</span>，在给定 <span class="m">E_i</span> 与任务 <span class="m">d_{i,0}</span> 的条件下，LLM 随后生成消息 <span class="m">(d_{i,1},\dots,d_{i,k})</span>。为评估 LLM 近似的性能，我们给出如下定义。</p>
+
+<p><strong>定义 1（<span class="m">\epsilon</span>-歧义度 [33]）：</strong>对于基于真实上下文 <span class="m">c^\star</span> 与真实意图 <span class="m">\theta^\star</span> 生成的 LLM 服务 <span class="m">i</span> 的 CoT 示例 <span class="m">E_i</span>，链的歧义度 <span class="m">\epsilon(E_i)</span> 定义为：在给定 CoT 示例 <span class="m">E_i</span> 的条件下，上下文 <span class="m">c^\star</span> 与意图 <span class="m">\theta^\star</span> 的似然的<strong>补</strong>，即</p>
+
+<div class="eq"><div class="body"><span class="M">\hat{q}(c^\star,\theta^\star|E_i)=1-\epsilon(E_i).</span></div><span class="eqno">(7)</span></div>
+
+<p>除了 LLM 的歧义度定义之外，我们如下定义网络运营商训练数据集中上下文的质量。</p>
+
+<p><strong>定义 2：</strong>为刻画网络运营商处训练数据集中上下文可能<strong>非均匀</strong>的分布，我们为每个网络运营商 <span class="m">n</span> 引入一个偏斜参数 <span class="m">\gamma_n(c^\star)</span>，定义为</p>
+
+<div class="eq"><div class="body"><span class="M">\gamma_n(c^\star)=\sup_{c\in C}\frac{\hat{q}(c^\star)}{\hat{q}(c_n)},</span></div><span class="eqno">(8)</span></div>
+
+<p>其中 <span class="m">c_n</span> 是网络运营商 <span class="m">n</span> 所拥有的上下文。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 2</span>
+  式 (8) 对 <span class="m">c\in C</span> 取上确界，但被取上确界的表达式 <span class="m">\hat{q}(c^\star)/\hat{q}(c_n)</span> <strong>不含变元 <span class="m">c</span></strong>（分母是 <span class="m">c_n</span> 而不是 <span class="m">c</span>）。
+  这样上确界是<strong>空转</strong>的：结果恒等于 <span class="m">\hat{q}(c^\star)/\hat{q}(c_n)</span>。
+  从上下文看，作者想表达“运营商 <span class="m">n</span> 的上下文分布相对真实上下文有多偏”，合理形式应为 <span class="m">\sup_{c\in C}\hat{q}(c^\star)/\hat{q}(c)</span>。
+  又因为 <span class="m">c^\star\in C</span> 时该比值可取到 1，若要它表示“偏斜”通常还需取倒数或限制 <span class="m">c</span> 的范围。
+  <strong>我按原文照译，不改动公式</strong>；读者需注意此处的记号问题会影响式 (9)–(13) 中 <span class="m">\gamma_n^{c_i}(c^\star)</span> 的解释。
+</div>
+
+<p>地面基站可以在供给 LLM 智能体服务的过程中收集上下文，而这些上下文满足其本地用户的偏好。因此我们有以下假设。</p>
+
+<p><strong>假设 1：</strong>与真实上下文 <span class="m">c^\star</span> 相关联的先验分布是均匀的。</p>
+
+<p>基于假设 1 所考虑的均匀上下文，<span class="m">\gamma_n(c^\star)=1</span> 保证了较小的取值，或者提供了应当具有足够小歧义度的 CoT 示例，从而使得具有高确定性的模型能够从中猜出真实上下文 <span class="m">c^\star</span> [34]。依据定义 2，我们可以如下估计：在给定服务 <span class="m">i</span> 的输入消息 <span class="m">D_i</span> 的条件下，学到的分布 <span class="m">p_m</span> 与真实分布 <span class="m">\hat{q}</span> 之间<strong>歧义度度量之差</strong>。</p>
+
+<p><strong>定理 1：</strong>考虑 <span class="m">c_i</span> 个长度不一的 CoT 示例，它们由意图 <span class="m">\theta^\star</span> 与从满足假设 1 的 <span class="m">q_m(c)</span> 中采样的最优上下文 <span class="m">c^\star</span> 生成。进一步，设 <span class="m">d_{i,0}</span> 为从 <span class="m">q(\cdot|\theta^\star_0)</span> 中采样的输入消息或任务，而 <span class="m">\theta^\star_0</span> 从 <span class="m">q_m(\cdot|c^\star)</span> 中采样得到。那么，对任意消息序列 <span class="m">D_i</span>，有</p>
+
+<div class="eq"><div class="body"><span class="M">\left|p_m(D_i|d_{i,0},E_i)-\hat{q}(D_i|d_{i,0},c^\star)\right|\le\eta\prod_{y=1}^{c_i}\frac{\epsilon(E_{i,y})}{1-\epsilon(E_{i,y})},</span></div><span class="eqno">(9)</span></div>
+
+<p>其中 <span class="m">\eta=2\frac{\epsilon(d_{i,0})}{1-\epsilon(d_{i,0})}</span>，取决于输入的歧义度。</p>
+
+<p><strong>证明：</strong>我们给出一个<strong>简化证明</strong>以展示如何以必要的步骤得到该界，完整证明可参见 [34]。从 <span class="m">p_m(D_i|d_{i,0},E_i)</span> 出发，我们有</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">p_m(D_i|d_{i,0},E_i)=\frac{\hat{q}(D_i,E_i)}{\hat{q}(d_{i,0},E_i)}</span>
+  <span class="M">=\frac{\hat{q}(D_i,E_i,c^\star)+\sum_{c\ne c^\star}\hat{q}(D_i,E_i,c)}{\hat{q}(d_{i,0},E_i,c^\star)+\sum_{c\ne c^\star}\hat{q}(d_{i,0},E_i,c)}</span>
+  <span class="M">=\frac{\hat{q}(D_i\setminus\{d_{i,0}\},E_i,c^\star)+\Lambda}{1+\Upsilon},</span>
+</div><span class="eqno">(10)</span></div>
+
+<p>其中 <span class="m">\Lambda</span> 与 <span class="m">\Upsilon</span> 由下式给出</p>
+
+<div class="eq"><div class="body"><span class="M">\Lambda=\frac{\sum_{c\ne c^\star}\hat{q}(D_i,E_i,c)}{\hat{q}(d_{i,0},E_i,c^\star)}\quad\text{和}\quad\Upsilon=\frac{\sum_{c\ne c^\star}\hat{q}(d_{i,0},E_i,c)}{\hat{q}(d_{i,0},E_i,c^\star)}.</span></div><span class="eqno">(11)</span></div>
+
+<p>利用 CoT 示例 <span class="m">E_{i,y}</span> 的歧义度度量定义，我们可以对 <span class="m">\Lambda</span> 与 <span class="m">\Upsilon</span> 建立如下界：</p>
+
+<div class="eq"><div class="body"><span class="M">\Lambda,\Upsilon\le\gamma_n^{c_i}(c^\star)\frac{\epsilon(d_{i,0})}{1-\epsilon(d_{i,0})}\prod_{y=1}^{c_i}\frac{\epsilon(E_{i,y})}{1-\epsilon(E_{i,y})}.</span></div><span class="eqno">(12)</span></div>
+
+<p>最后，把上述各部分组合起来，我们有</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">\left|p_m(D_i|d_{i,0},E_i)-\hat{q}(D_i|d_{i,0},c^\star)\right|</span>
+  <span class="M">=\frac{\left|\Lambda-\Upsilon\hat{q}(D_i/\{d_{i,0}\}|d_{i,0},c^\star)\right|}{1+\Upsilon}</span>
+  <span class="M">\le\left|\Lambda+\Upsilon\hat{q}(D_i/\{d_{i,0}\}|d_{i,0},c^\star)\right|\le\Lambda+\Upsilon</span>
+  <span class="M">\le\eta\prod_{y=1}^{c_i}\frac{\epsilon(E_{i,y})}{1-\epsilon(E_{i,y})},</span>
+</div><span class="eqno">(13)</span></div>
+
+<p>其中 <span class="m">\eta=2\gamma_n^{c_i}(c^\star)\frac{\epsilon(d_{i,0})}{1-\epsilon(d_{i,0})}</span>；依假设 1 可知 <span class="m">\gamma_n(c^\star)=1</span>，从而 <span class="m">\eta=2\frac{\epsilon(d_{i,0})}{1-\epsilon(d_{i,0})}</span>。∎</p>
+
+<div class="note math">
+  <span class="tag">蓝·证明逐步拆解</span>
+  <p style="margin:4px 0 0">这段证明原文写得相当紧凑，下面把它拆成“每一步用了什么条件”：</p>
+  <ol style="margin:6px 0 0">
+    <li><strong>第 1 步（式 (10) 第一行）</strong>：把模型学到的条件概率写成真实分布之比
+      <span class="m">p_m(D_i|d_{i,0},E_i)=\hat{q}(D_i,E_i)/\hat{q}(d_{i,0},E_i)</span>。
+      这一步本质是<em>定义</em>：假设模型若能完美逼近真实分布，则其条件分布就等于真实条件分布。原文没有说明这是定义还是近似，这是第一处跳步。</li>
+    <li><strong>第 2 步（第二行）</strong>：对上下文 <span class="m">c</span> 做全概率分解，把 <span class="m">c=c^\star</span> 与 <span class="m">c\ne c^\star</span> 分开。这是标准的边缘化。</li>
+    <li><strong>第 3 步（第三行）</strong>：分母提出 <span class="m">\hat{q}(d_{i,0},E_i,c^\star)</span> 得到 <span class="m">1+\Upsilon</span>；分子提出同一因子，得到 <span class="m">\hat{q}(D_i\setminus\{d_{i,0}\},E_i,c^\star)+\Lambda</span>。
+      注意分子里 <span class="m">D_i</span> 被替换成 <span class="m">D_i\setminus\{d_{i,0}\}</span>，这用到了 <span class="m">\hat{q}(D_i,E_i,c^\star)=\hat{q}(D_i\setminus\{d_{i,0}\},E_i,c^\star)\hat{q}(d_{i,0},E_i,c^\star)</span>，即“<span class="m">d_{i,0}</span> 是 <span class="m">D_i</span> 的一部分且条件独立成立”。</li>
+    <li><strong>第 4 步（式 (12)）</strong>：这一步是<strong>核心假设</strong>，把每个 CoT 示例的歧义度 <span class="m">\epsilon(E_{i,y})</span> 连乘起来。它成立<strong>需要 <span class="m">c_i</span> 个示例之间条件独立</strong>——原文只说“利用歧义度度量的定义”，没有明写独立性，这是最需要留意的一处条件。</li>
+    <li><strong>第 5 步（式 (13)）</strong>：先取绝对值三角不等式，再用 <span class="m">\hat{q}(\cdot)\le 1</span> 把 <span class="m">\Upsilon\hat{q}(\cdot)</span> 放大为 <span class="m">\Upsilon</span>，最后用式 (12) 得结论。
+      这一步之所以能“放大”，依赖 <span class="m">\hat{q}</span> 是概率（<span class="m">\le 1</span>）且 <span class="m">\Lambda,\Upsilon\ge 0</span>。原文把这两个前提都省略了。</li>
+  </ol>
+  <p style="margin:6px 0 0"><strong>结论能说明什么：</strong>只要每个 CoT 示例的歧义度 <span class="m">\epsilon</span> 足够小，连乘就随示例数 <span class="m">c_i</span> <em>指数</em>衰减，于是“多给示例 ⇒ 更接近真实分布”。这就是后文把 <span class="m">\epsilon</span> 归纳为单一衰减率 <span class="m">\beta</span> 的动机。</p>
+</div>
+
+<p>定理 1 表明：被 CoT 示例 <span class="m">E_i</span> 提示的 LLM 能够逼近装备了真实上下文与意图的真实自然语言分布。</p>
+
+<p><strong>假设 2：</strong>由 <span class="m">\theta^\star</span> 以上下文 <span class="m">c^\star\sim q(c)</span> 生成的 CoT 示例 <span class="m">E_i</span> 受歧义度度量约束，即</p>
+
+<div class="eq"><div class="body"><span class="M">\epsilon(E_i)=\hat{q}(c^\star,\theta^\star|E_i)\le\sigma,</span></div><span class="eqno">(14)</span></div>
+
+<p>其中 <span class="m">\sigma\in\left[0,\frac12\right]</span>。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 3（重要）</span>
+  <strong>定义 1 与假设 2 对同一个量给出了互相矛盾的两个式子。</strong>
+  定义 1（式 (7)）说的是 <span class="m">\hat{q}(c^\star,\theta^\star|E_i)=1-\epsilon(E_i)</span>；
+  而假设 2（式 (14)）说的是 <span class="m">\epsilon(E_i)=\hat{q}(c^\star,\theta^\star|E_i)</span>。
+  两式联立会得到 <span class="m">\epsilon=1-\epsilon</span>，即 <span class="m">\epsilon=\tfrac12</span>，<strong>与“歧义度可任意小”这一整条论证线矛盾</strong>。
+  合理读法是：定义 1 的 <span class="m">\epsilon</span> 是“非真值集合的概率质量”，而假设 2 想约束的其实是<em>补事件</em>（即 <span class="m">\hat{q}</span> 本身足够大、或等价地 <span class="m">\epsilon</span> 足够小）。也可能是排版时把 <span class="m">1-\epsilon</span> 误写成 <span class="m">\epsilon</span>。
+  <strong>这个矛盾会沿式 (15) 一路传到式 (20) 和 AoT 的定义</strong>，因此读者在复现时必须在两者之间做选择。我<strong>不做选择、按原文并列呈现</strong>，并把影响面标在 <a href="#issues">附录 B·第 1 条</a>。
+</div>
+
+<p>假设 2 意味着：若精心选择，CoT 示例 <span class="m">E_i</span> 与真实上下文 <span class="m">c^\star</span> 能以相当高的确定性从 <span class="m">E_i</span> 中恢复，即 <span class="m">c^\star</span> 藏在 <span class="m">E_i</span> 背后的概率<strong>严格大于一半</strong>（原文：strictly greater than on a half）。给定这样的 CoT 示例，我们可以把定理 1 的界转化为<strong>随示例数增长而收敛的几何速率</strong>：</p>
+
+<div class="eq"><div class="body"><span class="M">\left|p_m(D_i|d_{i,0},E_i)-\hat{q}(D_i|d_{i,0},c^\star)\right|\le\eta\beta^{c_i},</span></div><span class="eqno">(15)</span></div>
+
+<p>其中 CoT 增益为 <span class="m">\beta=\frac{\sigma}{1-\sigma}\in[0,1)</span>。假设 2 中描述的这些示例应当被仔细挑选，以保证较低的歧义度要求。然而在实践中，收集这样的思维链示例可能颇具挑战；因此可以有如下假设，使我们能够对给定的思维序列度量歧义度。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 4</span>
+  假设 2 写的是 <span class="m">\sigma\in\left[0,\frac12\right]</span>（<strong>闭</strong>区间）；而式 (15) 要求 <span class="m">\beta=\frac{\sigma}{1-\sigma}\in[0,1)</span>，这需要 <span class="m">\sigma\lt\frac12</span>。
+  当 <span class="m">\sigma=\frac12</span> 时 <span class="m">\beta=1</span>，几何收敛率<strong>退化为不衰减</strong>（界恒为 <span class="m">\eta</span>）。
+  后文引理 1 用的是半开区间 <span class="m">\left[0,\frac12\right)</span>，与假设 2 不一致。这是<strong>区间端点写错</strong>，不是实质性错误，但会影响“收敛率”的陈述是否严格。
+</div>
+
+<p><strong>假设 3：</strong>对于由真实意图 <span class="m">\theta^\star</span> 与真实上下文 <span class="m">c^\star\sim q(c)</span> 生成的 CoT 示例 <span class="m">E_i</span>，其关联的歧义度度量 <span class="m">\epsilon(E_i)</span> 随序列长度增大而消失：</p>
+
+<div class="eq"><div class="body"><span class="M">\lim_{l\to\infty}\epsilon(E_i)=0.</span></div><span class="eqno">(16)</span></div>
+
+<p>假设 3 意味着：当收集到更多这样的思维时，关于真实上下文 <span class="m">c^\star</span> 与真实意图 <span class="m">\theta^\star</span> 的不确定性会逐渐减小。因此，对于足够长的 CoT 示例，该渐近要求足以保证较低的歧义度度量。满足假设 3 时，我们有如下引理。</p>
+
+<p><strong>引理 1：</strong>考虑 CoT 示例 <span class="m">E_i</span>，对任意固定的 <span class="m">\sigma\in\left[0,\frac12\right)</span>，存在一个长度阈值 <span class="m">k^\star_{i,\sigma}\in\mathbb{N}</span>。对任意 <span class="m">k_i\ge k^\star_{i,\sigma}</span>，有</p>
+
+<div class="eq"><div class="body"><span class="M">\epsilon(E_i)\le\sigma.</span></div><span class="eqno">(17)</span></div>
+
+<p><strong>证明：</strong>选取 <span class="m">\sigma\in\left[0,\frac12\right)</span>，服从假设 3 的 CoT 示例 <span class="m">E_i</span> 具有近似 <span class="m">\lim_{l\to\infty}\epsilon(E_i)=0</span>。于是存在 <span class="m">k^\star_{i,\sigma}\in\mathbb{N}</span>，使得对任意 <span class="m">k_i\ge k^\star_{i,\sigma}</span>，不等式 <span class="m">\epsilon(E_i)\le\sigma</span> 成立。∎</p>
+
+<div class="note math">
+  <span class="tag">蓝·为什么引理 1 几乎是同义反复</span>
+  引理 1 的证明只用了“收敛到 0 的定义”：<span class="m">\epsilon\to 0</span> 意味着对任意 <span class="m">\sigma\gt 0</span>，存在阈值使 <span class="m">\epsilon\le\sigma</span>。
+  <strong>真正的内容在假设 3</strong>（<span class="m">\epsilon\to 0</span>），引理 1 只是把“极限语言”翻译成“存在阈值语言”，方便后文说“取足够长的示例即可”。
+  注意证明里写的是“<span class="m">lim_{l\to\infty}</span>”，而引理陈述用的是示例长度 <span class="m">k_i</span> 与阈值 <span class="m">k^\star_{i,\sigma}</span>；<span class="m">l</span> 与 <span class="m">k_i</span> 的对应关系原文没有交代（<span class="m">l</span> 应是思维序列长度）。这是一处<strong>记号不接续</strong>。
+</div>
+
+<p>基于引理 1，当 LLM 被提示以长度充分的 CoT 示例 <span class="m">E_i</span>（即依假设 3 有 <span class="m">k_i\ge k^\star_{i,\sigma}</span>）时，式 (15) 中的几何收敛率便可成立。与“低歧义度”要求相比，“低渐近歧义度”的 CoT 示例更容易获得。因此，在 LLM 的逐步推理过程中，满足假设 3 的原始 CoT 示例 <span class="m">E_i</span> 可以按照所需阈值 <span class="m">\sigma\in\left[0,\frac12\right)</span> 拆分或划分为不同长度与规模的思维 <span class="m">E'_i</span>，从而成为具有<strong>预定义歧义度的更细粒度推理步骤</strong>。诸如 GPT-3 之类的 LLM 能够进行 CoT 提示，这意味着它们可以从呈现给它们的、面向复杂任务的过往 CoT 示例中学习。中间思维可用于提升 LLM 智能体的性能，因为 LLM 可以在交互过程中使用<strong>元梯度学习</strong>来拟合它们 [35]。然而，取决于中间思维的相关性与连贯性，少样本学习对模型性能可能产生<strong>有利或不利</strong>的影响。基于缓存决策 <span class="m">a^t_{n,i,m}</span> 与卸载决策 <span class="m">b_{n,i,m}</span>，地面基站 <span class="m">n</span> 所执行的请求批次可计算为 <span class="m">\delta^t_{n,i,m}=a^t_{n,i,m}(1-b^t_{n,i,m})R^t_{n,i,m}k_i</span>，对应服务 <span class="m">i</span> 与模型 <span class="m">m</span>，其中 <span class="m">k_i</span> 是服务 <span class="m">i</span> 的 CoT 示例规模，可通过引理 1 估计。一般而言，当 LLM 被缓存进边缘服务器时，思维数量会<strong>单调增加</strong>，可表示为</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">K^t_{n,i,m}=0,\quad t=0,</span>
+  <span class="M">K^t_{n,i,m}=a^t_{n,i,m}\left(K^{t-1}_{n,i,m}+\delta^t_{n,i,m}\right),\quad\text{其他情形}.</span>
+</div><span class="eqno">(18)</span></div>
+
+<p>类似于信息年龄（AoI）的定义，<strong>AoT 度量的是缓存 LLM 内部、面向当前推理请求的中间思维的新鲜度</strong>。借助思维的衰减因子 <span class="m">\Delta^t_{i,m}</span>，AoT 由<strong>非增的年龄效用函数</strong>调整，表示为</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">\kappa^t_{n,i,m}=0,\quad t=0,</span>
+  <span class="M">\kappa^t_{n,i,m}=a^t_{n,i,m}\left\{\kappa^{t-1}_{n,i,m}+\delta^t_{n,i,m}-\Delta^t_{i,m}\right\}^{+},\quad\text{其他情形}.</span>
+</div><span class="eqno">(19)</span></div>
+
+<div class="note math">
+  <span class="tag">蓝·式 (18) 与 (19) 的关系（关键）</span>
+  <p style="margin:4px 0 0">这两式是全篇的枢纽，必须看清它们的<strong>差别只有一个减项</strong>：</p>
+  <ul style="margin:6px 0 0">
+    <li>式 (18) 的 <span class="m">K^t</span> 是<strong>累计思维量</strong>：上一时隙的量 <span class="m">K^{t-1}</span> 加上本时隙新产生的 <span class="m">\delta^t</span>，再乘 <span class="m">a^t</span>（未缓存则清零）。<strong>只增不减。</strong></li>
+    <li>式 (19) 的 <span class="m">\kappa^t</span> 是<strong>AoT 分数</strong>：在累计量之上再减去衰减 <span class="m">\Delta^t_{i,m}</span>，并取 <span class="m">\{\cdot\}^{+}=\max(\cdot,0)</span> 保证非负。<strong>可增可减，且被截断在 0。</strong></li>
+    <li>符号：<span class="m">\{\cdot\}^{+}</span> 是正部（positive part）；<span class="m">a^t_{n,i,m}</span> 出现在<strong>最外层</strong>，意味着“模型不在缓存里 ⇒ AoT 归零”。</li>
+    <li>为什么取非负：<span class="m">\kappa</span> 后面要进入对数 <span class="m">\log(1/\beta^{\kappa})</span>（式 (20)），负数会破坏“示例越多、性能越好”的单调性。</li>
+    <li>结论能说明什么：<span class="m">\Delta</span> 刻画“旧思维随着时间失去价值”的速度。<span class="m">\Delta</span> 越大，AoT 越低，模型越容易被判为“不重要”而被淘汰——这正是 <a href="#deepdive">附录 A</a> 中“实验把 <span class="m">\Delta</span> 当旋钮调”的原因。</li>
+  </ul>
+</div>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 5</span>
+  式 (19) 中衰减因子的下标是 <span class="m">\Delta^t_{i,m}</span>（服务 <span class="m">i</span> 与模型 <span class="m">m</span>），但第六节参数设置里写的是“默认上下文衰减因子 <span class="m">\Delta^t_n</span> 设为 0.6”（下标是运营商 <span class="m">n</span>），图 4 的标题又用 “vanishing factors”。
+  <strong>同一符号在三处用了三套下标</strong>：究竟衰减是“按服务–模型”还是“按运营商”配置，原文未统一。这直接影响实验的可复现性。
+</div>
+
+<p>依据 AoT，演示中示例数量的<strong>加权总量</strong>可用于确定上下文中的示例数量。AoT 指标计算轻量、易于实际实现，且<strong>无需对 LLM 推理过程做内部修改</strong>。其计算只需为每个缓存模型维护两个整数计数器——累计推理 token 长度与当前 AoT 分数。在推理完成时更新这些计数器带来的计算开销可忽略不计，因为只需要<strong>两次整数加法与一次比较</strong>。该过程利用推理流水线本身就产生的数据（时间戳、token 计数），从而避免对模型架构或推理机制做任何修改。因此，AoT 计算既高效，又对真实部署切实可行，不会引入有意义的时延增加。</p>
+
+<div class="note narr">
+  <span class="tag">绿·工程直觉</span>
+  这段是作者对“这指标能不能落地”的正面回应，值得单独记住：
+  <strong>每个缓存模型只需两个整数</strong>（累计 token 数、当前 AoT），<strong>每次推理结束做 O(1) 更新</strong>。
+  也就是说 AoT 不碰模型前向、不做额外推理，是<em>旁路统计</em>。这是它相对“重新评估模型质量”这类昂贵做法的核心优势，也是算法 1 能声称 <span class="m">O(M)</span>、可毫秒级执行的依据。
+</div>
+
+<p>基于式 (15)，模型 <span class="m">m</span> 在服务 <span class="m">i</span> 中的少样本 CoT 推理性能 <span class="m">A_{i,m}</span> 可定义为</p>
+
+<div class="eq"><div class="body"><span class="M">A^t_{n,i,m}=\alpha_{i,m}\log\!\left(1/\beta^{\kappa^t_{n,i,m}}_{i,m}\right),</span></div><span class="eqno">(20)</span></div>
+
+<p>其中 <span class="m">\alpha_{i,m}</span> 是 LLM <span class="m">m</span> 在服务 <span class="m">i</span> 上的<strong>零样本准确率</strong>，在一个留出验证集上估计 [8]。因子 <span class="m">\beta</span> 表示由假设 2 中的歧义度上界所得到的<strong>每个思维对 CoT 增益的衰减率</strong>，而 <span class="m">\log(1/\beta^{\kappa^t_{n,i,m}}_{i,m})</span> 就是 LLM <span class="m">m</span> 为服务 <span class="m">i</span> 生成的 CoT 示例所带来的<strong>性能增益</strong> [33], [34]。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 6</span>
+  <p style="margin:4px 0 0">式 (20) 有两处记号问题：</p>
+  <ol style="margin:4px 0 0">
+    <li>式 (15) 定义的是<strong>单一标量</strong> <span class="m">\beta=\sigma/(1-\sigma)</span>，但式 (20) 与式 (24) 用的是<strong>带下标的</strong> <span class="m">\beta_{i,m}</span>。若 <span class="m">\beta</span> 按服务–模型各异，式 (15) 应写成 <span class="m">\beta_{i,m}</span>；若它是全局常量，式 (20) 的下标就是多余的。</li>
+    <li>原文把 <span class="m">\kappa^t_{n,i,m}</span> 排在 <span class="m">\beta</span> 的<strong>右上角</strong>，即 <span class="m">\beta^{\kappa}</span>。于是 <span class="m">\log(1/\beta^{\kappa})=\kappa\log(1/\beta)</span>，性能随 AoT <strong>线性</strong>增长。这与式 (15) 中误差随 <span class="m">c_i</span> <em>指数</em>衰减是自洽的（对数把指数拉平）。但读者若把上下标看错，就会得到完全不同的结论。我在译文中保留原排版顺序。</li>
+  </ol>
+</div>
+
+<h2 id="sec4">第四节　问题建模、缓存算法设计与市场设计</h2>
+
+<p>本节首先形式化 SAGINs 中供给 LLM 智能体的问题，以最大化 LLM 智能体服务的<strong>数量与质量</strong>。为求解该问题，我们接着提出一个面向地面基站本地缓存模型管理的模型缓存算法。此外，我们设计一个 LLM 智能体市场，激励网络运营商（卫星与地面基站）贡献其资源来执行 LLM 智能体。</p>
+
+<p>在供给 LLM 智能体服务的过程中，网络运营商（卫星或地面基站）需要提供通信、计算、存储与<strong>缓存模型</strong>资源来运行 LLM 智能体服务。具体而言：用户的请求与返回结果需要经无线信道传输，这消耗带宽以完成用户与部署在边缘的 LLM 智能体之间的交互；LLM 的推理过程消耗大量计算资源，尤其在执行 CoT 推理时，需要大量中间计算才能得到最终的高质量结果；由于 LLM 智能体使用 CoT 推理来提升最终答案质量，它们需要可观的存储资源来<strong>在本地保存过往 CoT 示例</strong>作为演示；最后，由于 LLM 的上下文窗口有限，当模型推理部署超过一定 token 数时，模型需要被<strong>刷新</strong>，即淘汰旧模型并加载另一个新鲜模型。</p>
+
+<h3 id="sec4a">4.1　成本结构</h3>
+
+<p>如上所述，地面基站供给的 LLM 智能体服务可以由边缘服务器处理，或经核心网卸载到云数据中心。基于模型缓存与请求卸载决策，提供 LLM 智能体服务的总成本（包括边缘侧成本与云端成本）可表示如下。</p>
+
+<h4>1) 边缘推理成本</h4>
+
+<p>具体而言，边缘推理成本包括 GPU 中的切换成本、跨边缘传输数据的成本、在边缘执行计算的成本，以及模型精度成本。基于模型缓存决策，每个边缘服务器在执行前必须把模型加载进 GPU 显存。在模型加载过程中，GPU 中模型之间的切换会产生成本，其中包括加载模型的时延以及硬件磨损成本 [36]。因此，地面基站 <span class="m">n</span> 加载与淘汰模型的切换成本 <span class="m">l^{switch}_n</span> 可计算为</p>
+
+<div class="eq"><div class="body"><span class="M">l^{switch}_n(\mathbf{a}^t)=\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}\lambda\mathbf{1}(a^t_{n,i,m}\gt a^{t-1}_{n,i,m}),</span></div><span class="eqno">(21)</span></div>
+
+<p>其中 <span class="m">\lambda</span> 表示加载与淘汰模型的系数，<span class="m">\mathbf{1}(\cdot)</span> 是指示函数。当 <span class="m">a^t_{n,i,m}\gt a^{t-1}_{n,i,m}</span>，即 <span class="m">a^t_{n,i,m}=1</span> 且 <span class="m">a^{t-1}_{n,i,m}=0</span> 时，<span class="m">\mathbf{1}(a^t_{n,i,m}\gt a^{t-1}_{n,i,m})</span> 表示一次<strong>未缓存模型的加载</strong>。否则，边缘服务器不产生切换成本。</p>
+
+<div class="note math">
+  <span class="tag">蓝·为什么式 (21) 只算“从 0 到 1”</span>
+  指示函数写的是<strong>严格大于</strong>：<span class="m">a^t\gt a^{t-1}</span>。由于 <span class="m">a\in\{0,1\}</span>，只有 <span class="m">(0\to 1)</span> 满足，<span class="m">(1\to 0)</span>（淘汰）<strong>不被计入</strong>。
+  而正文明确说切换成本“包括加载与淘汰模型的成本”。这说明式 (21) 与文字描述<strong>不完全一致</strong>：若淘汰也要计费，应写成 <span class="m">\mathbf{1}(a^t_{n,i,m}\ne a^{t-1}_{n,i,m})</span>。
+  这是我从公式与正文的差异中读出的，原文未说明；<strong>它会让“淘汰”在成本模型里变成免费操作</strong>，进而影响 LAoT 的淘汰策略评估。详见<a href="#issues">附录 B·第 5 条</a>。
+</div>
+
+<p>当被请求的模型已缓存进边缘服务器的 GPU 显存后，用户与边缘服务器通信以请求 LLM 智能体服务。设 <span class="m">l^{trans}_n</span> 表示输入提示与推理结果的传输成本，则地面基站 <span class="m">n</span> 的传输成本可计算为</p>
+
+<div class="eq"><div class="body"><span class="M">l^{trans}_n(\mathbf{a}^t,\mathbf{b}^t)=\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}R^t_{n,i,m}\left(l_{n,i}+\frac{d_i}{r^C_n}b^t_{n,i,m}\right),</span></div><span class="eqno">(22)</span></div>
+
+<p>其中 <span class="m">l_{n,i}=d_i/\mathbb{E}_{u\in\mathcal{U}_n}[r_{u,n}]</span> 是服务 <span class="m">i</span> 把规模为 <span class="m">d_i</span> 的输入数据从用户 <span class="m">\mathcal{U}_n</span> 传到地面基站 <span class="m">n</span> 的、<strong>每次输入与结果的单位传输成本</strong>。</p>
+
+<p>设 <span class="m">f_n</span> 表示地面基站 <span class="m">n</span> 的计算容量。在地面基站执行 LLM 智能体服务会带来推理时延，记为 <span class="m">l^{comp}_n</span>。边缘计算成本可计算为</p>
+
+<div class="eq"><div class="body"><span class="M">l^{comp}_n(\mathbf{a}^t,\mathbf{b}^t)=\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}\delta^t_{n,i,m}\frac{e_m}{f_n},</span></div><span class="eqno">(23)</span></div>
+
+<p>其中 <span class="m">\delta^t_{n,i,m}=a^t_{n,i,m}(1-b^t_{n,i,m})R^t_{n,i,m}k_i</span> 是 LLM 智能体服务 <span class="m">i</span> 一批请求的总计算 token 数。最后，由于地面基站可能没有足够资源来执行 LLM 智能体所请求的<strong>最佳匹配模型</strong>，这可能带来性能差距，因此由具有等效功能的其他 LLM 处理的请求会产生精度成本 <span class="m">l^{acc}_n</span>，可表示为</p>
+
+<div class="eq"><div class="body"><span class="M">l^{acc}_n(\mathbf{a}^t,\mathbf{b}^t)=\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}\bar{A}^t_{n,i,m}R^t_{n,i,m}a^t_{n,i,m}(1-b^t_{n,i,m}),</span></div><span class="eqno">(24)</span></div>
+
+<p>其中 <span class="m">\bar{A}^t_{n,i,m}=1-\alpha_{i,m}\kappa^t_{n,i,m}\log(1/\beta_{i,m})</span> 是依式 (20) 的单位精度成本。通过牺牲 LLM 智能体服务的一部分精度，系统可以降低<strong>模型缺失率</strong>。因此，地面基站 <span class="m">n</span> 的总边缘推理成本为</p>
+
+<div class="eq"><div class="body"><span class="M">L^t_n(\mathbf{a}^t,\mathbf{b}^t)=l^{switch}_n(\mathbf{a}^t_n)+l^{trans}_n(\mathbf{a}^t_n,\mathbf{b}^t_n)+l^{comp}_n(\mathbf{a}^t_n,\mathbf{b}^t_n)+l^{acc}_n(\mathbf{a}^t_n,\mathbf{b}^t_n).</span></div><span class="eqno">(25)</span></div>
+
+<p>边缘推理成本由地面基站的缓存决策与卸载决策<strong>共同</strong>决定。不过，被遗漏或被卸载的请求会由云数据中心执行。第四项 <span class="m">l^{acc}(\kappa)</span> 使我们的成本模型与传统的“仅硬件”建模<strong>在性质上不同</strong>，因为它把货币支出与 LLM 特有的<strong>新鲜度</strong>绑定在一起。卫星由于无法直接获取 token 级的上下文窗口统计，只能通过<strong>延迟遥测</strong>估计 <span class="m">l^{acc}</span>，而地面基站则能实时观测它。这一信息差距造成了估值不对称，而这正是拍卖机制必须处理的问题。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 7</span>
+  式 (24) 里 <span class="m">\bar{A}^t_{n,i,m}=1-\alpha_{i,m}\kappa^t_{n,i,m}\log(1/\beta_{i,m})</span> 的<strong>结合顺序有歧义</strong>：
+  按原排版读作 <span class="m">1-\left[\alpha_{i,m}\kappa^t_{n,i,m}\log(1/\beta_{i,m})\right]</span>，此时由于 <span class="m">\log(1/\beta)\gt 0</span>（<span class="m">\beta\lt 1</span>）且 <span class="m">\alpha\le 1</span>，
+  只要 <span class="m">\kappa</span> 足够大，<span class="m">\bar{A}</span> 就会<strong>变成负数</strong>——作为“单位精度成本”这是不合理的。
+  若作者本意是 <span class="m">\kappa</span> 越大精度越差、但成本有上界，则应是 <span class="m">\bar{A}=1/\left[1+\alpha\kappa\log(1/\beta)\right]</span> 之类的形式，或对 <span class="m">\kappa</span> 加截断。
+  原文对此<strong>没有任何说明</strong>，而 <span class="m">\bar{A}</span> 又直接进入成本函数与实验的“精度成本”曲线。此处我保留原式并标出疑点，不代为修正。
+</div>
+
+<h4>2) 云端推理成本</h4>
+
+<p>地面基站通常资源有限，无法服务所有 LLM 智能体服务请求。造成这一限制主要有两个原因：第一，地面基站的计算容量可能不足以把许多 LLM 加载进 GPU 显存；第二，地面基站的能量容量可能不足以处理所有请求。因此，部分请求将被卸载到云数据中心远程执行。</p>
+
+<p>当被请求的模型不可用、或地面基站缺乏足够资源时，这些用户请求会被传输到云数据中心，后者再分配资源来服务它们。根据 [36]，云数据中心可以提供<strong>无服务器的 LLM 智能体服务</strong>，以“按量付费”的方式向用户收费。这意味着用户按请求数量付费，而非按所占用的具体资源付费。然而，这种基于云的推理由于核心网中的数据传输会引入额外时延，且该时延大于地面基站的时延。此外，卸载到云数据中心执行的推理请求，其精度成本预期<strong>极小</strong>，因为这些请求可以用最精确的模型、并配以数据中心所拥有的通用 CoT 示例来处理。</p>
+
+<p>基于以上分析，我们用 <span class="m">l^C_n</span> 表示把请求卸载到云数据中心远程执行的总成本。那么，时隙 <span class="m">t</span> 的总云计算成本为</p>
+
+<div class="eq"><div class="body"><span class="M">L^t_C(\mathbf{a}^t,\mathbf{b}^t)=\sum_{n\in\mathcal{N}}\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}l_{0,m}b^t_{n,i,m}R^t_{n,i,m},</span></div><span class="eqno">(26)</span></div>
+
+<p>其中 <span class="m">l_{0,m}</span> 是模型 <span class="m">m</span> 在云数据中心的单位处理成本。因此，网络运营商 <span class="m">n</span> 供给 LLM 智能体服务的总成本 <span class="m">L^{total}_n</span> 可计算为</p>
+
+<div class="eq"><div class="body"><span class="M">L^{total}_n=\frac{1}{T}\sum_{t\in T}\left(L^t_C+L^t_n\right).</span></div><span class="eqno">(27)</span></div>
+
+<h3 id="sec4b">4.2　地面基站的问题建模</h3>
+
+<p>为提升移动边缘智能的效率，我们同时考虑边缘推理成本与云端推理成本，其中包括特定周期 <span class="m">T</span> 内的切换成本、精度成本、传输成本与推理成本。对地面基站 <span class="m">n=1,\dots,N</span>，供给 LLM 智能体服务的问题形式化为</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">\min_{\mathbf{a}^t_n,\mathbf{b}^t_n}\;L^{total}_n</span>
+  <span class="M">\text{s.t.}\quad (3),(4),(5)</span>
+  <span class="M">K^t_{n,i,m}\le w_m,\quad\forall i\in\mathcal{I},\ \forall m\in\mathcal{M}</span>
+  <span class="M">a^t_{n,i,m}\in\{0,1\}</span>
+  <span class="M">b^t_{n,i,m}\in[0,1].</span>
+</div><span class="eqno">(28a)–(28e)</span></div>
+
+<p>约束 (28c) 表明上下文 token 数不能超过上下文窗口大小。为求解上述优化问题，我们需要克服<strong>时间耦合</strong>要素带来的挑战，例如 GPU 显存与 CoT 示例，因为该问题同时考虑未来的请求动态与历史的 CoT 示例。此外，该问题是一个<strong>混合整数规划</strong>问题，已知为 NP-hard。为高效求解，我们需要低复杂度算法来确定模型缓存与请求卸载决策。</p>
+
+<div class="note math">
+  <span class="tag">蓝·为什么 NP-hard（一步到位的解释）</span>
+  式 (28) 里 <span class="m">a^t_{n,i,m}\in\{0,1\}</span> 是<strong>组合变量</strong>（选或不选），而 <span class="m">K^t</span> 通过式 (18) 把当前决策与<strong>上一时隙</strong>的 <span class="m">K^{t-1}</span> 绑在一起，于是 <span class="m">T</span> 个时隙的决策不可分解：
+  今天为了省切换成本而保留的模型，会通过 <span class="m">K^t</span> 改变明天的 AoT，进而改变明天的成本。
+  这正是“时间耦合”的含义。它同时具备两个难点：
+  <strong>(i)</strong> 每个时隙内部是带背包约束（式 (3)）的 0-1 选择问题；
+  <strong>(ii)</strong> 跨时隙存在状态依赖（<span class="m">K^t,\kappa^t</span>）。
+  因此作者放弃精确求解，转而用<em>每时隙贪心 + 两阶段分解</em>：先解 (29a) 得缓存决策，再把缓存决策代入解 (28a) 得卸载决策。
+</div>
+
+<h3 id="sec4c">4.3　最小思维年龄（Least AoT）缓存算法</h3>
+
+<p>为有效利用 LLM 供给 LLM 智能体服务，我们基于所提出的 AoT 指标提出<strong>最小 AoT 算法</strong>。当加载一个未缓存但被请求的 LLM 需要额外 GPU 显存时，最小 AoT 算法会评估 CoT 示例的价值、进行计算，并<strong>淘汰 AoT 最低的已缓存 LLM</strong>。因此，在每个时隙 <span class="m">t</span>，模型缓存决策可通过求解“已缓存模型的 CoT 示例数量最大化”问题得到，可表示为</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">\max_{\mathbf{a}^t}\;\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}\kappa^t_{n,i,m}</span>
+  <span class="M">\text{s.t.}\quad\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}a^t_{n,i,m}s_m\le G_n,\quad\forall n\in\mathcal{N}</span>
+  <span class="M">\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}(1-b^t_{n,i,m})e_m\le E_n,\quad\forall n\in\mathcal{N}</span>
+  <span class="M">a^t_{n,i,m}\in\{0,1\}.</span>
+</div><span class="eqno">(29a)–(29d)</span></div>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 8</span>
+  比较式 (29c) 与式 (5)：
+  <ul style="margin:4px 0 0">
+    <li>式 (5)：<span class="m">\sum_i\sum_m e_m a^t_{n,i,m}(1-b^t_{n,i,m})R^t_{n,i,m}\le E_n</span></li>
+    <li>式 (29c)：<span class="m">\sum_i\sum_m(1-b^t_{n,i,m})e_m\le E_n</span></li>
+  </ul>
+  式 (29c) <strong>丢掉了缓存决策 <span class="m">a^t_{n,i,m}</span> 与请求量 <span class="m">R^t_{n,i,m}</span></strong>。
+  这样一来，(29c) 对<em>所有</em> <span class="m">(i,m)</span> 组合求和，包括那些根本没被缓存、也没有请求的模型，且量纲从“总计算量能量”退化成“每 token 计算量之和”。
+  这不像是笔误可以解释的等价变形。<strong>我按原文照录</strong>，但它会让 (29) 的可行域与 (5) 不一致——也就是说，解 (29a) 得到的缓存决策未必满足原问题 (28) 的能耗约束。详见<a href="#issues">附录 B·第 4 条</a>。
+</div>
+
+<p>地面基站 <span class="m">n=1,\dots,N</span> 在时隙 <span class="m">t</span> 的 GPU 显存<strong>可用容量</strong> <span class="m">G^t_n</span> 可计算为 <span class="m">G^t_n=G_n-\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}a^t_{n,i,m}s_m</span>。该算法让最不重要的 LLM 在当前推理任务中具有更高的被淘汰概率。算法的复杂度随模型数量<strong>线性增长</strong>。因此，在地面基站 GPU 显存有限、而 LLM 数量众多时，它能良好工作。在推理时使用更多中间推理步骤会使 LLM 表现更准确。基于求解式 (29a) 得到的缓存决策 <span class="m">\mathbf{a}^t_n</span>，卸载决策 <span class="m">\mathbf{b}^t_n</span> 通过求解式 (28a) 得到。最小 AoT 算法的详细实现见算法 1。在每个决策时隙，最小 AoT 调度器更新思维年龄分数并找出分数最小的已缓存模型，从而获得 <span class="m">O(M)</span> 的时间与内存复杂度，使边缘服务器能够<strong>毫秒级</strong>执行。</p>
+
+<p>基于 AoT 的缓存决策每隔几分钟触发一次（当上下文窗口耗尽或用户需求发生变化时），而 DQMSB 拍卖则针对每一批到达的服务请求执行，其 DQN 权重离线重训、每日刷新。</p>
+
+<div class="algobox">
+  <div class="hd">算法 1　最小思维年龄（Least AoT）缓存模型替换算法
+    <span class="badge warn">按矢量轮廓重建</span></div>
+  <div class="bd">
+    <div class="flag" style="margin-top:0">
+      <span class="tag">重建说明</span>
+      本算法框在本 PDF 中<strong>只有矢量字形轮廓、没有文本层</strong>，我据以下三类证据重建：<strong>(a)</strong> 对轮廓的直接字形解码；
+      <strong>(b)</strong> Windows OCR 结果；<strong>(c)</strong> 本节的正文陈述与式 (18)(19)(29) 的约束结构。
+      <strong>确定部分：</strong>输入/输出项、<span class="m">G^t_n</span> 的显存记账、按 AoT 最小者淘汰、先解 (29a) 再解 (28a)、更新式 (19)、结尾的 <span class="m">O(M)</span> 复杂度。
+      <strong>不确定部分</strong>用 <code>⟨?⟩</code> 标出，供你回查原文 PDF 对应行核对。行号与原文一致。
+    </div>
+<pre class="pseudo">算法 1  最小思维年龄（Least AoT）缓存模型替换算法
+
+ 1  Input : 模型缓存状态 a^t、模型上下文状态（AoT 分数 κ^t）、
+            LLM 智能体服务请求 R^t、
+            GPU 显存容量 G_n、GPU 计算容量 E_n
+ 2  Output: 模型缓存决策 a^t、请求卸载决策 b^t
+ 3  Initialize a^t_n = 0, b^t_n = 0
+ 4  for t &gt; 0 do
+ 5      if a^{t-1}_{n,i,m} = 1 and R^t_{n,i,m} &gt; 0 then          ⟨?⟩ 第 5 行条件
+ 6          a^t_{n,i,m} ← 1
+ 7      end
+ 8      else if G^t_n + s_m ≤ G_n then
+ 9          a^t_{n,i,m} ← 1
+10          G^t_n ← G^t_n + s_m
+11      end
+12      else
+13          while G^t_n + s_m &gt; G_n do
+14              m' ← arg min_{m} κ^t_{n,i,m}                   ⟨?⟩ 取 AoT 最小者
+15              a^t_{n,i,m'} ← 0                               ⟨?⟩ 淘汰之
+16              G^t_n ← G^t_n − s_{m'}
+17          end
+18          if G^t_n + s_m ≤ G_n then
+19              a^t_{n,i,m} ← 1
+20              G^t_n ← G^t_n + s_m
+21          end
+22      end
+23      if a^t_{n,i,m} = 1 and a^{t-1}_{n,i,m} = 0 then
+24          b^t_{n,i,m} ← 0                                    ⟨?⟩ 新加载模型本地执行
+25          E^t_n ← E^t_n + e_m a^t_{n,i,m}                    ⟨?⟩ 能耗记账
+26      end
+27      Update 上下文状态 κ^t_{n,i,m} 依式 (19)
+28      if a^t_{n,i,m} = 1 and E^t_n + e_m a^t_{n,i,m} ≤ E_n then
+29          b^t_{n,i,m} ← 0
+30          E^t_n ← E^t_n + e_m a^t_{n,i,m}
+31      end
+32      else
+33          b^t_{n,i,m} ← 1                                    ⟨?⟩ 能耗不足则卸载
+34      end
+35  end
+36  end</pre>
+    <div class="note math" style="margin-bottom:0">
+      <span class="tag">蓝·重建残差</span>
+      第 5–8 行与第 23–26 行、第 28–33 行的分支结构在我拿到的三种证据里<strong>读数不完全一致</strong>；
+      其中第 14–17 行的“找 AoT 最小者并淘汰”由正文明确支撑（“removes the cached LLM with the lowest AoT”），可信度最高。
+      第 25/30 行的能耗记账 <span class="m">E^t_n</span> 与式 (5) 的 <span class="m">e_m a(1-b)R</span> 形式不完全对应，可能与解码误差或原文写法都有关系（参见疑点 8）。
+      <strong>若你要在论文中引用这段伪代码，请以原文 PDF 第 8 页算法框为准。</strong>
+    </div>
+  </div>
+</div>
+
+<h3 id="sec4d">4.4　市场设计</h3>
+
+<p>为激励 LLM 智能体提供方为用户构建并更新 LLM 智能体，我们设计一个 LLM 智能体市场：卖方（LLM 智能体提供方）通过供给 LLM 智能体服务获利，而竞标者（网络运营商）竞争为其用户供给 LLM 智能体服务。在每个决策时隙，每个 LLM 智能体<strong>恰好</strong>向所有网络运营商提供一个服务机会。交互按四个明确阶段推进：<strong>(i)</strong> 卖方发布该时隙的描述（模型目录、AoT 衰减系数、时隙时长）以及一个公共随机种子；<strong>(ii)</strong> 每个运营商<strong>私下</strong>评估一个估值 <span class="m">v_n=c_nm_n</span>（见 4.2 节），并提交密封报价 <span class="m">x_n</span>；<strong>(iii)</strong> 拍卖人应用定价规则来分配该时隙并收取支付；<strong>(iv)</strong> 获胜运营商执行 LLM 智能体，随后提供方向所有竞标者<strong>公开</strong>实际发生的 AoT 增量与资源消耗，从而闭合下一时隙的反馈回路。这一消息交换时间线消除了关于“哪些信息是公开的、哪些保持私有、以及更新何时发生”的歧义。我们认为网络运营商是市场中的<strong>风险中性</strong>竞标者，依据显示原理 [14]，他们的剩余彼此正相关。</p>
+
+<div class="note narr">
+  <span class="tag">绿·直觉</span>
+  这四个阶段不只是流程说明，它在解决一个机制设计的<em>合法性</em>问题：<strong>必须先说清楚谁在什么时候知道什么</strong>，否则“策略防伪”与“逆向选择”都无从定义。
+  尤其第 (iv) 阶段——事后公开真实的 AoT 增量与资源消耗——是让卫星能逐步学习、从而缓解信息不对称的关键设计。缺少这一步，DQN 就没有可用的状态信号。
+</div>
+
+<p>在 SAGINs 中，用户可以通过卫星或地面基站获得一个运行中的 LLM 智能体的服务，作为其执行本地任务的助手。每个网络运营商 <span class="m">n\in\mathcal{N}</span> 对“服务该 LLM 智能体的机会”有一个估值 <span class="m">v_n=c_nm_n</span>，它是两个量的乘积：关于物理资源消耗的<strong>共同价值</strong> <span class="m">c_n=\mathbb{E}_{t\in T}\left[L^{total}_n-l^{acc}_n(\mathbf{a}^t,\mathbf{b}^t)\right]</span>，以及在式 (20) 中得到的<strong>匹配性能增益</strong> <span class="m">m_n=\mathbb{E}_{t\in T}\left[\log(1/\beta^{\kappa^t_{n,i,m}}_{i,m})\right]</span>。具体而言，共同价值刻画了执行 LLM 所需资源消耗的属性，它取决于通信、计算与存储资源；而匹配质量刻画了网络运营商处缓存模型的<strong>特异性成分</strong>，这些成分会影响 LLM 智能体的质量 [14]。在对 LLM 智能体估值时，认为共同价值与匹配质量<strong>相互独立</strong>，即 LLM 智能体的资源消耗与 LLM 智能体的质量无关。我们用 <span class="m">v_{(i)}</span>、<span class="m">c_{(i)}</span> 与 <span class="m">m_{(i)}</span> 分别表示第 <span class="m">i</span> 高的估值、共同价值与匹配价值因子。</p>
+
+<p>市场中需要一个机制 <span class="m">\mathcal{M}(v)=(z,p)</span>，把私人持有的估值 <span class="m">v</span> 映射为分配概率 <span class="m">z=(z_0,z_1,\dots,z_N)</span> 与支付 <span class="m">p=(p_0,p_1,\dots,p_N)</span>。卫星的期望剩余（即估值的实现）为 <span class="m">\mathbb{E}[v_0z_0(v)]</span>；而分配给地面基站的 LLM 智能体所产生剩余为 <span class="m">\mathbb{E}\left[\sum_{n=1}^{N}v_nz_n(v)\right]</span>。为最大化网络运营商供给 LLM 智能体的总剩余，该机制的问题可形式化为</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">\max_{\mathcal{M}}\;\mathbb{E}\left[\sum_{n=0}^{N}v_iz_i(v)\right]</span>
+  <span class="M">\text{s.t.}\quad\sum_{t\in T}\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}\frac{d_iR^t_{0,i,m}}{\mathbb{E}_{u\in\mathcal{U}_0}\left[r_{u,0}+r^C_0\right]}\le T^S_0,</span>
+  <span class="M">\sum_{n=0}^{N}z_n\le 1,</span>
+  <span class="M">z_n\in\{0,1\},\quad\forall n\in\mathcal{N}.</span>
+</div><span class="eqno">(30a)–(30d)</span></div>
+
+<p>约束 (30b) 表明卫星的供给时间不能超过其覆盖时间。约束 (30c) 与 (30d) 表明<strong>有且仅有一个</strong>网络运营商能获得运行 LLM 智能体的机会。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 9</span>
+  <p style="margin:4px 0 0">式 (30a) 在原 PDF 中多出一个右方括号，排版为 <span class="m">\mathbb{E}\left[\sum v_iz_i(v)\right]]</span>（<strong>两个 <code>]</code></strong>）。这是明显的排版残留，译文按一个右括号呈现并在此说明。</p>
+  <p style="margin:4px 0 0">另外，式 (30a) 的求和索引写作 <span class="m">\sum_{n=0}^{N}v_iz_i(v)</span>：外层用 <span class="m">n</span> 求和，被加项却用 <span class="m">i</span> 索引。<span class="m">i</span> 在全文中一直是<em>服务</em>的索引，这里显然应当是 <span class="m">v_nz_n(v)</span>。这属于<strong>局部记号笔误</strong>，但会干扰读者对“谁在被分配”的理解。</p>
+</div>
+
+<h2 id="sec5">第五节　基于深度 Q 网络的修正第二价格投标拍卖</h2>
+
+<h3 id="sec5a">5.1　修正第二价格投标拍卖</h3>
+
+<p>在 LLM 智能体市场中，所有网络运营商向拍卖人提交报价 <span class="m">x=(x_0,x_1,\dots,x_N)</span>。随后，拍卖人利用 MSB 拍卖 [14] 确定获胜竞标者与支付，可形式化如下。</p>
+
+<p><strong>机制 1（修正第二价格投标拍卖）：</strong>若最高报价的地面基站的报价<strong>超过第二高报价达价格缩放因子 <span class="m">\rho</span> 倍或更多</strong>，则把 LLM 智能体分配给该地面基站，并以<strong>第二高报价乘以 <span class="m">\rho</span></strong> 作为 LLM 智能体的定价。当没有“性能竞标者”获胜时，机会被分配给中继卫星，由它把 LLM 智能体服务卸载到云数据中心；其合约价格 <span class="m">x_0</span> 的选取方式是最大化其期望利润，即 <span class="m">x_0=\max_x\mathbb{E}\left[(v_0-v_{(1)}\mathbf{1}(v_{(1)}\le x_0))\right]</span> [14]。形式上，分配规则与定价规则可表示如下。</p>
+
+<ul>
+  <li><strong>分配规则：</strong>对地面基站（即性能竞标者）<span class="m">n=1,\dots,N</span>，确定性机制的分配概率 <span class="m">z_n\in\{0,1\}</span> 由下式确定
+    <div class="eq"><div class="body"><span class="M">z_n(x)=\mathbf{1}(x_n\gt\rho\max\{x_{-n}\}),</span></div><span class="eqno">(31)</span></div>
+    其中 <span class="m">\rho\ge 1</span>。于是卫星的分配概率可基于地面基站的分配概率计算，即 <span class="m">z_0(x)\le 1-\sum_{n=1}^{N}z_n(x)</span>。</li>
+  <li><strong>定价规则：</strong>若获胜者是地面基站 <span class="m">n=1,\dots,N</span>，则该获胜地面基站被收取<strong>价格缩放因子 <span class="m">\rho</span> 与第二高报价的乘积</strong>，即支付 <span class="m">p_n</span> 可计算为
+    <div class="eq"><div class="body"><span class="M">p_n(x)=z_n(x)\cdot\rho\max\{x_{-n}\}.</span></div><span class="eqno">(32)</span></div>
+    此外，卫星的支付取决于其合约价格 <span class="m">x_0</span>，即 <span class="m">p_0(x)=z_0(x)x_0</span>。</li>
+</ul>
+
+<div class="note math">
+  <span class="tag">蓝·MSB 到底“修正”了什么</span>
+  把式 (31)(32) 与标准第二价格拍卖（SPA）对比：
+  <ul style="margin:4px 0 0">
+    <li><strong>SPA：</strong>最高价者获胜，支付第二高价。</li>
+    <li><strong>MSB：</strong>最高价者获胜的条件是 <span class="m">x_n\gt\rho\max\{x_{-n}\}</span>，且支付 <span class="m">\rho\max\{x_{-n}\}</span>。</li>
+  </ul>
+  所以 <span class="m">\rho</span> 是<strong>一道“门槛 + 加价”的双重旋钮</strong>：
+  <span class="m">\rho</span> 越大，地面基站越难赢（门槛 <span class="m">\rho\max\{x_{-n}\}</span> 越高），赢得后也付得越多；<span class="m">\rho</span> 越小则相反。
+  为什么要这道门槛：因为存在<strong>逆向选择</strong>——若不加门槛，掌握信息优势的地面基站会系统性赢下那些“实际成本高于其估计”的机会，而卫星永远拿不到机会、也无法暴露其隐藏成本。当无人跨过门槛时，机会落到卫星（云卸载），这保证了卫星的参与。
+  这一步为什么“策略防伪”：支付等于“刚好能赢的最低报价”（临界支付），竞标者如实报价与策略性报价的收益相同，故如实报价是弱占优策略。这一点是第六节要验证的核心。
+</div>
+
+<p>虽然 MSB 简单直接，但它对<strong>固定</strong>价格缩放因子 <span class="m">\rho</span> 的依赖带来了显著权衡。较低的 <span class="m">\rho</span> 会过度偏向地面站，忽视卫星的隐藏成本；而较高的 <span class="m">\rho</span> 又会过度限制地面站报价，损害整体系统效率。现有方案依赖基于历史统计信息的固定价格缩放因子 <span class="m">\rho=\max(1,\mathbb{E}[x_0]/\mathbb{E}[x_{(2)}])</span> [14]。考虑到卫星–地面网络中 LLM 智能体服务固有的<strong>动态与非平稳</strong>特性——用户需求、卫星覆盖与计算可用性都可能快速变化——单一固定的价格缩放因子 <span class="m">\rho</span> 不太可能在各时刻都保持最优，因此有必要<strong>实时自适应</strong>地确定 <span class="m">\rho</span>。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 10</span>
+  本节标题是“修正<strong>Section</strong>-Price Auction”（修正<strong>分节</strong>价格拍卖），而机制 1 叫“Modified <strong>Second</strong>-bid Auction”（修正<strong>第二价格投标</strong>）。
+  从正文与式 (31)(32) 看，机制实际做的是<strong>第二价格投标</strong>，标题里的 “Section” 疑为 “Second” 的笔误（或排版替换错误）。译文对该标题<strong>按字面直译并标注</strong>，不擅自统一。
+</div>
+
+<h3 id="sec5b">5.2　基于 DQN 的价格缩放因子</h3>
+
+<p>为利用深度强化学习确定价格缩放因子，我们把 MSB 的过程形式化为一个<strong>马尔可夫决策过程（MDP）</strong>，由状态、动作与奖励组成。在每个时间步，基于 DRL 的拍卖人观察当前状态并选择一个动作，即从可行动作空间中选择价格缩放因子。随后，拍卖人确定获胜竞标者与支付，并<strong>以总剩余作为奖励</strong>。形式上，MSB 的 MDP 可形式化如下。在拍卖过程中，多个网络运营商向拍卖人提交报价。因此，状态空间由 MSB 中的报价信息构成，即在决策时隙 <span class="m">k</span> 的 <span class="m">S_k\triangleq\{x_k\}</span>。为计算定价规则与分配规则，拍卖人需要确定价格缩放因子的水平，即 <span class="m">a_k\in\mathcal{A}\subseteq\mathbb{N}</span>。于是价格缩放因子计算为 <span class="m">\rho=10^{\,a_k/|\mathcal{A}|}</span>，其中 <span class="m">|\mathcal{A}|</span> 是动作空间大小。奖励计算为市场中取得的总剩余，即式 (30a) 中计算的 <span class="m">r_k=\mathbb{E}\left[\sum_{n=0}^{N}v_iz_i(v)\right]</span>。</p>
+
+<div class="note math">
+  <span class="tag">蓝·为什么动作空间是“离散幂次”</span>
+  <span class="m">a_k\in\mathcal{A}\subseteq\mathbb{N}</span> 是<strong>整数</strong>动作，再映射为 <span class="m">\rho=10^{\,a_k/|\mathcal{A}|}</span>。
+  这样做的原因：DQN 适用于<strong>离散有限</strong>动作集（要对每个动作算 <span class="m">Q</span> 再取 <span class="m">\arg\max</span>）；而对 <span class="m">\rho</span> 取对数尺度（<span class="m">10^{a/|\mathcal{A}|}</span>）则是因为 <span class="m">\rho</span> 的<em>相对</em>变化才有意义：
+  <span class="m">\rho</span> 从 1.01 到 1.02 与从 10 到 20 是同一量级的相对变化。若直接离散 <span class="m">\rho</span> 本身，动作空间会在小值区过疏、大值区过密。
+  这一步为什么成立：<span class="m">\rho\ge 1</span> 要求 <span class="m">a_k\ge 0</span>，与 <span class="m">\mathcal{A}\subseteq\mathbb{N}</span> 相容。
+  结论能说明什么：<span class="m">\mathcal{A}</span> 的大小直接决定 DQN 的复杂度 <span class="m">O(|\mathcal{A}|C_{net}+N)</span>——见算法 2 后的复杂度说明。
+</div>
+
+<p>基于 MSB 的 MDP，基于 DRL 的拍卖人的目标是优化一个参数为 <span class="m">\varphi</span> 的<strong>非线性函数近似</strong>（即 Q 网络），以最大化未来折扣回报 <span class="m">R_k=\sum_{k'=k}^{K}\gamma^{k'-k}r_{k'}</span>。为此，拍卖人需要学习最优动作价值函数：</p>
+
+<div class="eq"><div class="body"><span class="M">Q^\star(S,a)=\mathbb{E}_{S'}\left[r+\gamma\max_{a'}Q^\star(S',a')\,\middle|\,S,a\right],</span></div><span class="eqno">(33)</span></div>
+
+<p>其中动作 <span class="m">a'</span> 的选取使 <span class="m">r+\gamma Q^\star(S',a')</span> 的期望值最大。因此，第 <span class="m">k</span> 次迭代的目标可计算为 <span class="m">y_k=r_k+\gamma\max_{a_{k+1}}Q_{\varphi'}(S_{k+1},a_{k+1})</span>，其中 <span class="m">\varphi'</span> 是目标网络 <span class="m">Q_{\varphi'}</span> 的参数。为最小化当前 Q 值与目标之间的性能差距，损失函数可定义为</p>
+
+<div class="eq"><div class="body"><span class="M">L=\frac{1}{K}\sum_{k=1}^{K}\left(y_k-Q_\varphi(S_k,a_k)\right)^2.</span></div><span class="eqno">(34)</span></div>
+
+<div class="note math">
+  <span class="tag">蓝·式 (33)(34) 的每一层含义</span>
+  <ol style="margin:4px 0 0">
+    <li><strong>式 (33) 是贝尔曼最优方程。</strong><span class="m">\mathbb{E}_{S'}</span> 表示对“转移到哪个下一状态”取期望；<span class="m">\max_{a'}</span> 表示下一步按当前最优策略行动。它之所以成立，是因为最优价值函数必须满足“当前奖励 + 折扣后的未来最优价值”这一自洽条件。</li>
+    <li><strong>为什么要 <span class="m">\gamma</span>（折扣因子）：</strong>拍卖收益是长期累积的，且越远的收益越不确定，故按 <span class="m">\gamma^{k'-k}</span> 折算。<span class="m">\gamma\lt 1</span> 也使回报和有界、收敛性有保证。</li>
+    <li><strong>式 (34) 是均方时序差分误差。</strong><span class="m">y_k</span> 是“用目标网络算出的目标值”（<em>停止梯度</em>，视为常数），<span class="m">Q_\varphi</span> 是“当前估计”。用<strong>两套网络</strong>（<span class="m">\varphi</span> 与 <span class="m">\varphi'</span>）的原因：若用同一套网络同时产生目标与估计，更新会导致目标跟着移动，产生震荡甚至发散。</li>
+    <li><strong>结论能说明什么：</strong>式 (34) 的梯度只更新 <span class="m">\varphi</span>；<span class="m">\varphi'</span> 按“每隔若干迭代复制一次”的方式缓慢跟随。这就是 DQN 稳定训练的标准配方，也是算法 2 中“Using target network <span class="m">Q'</span>”那一行的含义。</li>
+  </ol>
+</div>
+
+<p>出于计算效率与性能稳定性的考虑，DQN 利用<strong>随机梯度下降</strong>来优化式 (34) 所计算损失上的参数 <span class="m">\varphi</span>，并在每个迭代周期更新目标网络 <span class="m">\varphi'</span>。最后，DQMSB 拍卖见算法 2。在实时拍卖中，DQMSB 机制用训练好的 Q 网络评估每个动作，并在 <span class="m">|\mathcal{A}|</span> 个动作上执行一次 <span class="m">\arg\max</span> 操作，随后对 <span class="m">N</span> 个报价做一次线性扫描以确定拍卖结果。因此，总体复杂度为 <span class="m">O(|\mathcal{A}|C_{net}+N)</span>，其中 <span class="m">C_{net}</span> 表示通过全连接网络执行单次前向传播的计算量。</p>
+
+<div class="algobox">
+  <div class="hd">算法 2　DQMSB 拍卖
+    <span class="badge warn">按矢量轮廓重建</span></div>
+  <div class="bd">
+    <div class="flag" style="margin-top:0">
+      <span class="tag">重建说明</span>
+      与算法 1 相同，本框在本 PDF 中<strong>无文本层</strong>。此重建的证据强度<strong>高于算法 1</strong>：字形解码给出的结构相当清晰（“Determine the price scaling factor <span class="m">\rho</span>”、“Store transition”、“Sample a mini-batch of experiences”、“Using target network <span class="m">Q'</span>”、“Update the network”等短语可直接读出），且与本节正文（MDP 五要素、目标网络、SGD 更新）完全吻合。不确定处仍以 <code>⟨?⟩</code> 标出。
+    </div>
+<pre class="pseudo">算法 2  DQMSB 拍卖
+
+ 1  Input : 当前报价 x_k、相关参数                      ⟨?⟩ 首行文字
+ 2  Output: 价格缩放因子 ρ、获胜者与支付
+ 3  Initialize 经验回放池 D、Q 网络 Q_φ、目标网络 Q_{φ'}
+ 4  for 每个决策时隙 k do
+ 5      Determine 价格缩放因子 ρ = 10^{a_k/|A|} 依式 (32)     ⟨?⟩ 是否引用 (32)
+ 6      Calculate 获胜报价与支付（分配 z_n 与定价 p_n）
+ 7      Observe 下一状态 S_{k+1} 与奖励 r_k
+ 8      Store transition (S_k, a_k, r_k, S_{k+1}) 到 D
+ 9      Sample 一个小批量的经验（mini-batch）自 D
+10      计算 y_k = r_k + γ max_{a_{k+1}} Q_{φ'}(S_{k+1}, a_{k+1})
+11          Using target network Q_{φ'}
+12      Update 网络 Q_φ（对式 (34) 的损失做梯度下降）
+13  end
+14  end</pre>
+    <div class="note math" style="margin-bottom:0">
+      <span class="tag">蓝·重建残差</span>
+      原文首行我读到的是 “Current price scaling factors, parameters, and related …”，按 MDP 的惯例它应是 <em>Input</em>；
+      但同一位置也读到了 “Output” 字样（第 2 行），因此第 1/2 行的<strong>“Input/Output”归类存在不确定性</strong>。
+      第 5 行是否显式写“依式 (32)”不能确证——逻辑上 <span class="m">\rho</span> 的定义来自 5.2 节正文（<span class="m">\rho=10^{a_k/|\mathcal{A}|}</span>）而非式 (32)（式 (32) 是定价），此处可能是解码串行。
+      第 3 行的 “Initialize” 在解码中为 “ιι / r” 等残片，我按 MDP 的必然组成（回放池 + 两套网络）补全，并以此标记。
+    </div>
+  </div>
+</div>
+
+<h3 id="sec5c">5.3　性质分析</h3>
+
+<p>对拍卖而言，<strong>策略防伪性</strong>意味着参与者无法通过改变其诚实报价来获得更高效用。<strong>免于逆向选择</strong>意味着市场外部性与信息不对称的存在与竞标者的估值无关。因此，需要特别指出：DQMSB 拍卖<strong>完全策略防伪且免于逆向选择</strong>，如下述定理所给。</p>
+
+<p><strong>定理 2：</strong>具有固定参数 <span class="m">\bar{\varphi}</span> 的价格缩放策略下的 DQMSB 拍卖是<strong>匿名的、完全策略防伪的、且免于逆向选择的</strong>。</p>
+
+<p><strong>证明：</strong>为证明所提出的 DQMSB 拍卖是匿名的、完全策略防伪的且免于逆向选择，该拍卖应当以一个以 <span class="m">\bar{\varphi}</span> 为条件的<strong>临界支付函数 <span class="m">\chi</span></strong> 为特征，使得：对任意竞争报价 <span class="m">x_{-n}</span>，地面基站竞标者 <span class="m">n=1,\dots,N</span> 获胜<strong>当且仅当</strong>其报价超过临界支付 <span class="m">\chi(x_{-n};\bar{\varphi})=\rho^{\,a_k/|\mathcal{A}|}\max\{x^k_{-n}\}</span>，其中 <span class="m">a_k=\arg\max_aQ(x^k_{-n}\cup\{\mathbb{E}[x_n]\},a;\bar{\varphi})</span>。随后，当地面基站竞标者 <span class="m">n</span> 在“获胜”条件下时，它需要支付临界支付 <span class="m">\chi(x_{-n};\bar{\varphi})</span>。由于 <span class="m">\rho^{\,a_k/|\mathcal{A}|}\ge 1</span>，只有报价最高的地面基站竞标者才能获胜，这可以满足 <span class="m">\chi(x_{-n};\bar{\varphi})\ge\max\{x_{-n}\}</span> 的条件。此外，DQMSB 的临界支付函数 <span class="m">\chi(x_{-n};\bar{\varphi})=\rho^{\,a_k/|\mathcal{A}|}\max\{x^k_{-n}\}</span> 满足</p>
+
+<div class="eq multi"><div class="body">
+  <span class="M">\chi(\max\{x_{-n}\};\bar{\varphi})=\rho^{\,a_k/|\mathcal{A}|}\max\{\max\{x_{-n}\}\}</span>
+  <span class="M">=\rho^{\,a_k/|\mathcal{A}|}\max\{x_{-n}\}=\chi(x_{-n};\bar{\varphi}).</span>
+</div><span class="eqno">(35)</span></div>
+
+<p>因此，考虑到市场中存在两个竞标者，其中一个的取值高于 <span class="m">\chi(x_{-n};\bar{\varphi})</span>，另一个的取值为 <span class="m">\max\{x_{-n}\}</span>，这将导致 <span class="m">\chi(\max\{x_{-n}\};\bar{\varphi})\ne\chi(x_{-n};\bar{\varphi})</span>，<strong>于是 DQMSB 拍卖无法满足防伪名（false-name proof）</strong>。具体而言，当 <span class="m">\chi(x_{-n};\bar{\varphi})\lt\chi(\max\{x_{-n}\};\bar{\varphi})</span> 时，第一个竞标者可以在保持报价集合中其他报价不变的情况下提交更低的报价，因此该拍卖<strong>不是获胜者防伪名</strong>的。反之，当 <span class="m">\chi(x_{-n};\bar{\varphi})\gt\chi(\max\{x_{-n}\};\bar{\varphi})</span> 时，市场中<strong>落败</strong>的竞标者可以在保持其他报价 <span class="m">x_{-n}</span> 不变的情况下提交高于获胜者报价的报价，因此该拍卖<strong>不是落败者防伪名</strong>的。此外，DQMSB 拍卖的临界支付函数 <span class="m">\chi</span> 是<strong>一次齐次</strong>的，这表明该拍卖免于逆向选择。假设 <span class="m">\chi</span> 不是一次齐次的，竞标者就可以通过针对其私有信息 <span class="m">C\in\{1,c\}</span> 调整报价来操纵系统，即 <span class="m">\chi(m_{-n};\bar{\varphi})\lt\chi(cm_{-n};\bar{\varphi})/c</span>，其中 <span class="m">c\in\mathbb{R}_+</span>，<span class="m">n\ge 2</span>，且 <span class="m">x_{-n}\in\mathbb{R}^{n-1}_+</span> 与 <span class="m">C=1</span>，<span class="m">z_n(Cm)=z_n(m)=\mathbf{1}\{m_n\gt\chi(m_{-n};\bar{\varphi})\}=1</span>，故 <span class="m">z_0(Cm)=0</span>。当 <span class="m">C\ne 1</span> 时，这表明竞标者可以改变其报价，从 <span class="m">C=c</span> 出发去影响获胜概率，即 <span class="m">z_n(Cm)=z_n(cm)=\mathbf{1}(cm_n\gt\chi(cm_{-n};\bar{\varphi}))=0</span>。然而，报价最高的地面基站竞标者 <span class="m">n</span> 无法赢得拍卖，于是卫星竞标者 0 赢得拍卖，即 <span class="m">z_0(Cm)=1</span>。</p>
+
+<p>基于以上分析，所提出的 DQMSB 在确定性 <span class="m">Q_{\bar{\varphi}}</span> 下能够保证匿名性、完全策略防伪性与免于逆向选择。∎</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 11（最需要留意的一处）</span>
+  <p style="margin:4px 0 0">定理 2 的证明<strong>在逻辑上自相矛盾</strong>，读者务必不要把它当作“已证毕”的完整证明：</p>
+  <ol style="margin:4px 0 0">
+    <li>式 (35) 刚推出 <span class="m">\chi(\max\{x_{-n}\};\bar{\varphi})=\chi(x_{-n};\bar{\varphi})</span>（即<strong>相等</strong>），紧接着的正文却说“这将导致 <span class="m">\chi(\max\{x_{-n}\};\bar{\varphi})\ne\chi(x_{-n};\bar{\varphi})</span>”，并据此推出“<strong>无法满足防伪名</strong>”。<strong>式 (35) 与随后的文字直接冲突。</strong></li>
+    <li>证明随后分两种情形论证“不是获胜者防伪名”“不是落败者防伪名”，即<strong>在论证“防伪名不成立”</strong>；而定理 2 的结论是“匿名、完全策略防伪、免于逆向选择”——<strong>定理并未宣称防伪名</strong>，所以这一段既没有支持结论，也没有被结论所需要。它更像是作者把“反证假设不成立”的推导片段<strong>误写成了正向叙述</strong>（例如本应写“若 <span class="m">\chi</span> 非一次齐次，则会导致 …，与一次齐次矛盾，故不成立”）。</li>
+    <li>文中写 <span class="m">\rho^{\,a_k/|\mathcal{A}|}\ge 1</span>；而 <span class="m">\rho</span> 本身已定义为 <span class="m">10^{\,a_k/|\mathcal{A}|}</span>，于是 <span class="m">\rho^{\,a_k/|\mathcal{A}|}=10^{\,a_k^2/|\mathcal{A}|^2}</span>，与式 (31)(32) 中直接使用 <span class="m">\rho</span> 的写法<strong>不自洽</strong>。合理读法是：临界支付应当是 <span class="m">\rho\max\{x_{-n}\}</span>，而“<span class="m">\rho^{\,a_k/|\mathcal{A}|}</span>”是把 <span class="m">\rho</span> 的<em>定义式</em>误代入到了使用位置。</li>
+    <li>证明中 <span class="m">Q</span> 的参数被写成 <span class="m">\bar{\varphi}</span>，而 5.2 节用 <span class="m">\varphi</span>（在线网络）与 <span class="m">\varphi'</span>（目标网络）；<span class="m">\bar{\varphi}</span> 在此首次出现且未定义。</li>
+  </ol>
+  <p style="margin:6px 0 0"><strong>结论：</strong>我认为定理 2 的<em>陈述</em>（匿名 + 策略防伪 + 免逆向选择）很可能是对的——其依据是正文最后一段给出的更可靠的论证：DQMSB <strong>只改变 <span class="m">\rho</span> 的选取，完全保留标准第二价格拍卖的分配与支付规则</strong>，因此既有的策略防伪性证明继续成立，逆向选择鲁棒性也得以保持。
+  但<strong>式 (35) 之后的那段证明文字不能作为该结论的支撑</strong>。我在译文中完整保留原文，不做改写，供你核对。</p>
+</div>
+
+<p>定理 2 把 MSB 拍卖描述为一种稳健拍卖：它是匿名的、确定性的、不易发生逆向选择的，并且完全策略防伪。需要特别注意的是，基于其他 DRL 算法的作者们<strong>可能只具备这三项性质中的任意三项</strong>（原文如此表述）。通过允许非匿名性，由 DRL 算法确定的 <span class="m">\rho</span> 取值可以随当前竞标者的报价而变化。此外，由于 DQMSB 机制<strong>只修改价格缩放因子 <span class="m">\rho</span> 的选取</strong>，而完整保留标准第二价格拍卖的分配与支付规则，因此既有的策略防伪性证明继续成立。相应地，由于基于 DQN 的方法仅调整 <span class="m">\rho</span> 而不改变底层 MSB 结构，该机制对逆向选择的固有稳健性也同样得以保持。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 12</span>
+  原文 “the authors based on other DRL algorithms may possess any three of these characteristics” 一句<strong>语义不完整</strong>：字面是“基于其他 DRL 算法的<em>作者们</em>可能具备这三项性质中的任意三项”，但“三项性质”在前文列了<strong>四项</strong>（匿名、确定性、免逆向选择、完全策略防伪），且“任意三项”应为“至多三项”（at most three）。
+  译文按字面直译并在此说明，未做语义修补。
+</div>
+
+<h2 id="sec6">第六节　实验结果</h2>
+
+<p>本节验证联合模型缓存与推理框架，同时评估所提出的最小 AoT 缓存模型替换算法与 DQMSB 拍卖的性能。</p>
+
+<h3>6.1　参数设置</h3>
+
+<p>我们考虑包含一颗卫星与多个地面基站的 SAGINs，为用户供给 LLM 智能体服务。我们在 100 个时间步内评估所提出的算法。对于地面基站边缘服务器中的每块 GPU，显存为 80 GB，能效为 810 GFLOPS/W，能量容量为 300 W。默认服务数为 10，地面基站默认 GPU 数为 24，默认用户数为 10。我们采用 ImageBind [37] 作为 LLM 智能体的多模态感知模块，其性能为：图像 77.7%、视频 50.0%、红外 63.4%、深度 54.0%、音频 66.9%、IMU 25.0%。我们考虑两类执行 CoT 推理的 LLM，包括 LLAMA-65B 与 GPT3-174B，其上下文窗口分别为 2k 与 8k token。推理 LLM 的总数设为 10。运行时服务数据轨迹的生成方式是：用随机映射把每个活跃服务（例如服务数 = 10）指派给一个固定模型，并在每个时间步用均值为“用户数 / 10”的独立泊松过程模拟请求计数（默认用户数 = 10，故 <span class="m">\lambda=1</span>）。默认上下文衰减因子 <span class="m">\Delta^t_n</span> 设为 0.6。每个 CoT 推理示例的最大规模设为 200 token。用户发射功率设为 0.2 W，分配带宽设为 20 MHz。LLM 智能体服务的输入数据量在 <span class="m">[100,200]</span> MB 中均匀选取。LLM 服务请求数量由泊松点过程生成，取决于用户数。依据现有地面基站与通信卫星的比例，卫星的边缘接入成本设为 0.005、地面基站设为 0.0001。云接入成本对地面基站设为 0.04、对卫星设为 0.025。对 LLM 智能体服务市场，基站数默认设为 5。卫星相关设置遵循 [2]，DRL 相关参数设置遵循 [38]。</p>
+
+<p>评估采用<strong>三层指标</strong>。第一层把总成本分解为切换、精度、边缘推理与云端推理四类，从而在不同负载与硬件条件下精确定位是哪些操作驱动了支出。第二层研究精度、成本与归一化性能增益随上下文因子的变化，揭示<strong>演示新鲜度与计算负载之间的权衡</strong>。第三层在不同拍卖基线下量化总剩余及其在卫星与地面基站之间的分配，从而把技术性能转化为经济福利。这三层指标共同揭示：所提出的 AoT 引导缓存与 DQMSB 拍卖如何<strong>联合</strong>改善资源使用、用户体验与运营商收益。</p>
+
+<div class="note narr">
+  <span class="tag">绿·为什么是“三层指标”</span>
+  这套指标设计本身就是一种论证策略：
+  <strong>第一层（成本分解）</strong>回答“钱花在哪”；
+  <strong>第二层（随上下文因子的曲线）</strong>回答“AoT 这个新指标真的在起作用吗”——如果 AoT 无用，那么随上下文因子变化的曲线应当与 FIFO/LFU 重合；
+  <strong>第三层（剩余分配）</strong>回答“机制设计是否让各方都获益”，尤其是卫星是否被系统性剥夺。
+  三层分别对应<em>工程成本、算法有效性、经济可行性</em>。这是本文实验部分的骨架。
+</div>
+
+<h3>6.2　最小 AoT 算法的性能评估</h3>
+
+<p>在评估所提出模型缓存算法的性能时，我们采用若干传统缓存基线作比较，包括先进先出（FIFO）与最不经常使用（LFU）算法。从图 3 可以观察到，在整个网格上，<strong>启用卫星的架构平均把总供给成本削减 41%，且在每一种单独配置下都不少于 20%</strong>；这主要是因为该架构把长途流量从拥堵的地面网关转移开，并且与本地缓存策略不同，它既不会引入切换代价，也不会引入精度代价。例如，图 3(a) 给出了不同缓存与卸载策略（A–E）在一系列时隙上的平均成本。成本被分为四类：切换成本、精度成本、边缘推理成本与云端推理成本。对所有策略而言，随着时隙数增加，平均成本都有明显下降趋势。这表明随时间推移系统可能变得更高效，原因可能是缓存优化改善了，或 LLM 智能体任务在边缘与云之间的分配更合理了。此外，图 3(b) 展示了不同缓存与卸载方案的平均总成本随服务数增加而上升。这表明当系统必须处理更多种类的服务时，相关成本随之上升，原因可能是复杂度提高与资源需求增加。最小 AoT 算法表现出一致的性能优势，在不同服务数下都保持最低的平均总成本。</p>
+
+<p>进一步地，图 3(c) 展示了不同缓存与卸载方案的平均总成本随所用 GPU 数的变化。可以看到，更多可用 GPU 往往降低成本，原因可能是边缘侧计算效率提高、处理时间缩短。切换成本与精度成本在不同 GPU 数下相对稳定，说明这些成本更依赖于<strong>算法本身的效率</strong>而非硬件资源。同时，边缘推理成本的下降指向本地处理能力的收益，凸显了边缘能力在管理 LLM 缓存中的重要性。总体而言，对大多数方案，随着 GPU 资源增加，平均总成本下降。最后，图 3(d) 展示了所有方案的平均总成本随用户数增加而上升的趋势。这表明系统成本随用户基数增长而提高，原因可能是 LLM 服务需求增加，加剧了缓存与计算资源的负载。所有方案的平均总成本都随用户增加而上升，说明用户需求对系统资源利用与成本效率有<strong>直接影响</strong>。最小 AoT 算法通过保持最低的成本增幅展现出可扩展性，表明其随用户数增长而具备成本有效地扩展的潜力。切换成本在不同用户数下相对稳定，可能意味着“在已缓存 LLM 之间切换”这一动作对成本变化贡献不显著。</p>
+
+<p class="small">（原文此处“Fig. 4(a)”与“Fig. 3(b)”的引用见疑点 13。）</p>
+
+<p>如图 4(a) 所示，随着上下文因子增大，三种算法（FIFO、LFU 与最小 AoT）的精度成本也都上升。这表明当上下文变得更具影响力——可视为缓存相关性的重要性上升——时，所有方法都更难、也更昂贵地维持缓存决策的高精度。同时，在图 3(b) 中，所有算法的性能增益都随上下文因子增大而下降。这表明随着上下文在缓存决策中的重要性上升，这些算法的性能增益下降。性能增益随上下文因子升高而整体下降，说明当上下文的相关性增加时，任何算法相对基础缓存策略的<strong>超越空间都会缩小</strong>。这可能是因为决策过程变得更复杂，而精细策略的收益变得不那么显著。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 13</span>
+  <p style="margin:4px 0 0"><strong>图号交叉引用错误（三处）：</strong></p>
+  <ul style="margin:4px 0 0">
+    <li>上文段首说“如图 <strong>4(a)</strong> 所示……精度成本上升”，但紧接着的一句却说“同时，在图 <strong>3(b)</strong> 中，性能增益下降”。而 3(b) 在上一段已被用于说明“平均总成本随服务数增加”，与“性能增益随上下文因子变化”<strong>不是同一张图</strong>。此处第二句几乎确定应为 <strong>4(b)</strong>。</li>
+    <li>图 3 的标题是“不同系统设置下模型缓存算法的性能”，但正文说图 3(a) 展示的是“不同缓存与卸载策略（<strong>A–E</strong>）”——图例中的 A–E 与正文比较的三种算法（FIFO、LFU、最小 AoT）之间的对应关系<strong>原文未给出</strong>。</li>
+    <li>6.3 节写“DQMBS 在地面基站剩余上的性能”，其中 <strong>DQMBS</strong> 是 <strong>DQMSB</strong> 的字母次序错误（同段前文用的是 DQMSB）。</li>
+  </ul>
+  <p style="margin:6px 0 0">这类问题不影响方法本身，但会让读者按图索骥时找不到对应曲线，属<strong>必须标出</strong>的衔接缺陷。</p>
+</div>
+
+<h3>6.3　收敛性分析</h3>
+
+<p>首先，我们在图 5 中展示 DQMSB 拍卖的收敛性能。训练初期，DQMSB 拍卖取得的总剩余先急剧上升，随后趋于平缓，表明该机制很快学到了最大化剩余的有效策略，然后收敛到稳定解。约在第 200 个 epoch，总剩余稳定在较高水平。尽管在此上升之后存在小幅波动，剩余仍保持相对一致，表明系统在学习阶段已达成收敛。有趣的是，DQMBS 在地面基站剩余上的性能可以达到与 SPA 相近的水平，约为 3,000。这表明 SPA 能够实现卫星的剩余，对最优解而言可达约 4,500。此外，DQMSB 拍卖取得的总剩余<strong>比 MSB 拍卖高出约 20%</strong>。DQMSB 拍卖的收敛性能可认为是持续稳健的，因为它相对基线取得并保持了更高的总剩余。</p>
+
+<div class="flag">
+  <span class="tag">琥珀·疑点 14</span>
+  摘要宣称 DQMSB “可将分配效率提升 <strong>23%</strong>”，而 6.3 节报告的是“总剩余比 MSB 拍卖<strong>高出约 20%</strong>”。
+  <strong>23% 与 20% 不一致</strong>，且两处说的到底是“分配效率（allocation efficiency）”还是“总剩余（total surplus）”，原文没有明确区分这两个度量。
+  此外，6.3 节说“SPA 能实现卫星的剩余，对最优解而言可达约 4,500”，同时又说“DQMBS 在地面基站剩余上可达与 SPA 相近的水平，约 3,000”——这两句里的“3,000 / 4,500”分别指地面基站与卫星，但句式容易误读为同一主体的两个数值。译文按原文句式保留。
+</div>
+
+<h3>6.4　DQMSB 拍卖的性能评估</h3>
+
+<p>为评估 DQMSB 拍卖的性能，我们采用若干拍卖基线，包括第二价格拍卖（SPA）、短视 MSB（myopic MSB）与最优 MSB（optimal MSB）。特别地，短视 MSB 的价格缩放因子设为 <span class="m">\rho=\max(1,x_0/x_{(2)})</span>（使用当前轮次信息），而最优 MSB 的价格缩放因子设为 <span class="m">\rho=\max(1,\mathbb{E}[x_0]/\mathbb{E}[x_{(2)}])</span>（使用历史统计信息）[14]。</p>
+
+<p>在不同竞标者数量下，图 6(a) 展示了各类拍卖机制依据地面基站数取得的总剩余。在所有拍卖机制中，当地面基站数从 3 增至 7 时，总剩余都增加。这表明更多地面基站能带来更好的服务供给与覆盖，从而使拍卖产生的总体价值更高。<strong>无论地面基站数量如何，DQMSB 拍卖始终取得最高的总剩余。</strong>这表明相比其他拍卖类型，DQMSB 拍卖在资源分配与剩余生成上更高效。短视 MSB 与最优 MSB 拍卖优于 SPA，但不及 DQMSB 拍卖达到的性能。</p>
+
+<p>从图 6(b) 可以观察到，总剩余并不随服务数单调递增或递减。例如，当服务数从 10 变到 12 时，所有机制的总剩余都出现下降；随后在 14 个服务时回升，在 16 时再次下降，在 18 时又上升。在多数情况下，来自地面基站服务的剩余大于来自卫星服务的剩余。这种<strong>非线性关系</strong>意味着：单纯增加服务数量并不能保证更高的剩余。</p>
+
+<p>在图 6(c) 中，随着 GPU 数增加，所有拍卖的总剩余总体呈上升趋势。其他机制的剩余也趋于上升，尽管不如 DQMSB 拍卖那样一致或显著。对所有拍卖机制与所有 GPU 数量而言，地面基站剩余都主导着总剩余。然而，随着 GPU 数增加，卫星剩余也随之增加，表明计算资源与卫星侧服务产生剩余的能力之间存在正向关系。总剩余随 GPU 数增加而上升的趋势意味着：拥有更多计算资源能让拍卖机制（尤其是 DQMSB）表现更好。最后，图 6(d) 展示了所有拍卖机制的总剩余随用户数增加而上升的趋势，这表明更多用户带来更高的估值与更激烈的竞争，从而提升总剩余。当用户数增加时，DQMSB 拍卖能从地面基站产生更大剩余，从而限制了可被有效分配以最大化总剩余的计算与通信资源。</p>
+
+<div class="note narr">
+  <span class="tag">绿·读图提示</span>
+  三张图各讲一件事，别混：
+  <strong>图 5</strong> = “学得会吗”（收敛性，横轴是训练 epoch）；
+  <strong>图 6(a)(c)(d)</strong> = “随规模变大还成立吗”（横轴分别是地面基站数、GPU 数、用户数，纵轴是总剩余）；
+  <strong>图 6(b)</strong> = “服务数不是越多越好”（非单调，这是全文少见的“反直觉”结论，作者据此说明系统存在<em>内部资源竞争</em>：服务越多，每个服务分到的缓存/算力越少，剩余反而可能下降）。
+</div>
+
+<h2 id="sec7">第七节　结论</h2>
+
+<p>本文提出了一个面向 SAGINs 中泛在边缘智能服务供给的<strong>联合缓存与推理框架</strong>。在 SAGINs 中，利用卫星与地面基站，通过地面基站的边缘服务器或远程云数据中心来供给全球范围的 LLM 智能体服务。具体而言，考虑到 LLM 独特的少样本学习能力以及上下文窗口规模带来的新约束，我们引入了一个新概念——<strong>缓存模型即资源</strong>，它超越了传统的通信、计算与存储资源。为分配缓存模型资源，我们设计了一个新指标——<strong>思维年龄（AoT）</strong>，用于评估推理过程中上下文窗口里思维/CoT 示例的相关性与一致性，并提出了<strong>最小 AoT 算法</strong>。最后，我们提出 <strong>DQMSB</strong>，通过基于 DQN 的价格缩放因子，激励网络运营商以高市场效率供给 LLM 智能体。在理论上，我们证明了所提出的 DQMSB 拍卖是匿名的、完全策略防伪的、且免于逆向选择的。</p>
+
+<p>未来工作将包括构建原型平台并实现有代表性的 LLM 智能体应用，从而持续收集通信与计算轨迹，以支撑真实场景下的实证验证。此外，我们将扩展指标集合，纳入能耗、碳排放、按服务公平性与端到端时延分布，并利用<strong>硬件在环</strong>原型在更大规模上进行实证验证。</p>
+
+<div class="note narr">
+  <span class="tag">绿·作者自陈的边界</span>
+  结论段最后两句其实承认了本文的主要局限：<strong>所有结果都来自仿真，没有原型与真实轨迹</strong>。
+  对照摘要中“提升 23%”这类量化声明，读者应当清楚：这些数字来自参数化仿真（见 6.1 节），而非实测部署。译文保留作者的措辞，此处仅作提示。
+</div>
+
+<h2 id="refs">参考文献</h2>
+
+<p class="small">参考文献按原文编号照录（不翻译题名，便于与原文逐条比对）。</p>
+
+<ol class="small">
+  <li>J. Liu, Y. Shi, Z. M. Fadlullah, and N. Kato, “Space-air-ground integrated network: A survey,” <em>IEEE Commun. Surveys Tut.</em>, vol. 20, no. 4, pp. 2714–2741, 4th Quart., 2018.</li>
+  <li>Q. Tang, Z. Fei, B. Li, and Z. Han, “Computation offloading in LEO satellite networks with hybrid cloud and edge computing,” <em>IEEE Internet Things J.</em>, vol. 8, no. 11, pp. 9164–9176, Jun. 2021.</li>
+  <li>T. Wei, W. Feng, Y. Chen, C.-X. Wang, N. Ge, and J. Lu, “Hybrid satellite-terrestrial communication networks for the maritime Internet of Things: Key technologies, opportunities, and challenges,” <em>IEEE Internet Things J.</em>, vol. 8, no. 11, pp. 8910–8934, Jun. 2021.</li>
+  <li>B. Min et al., “Recent advances in natural language processing via large pre-trained language models: A survey,” <em>ACM Comput. Surv.</em>, vol. 56, no. 2, pp. 1–40, Sep. 2023.</li>
+  <li>M. Xu et al., “Sparks of generative pretrained transformers in edge intelligence for the metaverse: Caching and inference for mobile artificial intelligence-generated content services,” <em>IEEE Veh. Technol. Mag.</em>, vol. 18, no. 4, pp. 35–44, Dec. 2023.</li>
+  <li>M. Xu et al., “When large language model agents meet 6G networks: Perception, grounding, and alignment,” 2024, arXiv:2401.07764.</li>
+  <li>Z. Xi et al., “The rise and potential of large language model based agents: A survey,” 2023, arXiv:2309.07864.</li>
+  <li>T. B. Brown et al., “Language models are few-shot learners,” in <em>Proc. NIPS</em>, vol. 33, 2020, pp. 1877–1901.</li>
+  <li>H. Yang, M. Siew, and C. Joe-Wong, “An LLM-based digital twin for optimizing human-in-the loop systems,” 2024, arXiv:2403.16809.</li>
+  <li>S. Jiang and J. Wu, “Approaching an optimal Bitcoin mining overlay,” <em>IEEE/ACM Trans. Netw.</em>, vol. 31, no. 5, pp. 2013–2026, Oct. 2023.</li>
+  <li>M. Xu et al., “Unleashing the power of edge-cloud generative AI in mobile networks: A survey of AIGC services,” <em>IEEE Commun. Surveys Tut.</em>, vol. 26, no. 2, pp. 1127–1170, 2nd Quart., 2024.</li>
+  <li>C. Packer et al., “MemGPT: Towards LLMs as operating systems,” 2023, arXiv:2310.08560.</li>
+  <li>J. Yang, “LongQLoRA: Efficient and effective method to extend context length of large language models,” 2023, arXiv:2311.04879.</li>
+  <li>N. Arnosti, M. Beck, and P. Milgrom, “Adverse selection and auction design for internet display advertising,” <em>Amer. Econ. Rev.</em>, vol. 106, no. 10, pp. 2852–2866, Oct. 2016.</li>
+  <li>X. Xu, Q. Wang, Y. Hou, and S. Wang, “AI-SPACE: A cloud-edge aggregated artificial intelligent architecture for tiansuan constellation-assisted space-terrestrial integrated networks,” <em>IEEE Netw.</em>, vol. 37, no. 2, pp. 22–28, Mar. 2023.</li>
+  <li>X. Hou, J. Wang, Z. Fang, Y. Ren, K.-C. Chen, and L. Hanzo, “Edge intelligence for mission-critical 6G services in space-air-ground integrated networks,” <em>IEEE Netw.</em>, vol. 36, no. 2, pp. 181–189, Mar. 2022.</li>
+  <li>P. Qin, M. Wang, X. Zhao, and S. Geng, “Content service oriented resource allocation for space–air–ground integrated 6G networks: A three-sided cyclic matching approach,” <em>IEEE Internet Things J.</em>, vol. 10, no. 1, pp. 828–839, Jan. 2023.</li>
+  <li>Z. Chen, Z. Zhang, and Z. Yang, “Big AI models for 6G wireless networks: Opportunities, challenges, and research directions,” 2023, arXiv:2308.06250.</li>
+  <li>Y. Shen et al., “Large language models empowered autonomous edge AI for connected intelligence,” <em>IEEE Commun. Mag.</em>, vol. 62, no. 10, pp. 1–7, Oct. 2024.</li>
+  <li>Y. Du, H. Deng, S. Chang Liew, K. Chen, Y. Shao, and H. Chen, “The power of large language models for wireless communication system development: A case study on FPGA platforms,” 2023, arXiv:2307.07319.</li>
+  <li>H. Cui, Y. Du, Q. Yang, Y. Shao, and S. Chang Liew, “LLMind: Orchestrating AI and IoT with LLM for complex task execution,” 2023, arXiv:2312.09007.</li>
+  <li>F. Jiang et al., “Large language model enhanced multi-agent systems for 6G communications,” 2023, arXiv:2312.07850.</li>
+  <li>L. Dong et al., “LAMBO: Large AI model empowered edge intelligence,” 2023, arXiv:2308.15078.</li>
+  <li>Z. Lin, G. Qu, Q. Chen, X. Chen, Z. Chen, and K. Huang, “Pushing large language models to the 6G edge: Vision, challenges, and opportunities,” 2023, arXiv:2309.16739.</li>
+  <li>M. Zhang, L. Yang, S. He, M. Li, and J. Zhang, “Privacy-preserving data aggregation for mobile crowdsensing with externality: An auction approach,” <em>IEEE/ACM Trans. Netw.</em>, vol. 29, no. 3, pp. 1046–1059, Jun. 2021.</li>
+  <li>D. Niyato, N. C. Luong, P. Wang, and Z. Han, <em>Auction Theory for Computer Networks</em>. Cambridge, U.K.: Cambridge Univ. Press, 2020.</li>
+  <li>J. Du, C. Jiang, H. Zhang, Y. Ren, and M. Guizani, “Auction design and analysis for SDN-based traffic offloading in hybrid satellite-terrestrial networks,” <em>IEEE J. Sel. Areas Commun.</em>, vol. 36, no. 10, pp. 2202–2217, Oct. 2018.</li>
+  <li>Q. Chen, W. Meng, S. Han, and C. Li, “Service-oriented fair resource allocation and auction for civil aircrafts augmented space-air-ground integrated networks,” <em>IEEE Trans. Veh. Technol.</em>, vol. 69, no. 11, pp. 13658–13672, Nov. 2020.</li>
+  <li>N. Yang, D. Guo, Y. Jiao, G. Ding, and T. Qu, “Lightweight blockchain-based secure spectrum sharing in space–air–ground-integrated IoT network,” <em>IEEE Internet Things J.</em>, vol. 10, no. 23, pp. 20511–20527, Dec. 2023.</li>
+  <li>R. Deng, B. Di, S. Chen, S. Sun, and L. Song, “Ultra-dense LEO satellite offloading for terrestrial networks: How much to pay the satellite operator?,” <em>IEEE Trans. Wireless Commun.</em>, vol. 19, no. 10, pp. 6240–6254, Oct. 2020.</li>
+  <li>N. Cheng et al., “Space/aerial-assisted computing offloading for IoT applications: A learning-based approach,” <em>IEEE J. Sel. Areas Commun.</em>, vol. 37, no. 5, pp. 1117–1129, May 2019.</li>
+  <li>Z. Zhang et al., “Igniting language intelligence: The Hitchhiker’s guide from chain-of-thought reasoning to language agents,” 2023, arXiv:2311.11797.</li>
+  <li>H. Jiang, “A latent space theory for emergent abilities in large language models,” 2023, arXiv:2304.09960.</li>
+  <li>R. Tutunov, A. Grosnit, J. Ziomek, J. Wang, and H. Bou-Ammar, “Why can large language models generate correct chain-of-thoughts?,” 2023, arXiv:2310.13571.</li>
+  <li>D. Dai et al., “Why can GPT learn in-context? Language models secretly perform gradient descent as meta-optimizers,” in <em>Proc. Findings Assoc. Comput. Linguistics (ACL)</em>, Toronto, ON, Canada, Jul. 2023, pp. 4005–4019.</li>
+  <li>K. Zhao et al., “EdgeAdaptor: Online configuration adaption, model selection and resource provisioning for edge DNN inference serving at scale,” <em>IEEE Trans. Mobile Comput.</em>, vol. 22, no. 10, pp. 5870–5886, Oct. 2023.</li>
+  <li>R. Girdhar et al., “ImageBind one embedding space to bind them all,” in <em>Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR)</em>, Los Alamitos, CA, USA, Jun. 2023, pp. 15180–15190.</li>
+  <li>J. Weng et al., “Tianshou: A highly modularized deep reinforcement learning library,” <em>J. Mach. Learn. Res.</em>, vol. 23, no. 1, pp. 12275–12280, Jan. 2022.</li>
+</ol>
+
+<h2 id="deepdive">附录 A　算法由浅入深讲解（重点）</h2>
+
+<div class="note narr">
+  <span class="tag">绿·先纠正一个前提</span>
+  本论文只有 <strong>两个算法</strong>：算法 1（Least AoT 缓存替换）与算法 2（DQMSB 拍卖）。
+  它们分别解决<strong>两个不同时间尺度</strong>上的问题，这一点是理解全文的钥匙：
+  <ul style="margin:6px 0 0">
+    <li><strong>算法 1（分钟级）</strong>解决“<em>显存里放哪些模型</em>”——慢变量，由上下文窗口耗尽的节奏驱动。</li>
+    <li><strong>算法 2（每批请求级）</strong>解决“<em>这批请求该给谁做、按什么价</em>”——快变量，由请求到达驱动。</li>
+  </ul>
+  原文 4.3 节末句明确写了这两个时间尺度（“每隔几分钟触发”/“针对每一批到达的服务请求执行”）。<strong>把两者混成一件事，是理解本文最常见的错误。</strong>
+</div>
+
+<h3>A.1　第 0 层：先建立直觉（不写一个公式）</h3>
+
+<p>想象一个海上的边缘机房，里面有 24 块 GPU（80 GB/块），但公司总共有 10 个不同的大模型要用。问题很朴素：</p>
+<ol>
+  <li><strong>显存不够，装不下全部模型。</strong>于是必须决定“现在装哪几个”。——这就是式 (3) 的约束。</li>
+  <li><strong>模型不是装上去就完事。</strong>每次它回答一个问题，上下文窗口里就多积累一些 token（推理痕迹）。窗口是有限的（LLAMA-65B 只有 2k token），满了之后回答质量<strong>明显下降</strong>。——这就是式 (28c) 的约束与 AoT 指标要刻画的现象。</li>
+  <li><strong>所以“装哪几个”不是看模型大小，而是看“哪个模型现在还有用”</strong>——具体说，是看它窗口里积累的思维还“新鲜”不新鲜。这就是 AoT。</li>
+  <li>另一方面，机房之外还有一颗卫星可以兜底（把请求转发到云上）。但卫星自己<strong>看不见</strong>实时的资源消耗，所以它和地面基站谈判时处于信息劣势。如果直接把活儿派给报价最高的，长期下来卫星会被系统性地“坑”，市场效率变差。<strong>于是需要一个带“门槛”的拍卖</strong>，而且门槛还要随行情实时变化。这就是 DQMSB。</li>
+</ol>
+
+<div class="note narr">
+  <span class="tag">绿·类比</span>
+  <strong>算法 1 像“冰箱清库存”</strong>：冰箱容量固定，新买的菜（新请求的模型）要放进去，就得先扔掉最不值得留的——判断标准不是“什么时候买的”（那是 FIFO），也不是“用过几次”（那是 LFU），而是<strong>“还新不新鲜、还能不能吃”</strong>（这就是 AoT）。
+  <br><strong>算法 2 像“竞价接单 + 起拍价”</strong>：活儿只有一份，谁出价高给谁——但不能只看绝对出价，还要乘一个“行情系数”<span class="m">\rho</span>；<span class="m">\rho</span> 太低会让有信息优势的一方总是赢（不公平），太高又会让大家都赢不了、活儿只能给兜底方（低效）。这个 <span class="m">\rho</span> 由强化学习来试错找最优。
+</div>
+
+<h3>A.2　第 1 层：算法 1 逐步讲解（最小 AoT 缓存替换）</h3>
+
+<p><strong>它要做什么：</strong>在每个决策时隙，维护“哪些模型被缓存”（<span class="m">\mathbf{a}^t</span>），使得被缓存模型的 AoT 分数总和最大（式 (29a)），同时不超出显存（式 (3)）与能耗（式 (5)）限制。</p>
+
+<h4>逐行读法</h4>
+<table>
+  <thead><tr><th>行</th><th>在做什么</th><th>为什么必须这么做</th></tr></thead>
+  <tbody>
+    <tr><td>1–2（Input / Output）</td><td>输入：缓存状态 <span class="m">\mathbf{a}^t</span>、上下文状态 <span class="m">\kappa^t</span>、请求 <span class="m">R^t</span>、显存上限 <span class="m">G_n</span>、能耗上限 <span class="m">E_n</span>；输出：缓存与卸载决策</td><td>算法只做<strong>决策</strong>，不碰模型前向推理。这正是原文强调“无需修改 LLM 推理过程”的体现。</td></tr>
+    <tr><td>3</td><td>初始化：什么都没缓存（<span class="m">\mathbf{a}^t_n=\mathbf{0}</span>、<span class="m">\mathbf{b}^t_n=\mathbf{0}</span>）</td><td>空缓存是唯一的无偏初始状态：此时不需要假设任何模型的先验价值。</td></tr>
+    <tr><td>4</td><td>对每个时隙 <span class="m">t</span> 循环</td><td>模型缓存是<strong>在线</strong>问题，必须逐时隙决策。</td></tr>
+    <tr><td>5–7</td><td>若该模型上一时隙已缓存（<span class="m">a^{t-1}=1</span>）且本时隙有请求（<span class="m">R^t\gt 0</span>），则保持缓存</td><td><strong>先保留已在显存里的模型</strong>：因为切换（加载/淘汰）本身有成本（式 (21) 的 <span class="m">\lambda</span>），能不换就不换。</td></tr>
+    <tr><td>8–11</td><td>否则若<strong>显存够用</strong>（<span class="m">G^t_n+s_m\le G_n</span>），直接加载：<span class="m">a^t\leftarrow 1</span>，并更新可用显存 <span class="m">G^t_n\leftarrow G^t_n+s_m</span></td><td>这是“免费”路径——不淘汰任何模型就能满足新需求，显然最优。</td></tr>
+    <tr><td>13–17</td><td><strong>显存不够时</strong>：反复找出 AoT 最小的已缓存模型 <span class="m">m'</span> 并淘汰（<span class="m">a^t_{n,i,m'}\leftarrow 0</span>），每次释放 <span class="m">s_{m'}</span>，直到腾出足够空间</td><td><strong>这是算法的心脏。</strong>“淘汰 AoT 最小者”直接对应式 (29a) 的目标 <span class="m">\max\sum\kappa</span>：要从缓存集合中移除一个模型以腾出空间，移除哪个能让剩余集合的 <span class="m">\sum\kappa</span> 最大？答案就是移除 <span class="m">\kappa</span> 最小（AoT 最低）的那个。这是<strong>贪心</strong>，不是全局最优，但在“只淘汰一个”的场景下它就是最优的。</td></tr>
+    <tr><td>18–21</td><td>腾出空间后再确认一次 <span class="m">G^t_n+s_m\le G_n</span>，满足则加载并更新显存</td><td>防止 while 循环因为碎片或异常条件退出时仍然加载失败。</td></tr>
+    <tr><td>23–26</td><td>若该模型本时隙刚被加载（<span class="m">a^t=1</span> 且 <span class="m">a^{t-1}=0</span>），做相应记账</td><td>新加载意味着一次切换，需与式 (21) 的切换成本保持一致。</td></tr>
+    <tr><td>27</td><td><strong>按式 (19) 更新上下文状态 <span class="m">\kappa^t</span></strong></td><td>这一步让 AoT 随时间演化：加上本时隙新增的思维量 <span class="m">\delta^t</span>，减去因陈旧而衰减的 <span class="m">\Delta^t</span>，并截断在 0 以上。</td></tr>
+    <tr><td>28–34</td><td>若缓存成功<strong>且能耗仍有余量</strong>，则在本地执行（<span class="m">b^t\leftarrow 0</span>，即不卸载）并记账能耗；否则卸载到云（<span class="m">b^t\leftarrow 1</span>）</td><td>这实现式 (5) 的能耗约束：能耗不够就<strong>把请求推给云</strong>。注意这里 <span class="m">b</span> 的含义是“卸载比例”，<span class="m">b=0</span> 表示全部本地执行。</td></tr>
+    <tr><td>36–37</td><td>结束循环</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h4>为什么“淘汰 AoT 最小”是正确的</h4>
+<div class="note math">
+  <span class="tag">蓝·推导</span>
+  <p style="margin:4px 0 0">设在时刻 <span class="m">t</span> 已缓存的模型集合为 <span class="m">\mathcal{C}</span>，式 (29a) 的目标是 <span class="m">\max_{\mathbf{a}^t}\sum_{i\in\mathcal{I}}\sum_{m\in\mathcal{M}}\kappa^t_{n,i,m}</span>。
+  现在必须从 <span class="m">\mathcal{C}</span> 中移除至少一个模型以腾出 <span class="m">s_{m^\ast}</span> 的显存。</p>
+  <ul style="margin:6px 0 0">
+    <li><strong>假设：</strong>只需移除一个模型 <span class="m">m'</span> 即可满足 <span class="m">G^t_n+s_{m^\ast}\le G_n</span>。</li>
+    <li><strong>目标变为：</strong>选择 <span class="m">m'</span> 使 <span class="m">\sum_{m\in\mathcal{C}\setminus\{m'\}}\kappa_m</span> 最大。</li>
+    <li>由于 <span class="m">\sum_{m\in\mathcal{C}}\kappa_m</span> 是常数，最大化剩余和<strong>等价于</strong>最小化被移除项 <span class="m">\kappa_{m'}</span>。</li>
+    <li><strong>故最优选择是 <span class="m">m'=\arg\min_{m\in\mathcal{C}}\kappa_m</span></strong>——正是算法第 14 行。这一步不需要任何近似假设，是<strong>精确</strong>的（在“只淘汰一个”的前提下）。</li>
+    <li>若需淘汰多个（第 13 行的 while 会多次迭代），则每次重新求最小 = 贪心。<strong>贪心对“移除 k 个使剩余和最大”这个问题也是最优的</strong>，因为该问题是“从集合中删掉 k 个最小元素”，可用交换论证证明。所以算法 1 的淘汰规则在式 (29a) 的目标下是<em>最优</em>的，而非启发式的。</li>
+  </ul>
+  <p style="margin:6px 0 0"><strong>但要注意：</strong>这只说明“给定 <span class="m">\kappa^t</span> 的淘汰是最优的”，并<em>不</em>说明“整个缓存决策是全局最优的”——因为 <span class="m">\kappa^t</span> 本身依赖历史决策（式 (19) 是递推的），而算法 1 只看当前 <span class="m">\kappa^t</span>，属于<strong>短视（myopic）策略</strong>。原文的复杂度声明 <span class="m">O(M)</span> 也正是这种短视换来的。</p>
+</div>
+
+<h4>复杂度为什么是 <span class="m">O(M)</span></h4>
+<div class="note math">
+  <span class="tag">蓝·推导</span>
+  每个决策时隙：第 14 行找最小 AoT 需要扫描 <span class="m">M</span> 个模型一次，得到 <span class="m">O(M)</span>；while 循环最多执行 <span class="m">M</span> 次（每次至少淘汰一个模型），故总代价 <span class="m">O(M^2)</span>？
+  <strong>不是</strong>——原文声明的是 <span class="m">O(M)</span>。原因在于：一次决策时隙内，<strong>实际需要腾出的显存对应的模型数是常数级</strong>（通常只需淘汰 1 个），因此均摊为 <span class="m">O(M)</span>。
+  原文措辞是“时间与内存复杂度为 <span class="m">O(M)</span>”，其中内存 <span class="m">O(M)</span> 是显然的（只需为每个模型存两个整数计数器，见 3.4 节末段）。
+  <strong>这里需要留意：</strong>最坏情况下（例如新模型极大、必须淘汰很多个小模型）复杂度会退化为 <span class="m">O(M^2)</span>。原文只给了 <span class="m">O(M)</span> 而未讨论最坏情况，这在算法类论文中是应当补上的分析。
+</div>
+
+<h4>容易踩的三个坑</h4>
+<ol>
+  <li><strong>把 <span class="m">\kappa</span>（AoT）当成 <span class="m">K</span>（累计思维量）。</strong>两者只差一个衰减项 <span class="m">\Delta^t</span>（式 (18) vs 式 (19)），但语义完全不同：<span class="m">K</span> 只增不减，<span class="m">\kappa</span> 可增可减且截断在 0。淘汰用的是 <span class="m">\kappa</span>。</li>
+  <li><strong>把 <span class="m">b</span> 的方向搞反。</strong><span class="m">b</span> 是<em>卸载比例</em>，所以“本地执行比例”是 <span class="m">(1-b)</span>，能耗与计算量都用 <span class="m">(1-b)</span>（式 (5)(23)(24)），只有传输与云端成本用 <span class="m">b</span>（式 (22)(26)）。</li>
+  <li><strong>以为算法 1 会“优化”模型选择。</strong>它只做“够不够装 → 不够就扔最不新鲜的那个”。如果显存从一开始就够，它<strong>完全不淘汰</strong>（走第 8–11 行）。</li>
+</ol>
+
+<h3>A.3　第 1 层：算法 2 逐步讲解（DQMSB 拍卖）</h3>
+
+<p><strong>它要做什么：</strong>在每一批服务请求到达时，决定“把这次机会分配给哪个网络运营商、收多少钱”，其中分配与定价规则是<strong>固定的 MSB 形式</strong>（式 (31)(32)），唯一的学习对象是价格缩放因子 <span class="m">\rho</span>。</p>
+
+<h4>逐行读法</h4>
+<table>
+  <thead><tr><th>行</th><th>在做什么</th><th>为什么必须这么做</th></tr></thead>
+  <tbody>
+    <tr><td>1–2</td><td>输入当前报价与参数；输出 <span class="m">\rho</span>、获胜者与支付</td><td>注意输出的核心是 <span class="m">\rho</span>——机制结构不变，只学一个标量。</td></tr>
+    <tr><td>3</td><td>初始化经验回放池 <span class="m">D</span>、在线网络 <span class="m">Q_\varphi</span>、目标网络 <span class="m">Q_{\varphi'}</span></td><td>回放池打破样本时间相关性；双网络抑制“目标跟着估计跑”的震荡（见 5.2 节蓝色推导）。</td></tr>
+    <tr><td>4</td><td>对每个决策时隙 <span class="m">k</span> 循环</td><td>拍卖是<strong>在线重复</strong>的，每轮都要出价—分配—反馈。</td></tr>
+    <tr><td>5</td><td>由动作 <span class="m">a_k</span> 确定价格缩放因子 <span class="m">\rho=10^{\,a_k/|\mathcal{A}|}</span></td><td>这是 DQN 的“动作”落地成机制参数的唯一接口。<span class="m">\rho\ge 1</span> 保证门槛不会低于第二高价。</td></tr>
+    <tr><td>6</td><td>计算获胜报价与支付（分配 <span class="m">z_n</span>、定价 <span class="m">p_n</span>）</td><td>直接用式 (31)(32) 的确定性规则，没有随机性——这保证了定理 2 所说的“确定性机制”。</td></tr>
+    <tr><td>7</td><td>观测下一状态 <span class="m">S_{k+1}</span> 与奖励 <span class="m">r_k</span></td><td>奖励是<strong>总剩余</strong>（式 (30a)），即机制追求的经济目标；状态是报价信息 <span class="m">S_k=\{x_k\}</span>。</td></tr>
+    <tr><td>8</td><td>把转移 <span class="m">(S_k,a_k,r_k,S_{k+1})</span> 存入 <span class="m">D</span></td><td>经验回放是 DQN 的标准组件，用于稳定训练。</td></tr>
+    <tr><td>9</td><td>从 <span class="m">D</span> 采样一个小批量经验</td><td>用历史数据估计梯度，避免只用最近一条样本导致高方差。</td></tr>
+    <tr><td>10–11</td><td>用<strong>目标网络</strong> <span class="m">Q_{\varphi'}</span> 计算 <span class="m">y_k=r_k+\gamma\max_{a_{k+1}}Q_{\varphi'}(S_{k+1},a_{k+1})</span></td><td>式 (33) 贝尔曼最优方程的采样实现。<span class="m">\gamma</span> 是折扣因子。</td></tr>
+    <tr><td>12</td><td class=""><strong>更新网络</strong> <span class="m">Q_\varphi</span>（对式 (34) 的均方 TD 误差做梯度下降）</td><td>只更新在线网络；目标网络按周期复制。这一步是“学习”发生的地方。</td></tr>
+    <tr><td>13–14</td><td>结束循环</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="note math">
+  <span class="tag">蓝·为什么不能把 <span class="m">\rho</span> 固定住</span>
+  <p style="margin:4px 0 0">原文给了两个基线，恰好说明了固定的问题：</p>
+  <ul style="margin:6px 0 0">
+    <li><strong>短视 MSB：</strong><span class="m">\rho=\max(1,x_0/x_{(2)})</span>——只看<em>当前轮</em>的报价。缺点：单轮报价含噪声，<span class="m">\rho</span> 抖动大。</li>
+    <li><strong>最优 MSB：</strong><span class="m">\rho=\max(1,\mathbb{E}[x_0]/\mathbb{E}[x_{(2)}])</span>——用<em>历史统计</em>。缺点：把非平稳过程当成平稳的；一旦用户需求/卫星覆盖/算力可用性变化，历史均值就过时了。</li>
+    <li><strong>DQMSB：</strong>让 <span class="m">\rho</span> 成为<em>状态的函数</em>——<span class="m">\rho</span> 由 <span class="m">Q(S_k,\cdot)</span> 在当前报价 <span class="m">S_k=\{x_k\}</span> 上取 <span class="m">\arg\max</span> 得到，因此<strong>随行情自适应</strong>。这就是 6.4 节里 DQMSB 稳定优于两个基线的机制性原因。</li>
+  </ul>
+  <p style="margin:6px 0 0"><strong>代价（务必记住）：</strong>训练 DQN 需要历史数据与离线训练；原文说 DQN 权重“离线重训、每日刷新”，也就是说<strong>它并非在每个时隙都重新学习</strong>。这与算法 1 的分钟级触发是两个不同频率的回路。</p>
+</div>
+
+<h4>复杂度 <span class="m">O(|\mathcal{A}|C_{net}+N)</span> 是怎么来的</h4>
+<div class="note math">
+  <span class="tag">蓝·推导</span>
+  实时拍卖时对每个候选动作计算 <span class="m">Q</span>：<span class="m">|\mathcal{A}|</span> 个动作 × 每次前向传播 <span class="m">C_{net}</span> → <span class="m">O(|\mathcal{A}|C_{net})</span>；
+  随后在 <span class="m">N</span> 个报价上做一次线性扫描（找最高与次高）→ <span class="m">O(N)</span>。
+  合计 <span class="m">O(|\mathcal{A}|C_{net}+N)</span>。
+  <strong>含义：</strong>该复杂度与模型数量 <span class="m">M</span> 无关。这正是把“学习”限制在一个标量 <span class="m">\rho</span> 上、而不去学整个机制的好处——机制部分保持 <span class="m">O(N)</span>，学习部分规模由动作空间大小决定。
+</div>
+
+<h3>A.4　两个算法如何协同（关键，也是最容易忽略的地方）</h3>
+
+<table>
+  <thead><tr><th></th><th>算法 1（Least AoT）</th><th>算法 2（DQMSB）</th></tr></thead>
+  <tbody>
+    <tr><td>决策对象</td><td>缓存哪些模型 <span class="m">\mathbf{a}^t</span>、卸载比例 <span class="m">\mathbf{b}^t</span></td><td>价格缩放因子 <span class="m">\rho</span>（进而决定分配 <span class="m">z</span> 与支付 <span class="m">p</span>）</td></tr>
+    <tr><td>时间尺度</td><td>分钟级（上下文窗口耗尽 / 需求迁移时触发）</td><td>每批服务请求（快得多）</td></tr>
+    <tr><td>优化目标</td><td>最大化已缓存模型的 AoT 总和（式 29a），即<strong>成本最小化</strong>的代理</td><td>最大化总剩余（式 30a），即<strong>经济效率</strong></td></tr>
+    <tr><td>方法</td><td>贪心 + 双阶段分解（先 (29a) 再 (28a)）</td><td>DQN 学 <span class="m">\rho</span>，机制结构固定为 MSB</td></tr>
+    <tr><td>复杂度</td><td><span class="m">O(M)</span></td><td><span class="m">O(|\mathcal{A}|C_{net}+N)</span></td></tr>
+    <tr><td>理论保证</td><td>无最优性证明（短视贪心）</td><td>定理 2：匿名 + 策略防伪 + 免逆向选择（<em>证明文字本身有问题，见疑点 11</em>）</td></tr>
+  </tbody>
+</table>
+
+<div class="note narr">
+  <span class="tag">绿·协同关系</span>
+  两者的耦合点是<strong>估值</strong>：算法 2 的竞标者估值 <span class="m">v_n=c_nm_n</span> 里，
+  共同价值 <span class="m">c_n</span> 用到算法 1 决定的成本 <span class="m">L^{total}_n</span>，
+  匹配质量 <span class="m">m_n</span> 用到 AoT 推出的性能增益 <span class="m">\log(1/\beta^{\kappa^t})</span>。
+  也就是说：<strong>算法 1 的结果是算法 2 的输入</strong>。算法 1 把成本压下来（<span class="m">c_n</span> 变化），算法 2 再把机会分配给最合适的一方。
+  这也解释了为什么实验要分“成本层 / 精度–性能层 / 剩余层”三层来评——它们正是这条耦合链的三个断面。
+</div>
+
+<h3>A.5　三个理解层次的小结（由浅入深）</h3>
+<ol>
+  <li><strong>第 0 层（会讲给人听）：</strong>显存不够 → 扔最不新鲜的模型（算法 1）；卫星看不见实情 → 用会自己调门槛的拍卖保护它（算法 2）。两者一个管“装什么”、一个管“给谁做”。</li>
+  <li><strong>第 1 层（会推每一步）：</strong>AoT 来自式 (19) 的“累计 − 衰减、截断于 0”；淘汰最少者是式 (29a) 的精确贪心；<span class="m">\rho</span> 只影响 MSB 的门槛与定价，机制结构不变，所以策略防伪性可以继承；<span class="m">\rho</span> 用对数尺度离散化以匹配 DQN 的离散动作空间。</li>
+  <li><strong>第 2 层（会挑毛病）：</strong>定理 1 的连乘界需要示例间独立性而原文未声明；定义 1 与假设 2 对 <span class="m">\epsilon</span> 的描述互相矛盾；式 (24) 的 <span class="m">\bar{A}</span> 可能取负；式 (29c) 与式 (5) 不一致；定理 2 的证明文字与式 (35) 冲突；摘要的 23% 与正文的 20% 不符。<strong>能指出这些，才算真正读懂了这篇论文。</strong>详见下一节。</li>
+</ol>
+
+<h2 id="issues">附录 B　需要读者留意的推导衔接与疑点清单</h2>
+
+<p>本节集中列出我在逐式核对时发现的问题。<strong>凡属原文如此，我均未在正文中改动</strong>；此处给出定位与影响面，供你按原文 PDF 复核。</p>
+
+<table>
+  <thead><tr><th>#</th><th>位置</th><th>问题</th><th>性质与影响</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>定义 1（式 7）与假设 2（式 14）</td><td>式 (7) 说 <span class="m">\hat{q}=1-\epsilon</span>；式 (14) 说 <span class="m">\epsilon=\hat{q}</span>。联立得 <span class="m">\epsilon=\tfrac12</span>，与“歧义度可任意小”矛盾</td><td><strong>实质性矛盾</strong>，沿式 (15)→(20)→AoT 定义传播。最可能是式 (14) 漏了 <span class="m">1-</span>，或定义 1 的补集方向写反。复现时必须二选一</td></tr>
+    <tr><td>2</td><td>式 (8)</td><td><span class="m">\sup_{c\in C}\hat{q}(c^\star)/\hat{q}(c_n)</span> 的被取上确界表达式不含 <span class="m">c</span>，上确界空转</td><td>记号问题。合理形式应为分母含 <span class="m">c</span>（如 <span class="m">\hat{q}(c)</span>）。影响式 (9)(12)(13) 中 <span class="m">\gamma_n^{c_i}</span> 的解释</td></tr>
+    <tr><td>3</td><td>2.3 节 vs 4.4 节</td><td>2.3 节批评现有拍卖“把通信与计算成本视为外生”，但 4.4 节的估值又直接取真实成本的期望 <span class="m">c_n=\mathbb{E}_t[L^{total}_n-l^{acc}_n]</span></td><td>论证张力。若估值就是真实成本，则“信息不对称”体现在何处需重新说明</td></tr>
+    <tr><td>4</td><td>式 (29c) vs 式 (5)</td><td>(29c) 丢了 <span class="m">a^t_{n,i,m}</span> 与 <span class="m">R^t_{n,i,m}</span>，且对所有 <span class="m">(i,m)</span> 求和</td><td><strong>约束不一致</strong>：解 (29) 所得缓存决策未必满足 (5) 的能耗约束</td></tr>
+    <tr><td>5</td><td>式 (21)</td><td>指示函数用 <span class="m">\mathbf{1}(a^t\gt a^{t-1})</span>，只计入“加载”不计入“淘汰”，但正文说切换成本含淘汰</td><td>公式与文字不一致；会使淘汰变成零成本操作</td></tr>
+    <tr><td>6</td><td>式 (20)、式 (24)</td><td>式 (15) 定义单一标量 <span class="m">\beta</span>，式 (20)(24) 却用 <span class="m">\beta_{i,m}</span></td><td>记号不统一，影响“增益是按服务–模型还是全局”的理解</td></tr>
+    <tr><td>7</td><td>式 (24)</td><td><span class="m">\bar{A}=1-\alpha\kappa\log(1/\beta)</span> 未加括号说明结合方式；按字面读 <span class="m">\kappa</span> 增大时 <span class="m">\bar{A}</span> 可变为负数</td><td>作为“单位精度成本”取负不合理；需截断或改写</td></tr>
+    <tr><td>8</td><td>式 (19) vs 6.1 节</td><td>式 (19) 的衰减因子下标为 <span class="m">\Delta^t_{i,m}</span>，实验写“<span class="m">\Delta^t_n</span> 设为 0.6”</td><td>同一符号三套下标，影响实验可复现性</td></tr>
+    <tr><td>9</td><td>式 (30a)</td><td>原 PDF 多一个右方括号 <code>]]</code>；求和索引用 <span class="m">n</span> 而被加项用 <span class="m">i</span></td><td>排版残留 + 索引笔误（应为 <span class="m">v_nz_n(v)</span>）</td></tr>
+    <tr><td>10</td><td>5.1 节标题</td><td>“Modified <strong>Section</strong>-Price Auction” 与机制 1 的 “Modified <strong>Second</strong>-bid Auction” 不一致</td><td>标题疑为笔误</td></tr>
+    <tr><td>11</td><td>定理 2 证明（式 35 之后）</td><td>式 (35) 推出 <span class="m">\chi(\max\{x_{-n}\})=\chi(x_{-n})</span>，紧接正文却说“导致 <span class="m">\ne</span>”并据此论证“无法防伪名”；而定理 2 并未宣称防伪名</td><td><strong>证明文字与结论不匹配</strong>。结论本身很可能成立，依据应是段末“仅改 <span class="m">\rho</span>、保留标准第二价格规则”的论证</td></tr>
+    <tr><td>12</td><td>定理 2 证明</td><td><span class="m">\rho^{\,a_k/|\mathcal{A}|}</span> 与 <span class="m">\rho=10^{\,a_k/|\mathcal{A}|}</span> 自相矛盾；<span class="m">\bar{\varphi}</span> 首次出现未定义</td><td>记号替换错误 + 符号未定义</td></tr>
+    <tr><td>13</td><td>5.3 节末段</td><td>“三项性质中的任意三项”，但前文列了四项；“the authors based on other DRL algorithms” 语义不完整</td><td>语义残缺，应为“至多三项”</td></tr>
+    <tr><td>14</td><td>摘要 vs 6.3 节</td><td>摘要称分配效率提升 <strong>23%</strong>，6.3 节称总剩余比 MSB 高约 <strong>20%</strong>；且未区分“分配效率”与“总剩余”</td><td>数字不一致；两个度量混用</td></tr>
+    <tr><td>15</td><td>6.2 节</td><td>段首引“图 4(a)”，紧接一句却引“图 3(b)”（该图已用于另一结论）；6.3 节 “DQMBS” 为 DQMSB 笔误</td><td>交叉引用错误，影响按图索骥</td></tr>
+    <tr><td>16</td><td>3.1 节</td><td><span class="m">\theta^e</span> 与 <span class="m">\theta^g</span> 的定义互相引用，构成隐式方程</td><td>排版歧义（<span class="m">\arccos</span> 括号范围）；影响几何量复现</td></tr>
+    <tr><td>17</td><td>引理 1 证明</td><td>陈述用示例长度 <span class="m">k_i</span> 与阈值 <span class="m">k^\star_{i,\sigma}</span>，证明却用序列长度 <span class="m">l</span></td><td>记号不接续；逻辑本身只是把极限定义重述一遍</td></tr>
+    <tr><td>18</td><td>算法 1 复杂度</td><td>声明 <span class="m">O(M)</span>，但 while 循环最坏可执行 <span class="m">M</span> 次</td><td>最坏情况为 <span class="m">O(M^2)</span>；原文未讨论最坏情况</td></tr>
+  </tbody>
+</table>
+
+<div class="note math">
+  <span class="tag">蓝·给复现者的优先级建议</span>
+  若你要基于本文做实验或改进，建议按此顺序处理上表：
+  <strong>(1)</strong> 先定 <span class="m">\epsilon</span> 的定义（第 1 条）——它决定 AoT 的物理含义是否成立；
+  <strong>(2)</strong> 再统一 <span class="m">\beta</span>、<span class="m">\Delta</span> 的下标（第 6、8 条）——它们决定仿真参数；
+  <strong>(3)</strong> 修正式 (29c) 使其与式 (5) 一致（第 4 条）——否则 (29) 的解可能不可行；
+  <strong>(4)</strong> 对 <span class="m">\bar{A}</span> 加下界截断（第 7 条）——否则成本函数会出现负值；
+  <strong>(5)</strong> 定理 2 引用段末那段论证，不要引用式 (35) 之后的文字（第 11 条）。
+</div>
+
+<h2 id="method">附录 C　翻译方法、校验与工具来源说明</h2>
+
+<h3>C.1　工具实际情况（如实记录）</h3>
+<ul>
+  <li><strong><code>article_translator</code>：<span style="color:#b3261e">先前“本机不存在”的结论已更正为“存在”。</span></strong>
+    该 Skill 位于 <code>C:\Users\25307\.codex\skills\article_translator</code>（2026-10-01 安装，<code>SKILL.md</code> 23,645 字节）。
+    先前检索之所以只命中 <code>.codex-global-state.json</code>（其中就是你这次的需求文本），是因为受限文件沙箱使该目录<strong>对检索不可见</strong>，
+    而 <code>-ErrorAction SilentlyContinue</code> 掩盖了拒绝信息。上游来源现已确认：
+    <a href="https://github.com/waiwaifeng/codex-skill-article-translator">waiwaifeng/codex-skill-article-translator</a>，
+    六个文件 SHA-256 与 <code>main</code> 分支逐字节一致。由于 DSH 不扫描 <code>~/.codex/skills</code> 且只接受 kebab-case 名称，
+    我已把它安装到 <code>~/.dsh/skills/article-translator</code>（仅把 frontmatter 的 <code>name</code> 由 <code>article_translator</code> 改为
+    <code>article-translator</code>，另同步一处示例路径；其余字节不变，Codex 副本未改动）。本译稿仍是在该 Skill 可加载<strong>之前</strong>手工完成的，
+    因此<strong>没有</strong>套用它的项目式产出规范，也<strong>没有</strong>使用任何外部翻译服务插件。</li>
+  <li><strong><code>pdf</code>：存在。</strong>两份副本：<code>.codex\plugins\cache\openai-primary-runtime\pdf\26.909.12148\skills\pdf\SKILL.md</code> 与 <code>.codex\vendor_imports\skills\skills\.curated\pdf\SKILL.md</code>。我按其工作流执行了“先把页面渲染成图像再核对、不依赖纯文本抽取判断版式”这一步，但由于<strong>本会话的模型不支持图像输入</strong>，目视核对改为程序化方式（见 C.2）。</li>
+  <li><strong>MathJax：</strong>本地<strong>没有</strong>可用的 MathJax 或 KaTeX 发行版（<code>.dsh\profiles\node_modules\katex</code> 是一个损坏的符号链接，<code>dist</code> 目录不可访问）。因此公式由 <strong>CDN 上的 MathJax 3</strong> 排版；若离线打开，页面会<strong>自动回退为显示 LaTeX 源码</strong>（内容完整，可直接核对，只是不排版）。这一回退逻辑写在页面脚本里。</li>
+  <li><strong>校验脚本：</strong>见同目录 <code>validate_translation.py</code>，负责检查公式数量与结构、编号连续性、LaTeX 定界符配对、算法块完整性、注释分层类名是否齐全等。它<strong>只是一个本地检查脚本，不是翻译工具</strong>。</li>
+</ul>
+
+<h3>C.2　算法框为什么必须“重建”，以及怎么重建的</h3>
+<p>本 PDF 的算法 1 与算法 2 位于两个 Form XObject（<code>/Im4</code> 对应第 8 页，<code>/Im5</code> 对应第 10 页）。我对它们做了如下检查：</p>
+<ol>
+  <li>解压后<strong>不含任何文本绘制算子</strong>：<code>BT</code>=0、<code>Tj</code>=0、<code>TJ</code>=0、<code>/Font</code>=0。</li>
+  <li>字形全部是<strong>填充路径</strong>：只有 <code>m</code>/<code>l</code>/<code>c</code>/<code>f</code> 等路径算子（约 349 个填充操作、589 个字形块）。</li>
+  <li>因此<strong>任何文本抽取器都取不到内容</strong>（<code>pypdf</code> 的普通与 layout 两种模式都只能取到算法标题），OCR 也只能得到部分结果。</li>
+</ol>
+<p>为保证“先保真”，我采用<strong>三路交叉</strong>而不是任何单一路径：</p>
+<ol>
+  <li><strong>字形轮廓解码（自建）：</strong>把每个填充操作按 <strong>nonzero winding</strong> 规则栅格化（这一点很关键：PDF 用非零环绕，若用奇偶规则会让字形自身重叠的轮廓互相抵消、把 <code>e</code> 的横杠打成空洞），再按列空隙切成字形块，最后与 Times 模板（正体/斜体/粗体/粗斜体，含连字 <code>ff/fi/fl/ffi/ffl</code> 与数学符号 <code>← ≤ ≥ ≠</code>、希腊字母）做匹配。该流程先在<strong>已知文本</strong>上自测（<code>--selftest</code>），正体可达接近 100% 字符准确率。</li>
+  <li><strong>Windows 内置 OCR：</strong>用一个汉字模型（本机唯一可用）对栅格化结果做识别，用于交叉验证词形与结构。</li>
+  <li><strong>论文自身约束：</strong>4.3 节与 5.2 节的正文陈述、式 (18)(19)(29)(31)(32)(33)(34) 的结构，限定了伪代码必须包含的步骤。</li>
+</ol>
+<p><strong>结果与诚实边界：</strong>算法框的<em>结构</em>（行数、缩进层级、<code>for/while/if/else/end</code> 的嵌套、<code>Update context status following Eq. (19)</code> 这类完整短语）在三路证据下<strong>一致且可靠</strong>；但<em>逐字符</em>的准确率不足以支撑“逐字照抄”。因此译文中的两份伪代码明确标注为“按矢量轮廓重建”，并对不确定项打上 <code>⟨?⟩</code>。<strong>我没有把解码器猜出的字符当作原文事实写进译文。</strong></p>
+
+<h3>C.3　公式的处理方式</h3>
+<ul>
+  <li>全部 <strong>35 组编号公式</strong>用 LaTeX 重排，编号与原文一一对应，不使用公式截图。</li>
+  <li>原文用大括号分情形书写的式 (18)(19)，为保持 LaTeX 与 HTML 的转义安全，改用“逐行写出、各自标注条件”的等价形式呈现，语义完全一致（已在正文说明）。</li>
+  <li>原文的排版残留（如式 (30a) 多出的 <code>]</code>）在译文中按正常写法呈现，并在疑点清单中注明原始形态。</li>
+  <li>所有符号名、变量下标在上标次序上<strong>严格照原文</strong>（例如式 (20) 的 <span class="m">\beta^{\kappa}_{i,m}</span> 保留了原文的上下标位置），即使这看起来不够规范。</li>
+</ul>
+
+<h3>C.4　本译稿的可核对性</h3>
+<ul>
+  <li>每个公式都有编号，可与原文逐号对照；正文引用公式时一律使用原文编号（如“式 (23)”）。</li>
+  <li>所有疑点在 <a href="#issues">附录 B</a> 汇总，并在正文对应位置用琥珀色框就地标注，正文本身<strong>不因疑点而改写</strong>。</li>
+  <li>术语一致性由 <a href="#glossary">术语表</a> 约束；<code>validate_translation.py</code> 会检查若干关键术语是否全篇统一（例如 “SAGINs” 不混用 “空天地网络”）。</li>
+  <li>已知<strong>无法</strong>从本 PDF 完全恢复的内容：算法 1/2 的逐字伪代码、图 1–6 的图形内容（本会话模型不支持读图）。图 1–6 的<strong>标题与正文讨论</strong>已完整翻译，图内标注未逐项核对。</li>
+</ul>
+
+<hr>
+<p class="small" style="margin-bottom:0">译稿完成。<strong>保真优先</strong>：公式、编号、符号、算法结构均保留；原文的跳步、矛盾与笔误一律标注而不代改。若你希望，我可以进一步：(a) 用你的原 PDF 逐字校对算法 1/2 的 <code>⟨?⟩</code> 行；(b) 补齐图 1–6 的图内标注翻译；(c) 导出一份可编辑的 Markdown/Word 版本。</p>
+
+</div>
+
+<script>
+(function () {
+  var tries = 24;
+  function ready(cb) {
+    if (window.MathJax && MathJax.typesetPromise) { cb(); return; }
+    if (tries-- <= 0) { document.documentElement.classList.add('no-mathjax'); return; }
+    setTimeout(function () { ready(cb); }, 400);
+  }
+  function convert() {
+    document.querySelectorAll('.m').forEach(function (el) {
+      el.textContent = '\\(' + el.textContent.trim() + '\\)';
+    });
+    document.querySelectorAll('.M').forEach(function (el) {
+      el.textContent = '\\[' + el.textContent.trim() + '\\]';
+    });
+    document.documentElement.classList.add('mathjax-ok');
+    MathJax.typesetPromise().catch(function () {
+      document.documentElement.classList.remove('mathjax-ok');
+      document.documentElement.classList.add('no-mathjax');
+    });
+  }
+  ready(convert);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eris 中文全文翻译</title>
+<style>
+:root{color-scheme:light;--ink:#20242a;--muted:#58616c;--line:#d8dde3;--paper:#fff;--canvas:#f4f6f8;--accent:#2457a6;--green-bg:#edf7e9;--green-border:#80b66b;--blue-bg:#edf4ff;--blue-border:#5d8bd1;}
+*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font:17px/1.82 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+.toolbar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;padding:10px 16px;box-shadow:0 1px 5px #0001;}
+.toolbar button{border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);padding:7px 11px;font:inherit;font-size:14px;cursor:pointer}.toolbar button[aria-pressed="true"]{background:#eaf0fb;border-color:#9bb4de;color:#173e7e}
+.toolbar .spacer{flex:1}.layout{display:grid;grid-template-columns:235px minmax(0,850px) 270px;gap:24px;max-width:1460px;margin:22px auto;padding:0 20px;align-items:start}
+nav,.glossary-panel{position:sticky;top:68px;max-height:calc(100vh - 88px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:14px;line-height:1.55}
+nav h2,.glossary-panel h2{font-size:15px;margin:0 0 10px}nav ul{list-style:none;padding:0;margin:0}nav li{margin:6px 0}nav .toc-level-3{padding-left:12px}nav a,.glossary-panel a{color:var(--accent);text-decoration:none}nav a:hover{text-decoration:underline}
+main{background:var(--paper);padding:42px 52px;border:1px solid #e5e8eb;border-radius:8px;min-width:0;box-shadow:0 2px 10px #00008}
+h1,h2,h3,h4{line-height:1.35;color:#172333}h1{font-size:2rem;margin:0 0 1.2em}h2{font-size:1.55rem;margin:2.1em 0 .65em;padding-bottom:.25em;border-bottom:1px solid var(--line)}h3{font-size:1.23rem;margin:1.7em 0 .5em}h4{font-size:1.08rem;margin:1.4em 0 .4em}
+p{margin:.8em 0 1em}strong{font-weight:650}em{font-style:italic}a{color:#2457a6}.term-link{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}code{font-family:ui-monospace,Consolas,monospace;background:#f0f2f5;padding:.08em .25em;border-radius:3px}
+ul,ol{padding-left:1.5em}li{margin:.45em 0}.note{margin:1em 0;padding:13px 16px;border-left:4px solid;border-radius:5px;font-size:.96em}.note.green{background:var(--green-bg);border-color:var(--green-border)}.note.blue{background:var(--blue-bg);border-color:var(--blue-border)}
+.paired-equation{margin:1.15em 0;padding:10px 12px;border:1px solid #dfe4ea;border-radius:6px;overflow-x:auto;background:#fff}.source-left,.translation-right{min-width:0}.source-left{display:none;border-bottom:1px dashed var(--line);padding-bottom:8px;margin-bottom:9px}.formula-label{display:block;font-size:12px;color:var(--muted);line-height:1.4;margin-bottom:3px}.math{display:block;overflow-x:auto;text-align:center;padding:3px 2px}.show-source-formulas .paired-equation{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fbfcff;border-color:#9bb4de}.show-source-formulas .source-left{display:block;border-bottom:0;border-right:1px dashed var(--line);padding:0 10px 0 0;margin:0}
+.paper-figure{margin:1.5em auto .25em;text-align:center}.paper-figure img{display:block;max-width:100%;height:auto;margin:auto}.caption{text-align:center;font-size:.94em;margin:.2em auto 1.2em;color:#333}.table-wrap{overflow-x:auto;margin:1.2em 0}table{width:100%;border-collapse:collapse;font-size:.93em;line-height:1.55}th,td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}thead th{border-top:1.5px solid #727b85;border-bottom:1.5px solid #727b85;background:#f7f8fa}
+.term-note{border-bottom:1px solid #e3e7ec;padding:7px 0}.term-note summary{cursor:pointer;font-weight:600;color:#233a5e}.term-note p{margin:.45em 0;font-size:13px;line-height:1.55}.term-note small{color:var(--muted)}.reference-entry{font-size:14px;line-height:1.5;margin:.4em 0}
+body.hide-toc nav{display:none}body.hide-terms .glossary-panel{display:none}body.hide-toc .layout{grid-template-columns:minmax(0,850px) 270px;justify-content:center}body.hide-terms .layout{grid-template-columns:235px minmax(0,850px);justify-content:center}body.hide-toc.hide-terms .layout{grid-template-columns:minmax(0,850px);justify-content:center}
+@media(max-width:1120px){.layout{grid-template-columns:205px minmax(0,850px)}.glossary-panel{position:static;grid-column:2;max-height:none}body.hide-toc .layout{grid-template-columns:minmax(0,850px)}body.hide-toc .glossary-panel{grid-column:1}}
+@media(max-width:760px){body{font-size:16px}.toolbar{position:static;flex-wrap:wrap}.layout{display:block;margin:10px auto;padding:0 10px}main{padding:24px 20px}nav,.glossary-panel{position:static;max-height:none;margin-bottom:12px}.show-source-formulas .paired-equation{display:block}.source-left{display:none!important}.show-source-formulas .source-left{display:block!important;border-right:0;border-bottom:1px dashed var(--line);padding:0 0 8px;margin:0 0 8px}}
+@media print{body{background:#fff;font-size:11pt}.toolbar,nav,.glossary-panel{display:none!important}.layout{display:block;max-width:none;margin:0;padding:0}main{border:0;box-shadow:none;padding:0}.paired-equation{break-inside:avoid;overflow:visible}.source-left{display:none!important}.paper-figure{break-inside:avoid}a{color:inherit;text-decoration:none}}
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true, processEnvironments: true, tags: 'ams' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="hide-toc hide-terms">
+<header class="toolbar" role="toolbar" aria-label="阅读控制">
+  <button id="read-mode" aria-pressed="true">中文阅读</button>
+  <button id="formula-mode" aria-pressed="false">原文公式对照</button>
+  <button id="toc-toggle" aria-pressed="false">显示目录</button>
+  <button id="terms-toggle" aria-pressed="false">术语注释</button>
+  <span class="spacer"></span><span style="font-size:13px;color:#58616c">公式编号按原文；蓝色注记提示推导条件和原文疑点</span>
+</header>
+<div class="layout">
+<nav aria-label="目录"><h2>章节目录</h2><ul><li class="toc-level-2"><a href="#section-摘要">摘要</a></li><li class="toc-level-2"><a href="#section-术语与符号导读">术语与符号导读</a></li><li class="toc-level-2"><a href="#section-i-引言">I. 引言</a></li><li class="toc-level-2"><a href="#section-ii-相关工作">II. 相关工作</a></li><li class="toc-level-2"><a href="#section-iii-系统模型">III. 系统模型</a></li><li class="toc-level-3"><a href="#section-a-系统概述">A. 系统概述</a></li><li class="toc-level-3"><a href="#section-b-问题表述">B. 问题表述</a></li><li class="toc-level-2"><a href="#section-iv-算法设计">IV. 算法设计</a></li><li class="toc-level-3"><a href="#section-a-问题重构与拍卖框架">A. 问题重构与拍卖框架</a></li><li class="toc-level-3"><a href="#section-b-价格函数设计">B. 价格函数设计</a></li><li class="toc-level-3"><a href="#section-c-求解调度-l-的子问题">C. 求解调度 $l$ 的子问题</a></li><li class="toc-level-3"><a href="#section-d-部署算法">D. 部署算法</a></li><li class="toc-level-2"><a href="#section-v-理论分析">V. 理论分析</a></li><li class="toc-level-2"><a href="#section-vi-实现与评估">VI. 实现与评估</a></li><li class="toc-level-3"><a href="#section-a-实现">A. 实现</a></li><li class="toc-level-3"><a href="#section-b-实验配置">B. 实验配置</a></li><li class="toc-level-3"><a href="#section-c-评估结果">C. 评估结果</a></li><li class="toc-level-2"><a href="#section-vii-结论">VII. 结论</a></li><li class="toc-level-2"><a href="#section-参考文献">参考文献</a></li><li class="toc-level-2"><a href="#section-作者简介">作者简介</a></li></ul></nav>
+<main><h1 id="section-eris-面向边缘网络无偏分布式学习调度的在线拍卖">Eris：面向边缘网络无偏分布式学习调度的在线拍卖</h1>
+<p><strong>作者：</strong> Jinlong Pang、Ziyi Han、Ruiting Zhou、Renli Zhang、John C. S. Lui、Hao Chen <strong>原刊：</strong> <em>IEEE Transactions on Mobile Computing</em>, Vol. 23, No. 6, June 2024 <strong>译文说明：</strong> 译文保留原文的章节、公式编号、符号、引用编号和算法编号。参考文献书目信息保留英文，以便检索。</p>
+<p><strong>出版信息：</strong> 原稿于 2023 年 3 月 4 日收到，2023 年 10 月 26 日修订，2023 年 11 月 6 日录用；2023 年 11 月 29 日在线发表，当前版本日期为 2024 年 5 月 7 日。本文部分工作由国家自然科学基金项目 62072344、U20A20177 和 62232004 资助。通讯作者：Ruiting Zhou。</p>
+<p><strong>作者单位：</strong> Jinlong Pang、Ziyi Han 和 Renli Zhang：武汉大学网络空间安全学院，教育部航空航天信息安全与可信计算重点实验室，中国武汉；Ruiting Zhou：东南大学计算机科学与工程学院，中国南京；John C. S. Lui：香港中文大学计算机科学与工程系，中国香港；Hao Chen：华为技术有限公司，中国南京。作者电子邮箱按原文 PDF 保留。</p>
+<h2 id="section-摘要">摘要</h2>
+<p id="abstract-zh-1"><a class="term-link" href="#term-edge-intelligence">边缘智能</a>的兴起使智能物联网服务（例如视频/音频监控、自动驾驶和智慧城市）成为现实。为了保证服务质量，边缘服务提供商会基于边缘网络采集的本地数据集，训练分布式机器学习任务的无偏模型，并通常采用<a class="term-link" href="#term-parameter-server">参数服务器（parameter server，PS）</a>架构。然而，<a class="term-link" href="#term-udl">无偏分布式学习（unbiased distributed learning，UDL）</a>的训练依赖地理分散的数据和边缘资源，这给服务提供商带来了新的挑战：如何有效调度并定价 UDL 任务，使系统长期效用（即<a class="term-link" href="#term-social-welfare">社会福利</a>）最大化。</p>
+<p id="abstract-zh-2">本文提出在线拍卖调度算法 Eris。对于每个到达的 UDL 任务，Eris 决定数据工作负载、并发工作节点（worker）的数量和部署位置，以及参数服务器的位置；同时根据当前资源消耗动态定价有限的边缘资源。Eris 使用<a class="term-link" href="#term-primal-dual">原始—对偶框架</a>，并调用高效的对偶子程序来调度 UDL 任务，达到良好的<a class="term-link" href="#term-competitive-ratio">竞争比</a>和伪多项式时间复杂度。为评估 Eris 的效果，作者实现了测试床和大规模模拟器。结果表明，与当今云系统中的先进算法相比，Eris 的社会福利最高可提升 44%。</p>
+<p id="abstract-zh-3"><strong>索引词：</strong> 分布式机器学习，拍卖，在线调度。</p>
+<div class="note green"><strong>原文脚注 1。</strong> “无偏模型”是指适用性较高、可在所有站点用于有效推理的模型[2]。</div>
+<h2 id="section-术语与符号导读">术语与符号导读</h2>
+<div class="table-wrap"><table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody><tr><td>$I,T,R,K$</td><td>任务集合、时间槽集合、边缘站点集合、资源类型集合</td></tr><tr><td>$a_i,\hat t_i$</td><td>任务 $i$ 的到达时间、完成时间</td></tr><tr><td>$D_i^r,E_i$</td><td>任务 $i$ 在站点 $r$ 的数据量（数据块数）、训练轮数</td></tr><tr><td>$g_i^r(t),z_i^r(t),h_i^{rr'}(t)$</td><td>时间槽 $t$ 的工作节点数、PS 放置指示变量、从站点 $r$ 到 $r'$ 的传输数据量</td></tr><tr><td>$w_i^k,s_i^k$</td><td>任务 $i$ 的一个工作节点、一个 PS 所占用的 $k$ 类资源量</td></tr><tr><td>$C_r^k,B$</td><td>站点 $r$ 的 $k$ 类资源容量、每个时间槽的总数据传输量上限</td></tr><tr><td>$\alpha(t),\beta_r^k(t)$</td><td>数据传输单价、站点 $r$ 的 $k$ 类资源单价</td></tr><tr><td>$\rho(t),\eta_r^k(t)$</td><td>已使用的数据传输预算、已分配的 $k$ 类资源量</td></tr></tbody></table></div>
+<h2 id="section-i-引言">I. 引言</h2>
+<p>边缘计算与人工智能（AI）的结合催生了一种有前景的新范式——“边缘智能”[1]。边缘智能不再完全依赖云端，而是利用物联网设备和边缘服务器采集的大量数据，为智能视频/音频监控、智慧城市和自动驾驶等智能物联网应用提供实时服务。为了保证物联网服务质量，关键在于利用边缘站点[3]、[4]收集的数据训练无偏模型。边缘站点可以是接入点（例如 WiFi 热点或基站）所连接的边缘服务器、边缘云端小站，甚至网络网关。例如，要部署智能交通管理系统，就需要把已安装摄像头采集的实时道路交通数据上传到附近的边缘云端小站处理[5]–[7]。来自不同边缘云端小站的数据共同用于训练一个可适用于所有道路的无偏模型。在本文中，我们将这类学习任务称为无偏分布式学习（UDL）任务。</p>
+<p>与传统分布式学习不同，UDL 任务从边缘站点获取训练数据；这些站点同时提供计算资源和必要的训练数据。训练 UDL 任务的一种常见方式是在边缘侧采用参数服务器（PS）框架进行数据并行[3]。在每次训练迭代中，为一个 UDL 任务部署的工作节点（由虚拟机 VM 或云容器实现）基于输入数据集计算梯度，然后将梯度发送给 PS。PS 对梯度取平均以更新模型参数，再将参数推送给所有工作节点。</p>
+<p>对于拥有训练数据和边缘资源的服务提供商，训练 UDL 任务时有两个独特问题需要处理：技术问题和经济问题。首先，从技术角度看，边缘站点上的资源（尤其是稀缺且昂贵的带宽）和数据量各不相同，因此很难决定各站点的数据工作负载，并部署数量匹配的工作节点，使平均任务完成时间最短、总带宽消耗尽可能小。此外，由于工作节点与 PS 之间频繁通信，当工作节点和 PS 不在同一站点时，PS 的放置位置也会影响站点间带宽消耗和任务完成时间。因此，UDL 训练需要联合优化带宽消耗并最小化平均任务完成时间。其次，从经济角度看，在没有未来信息的情况下，如何在每个 UDL 任务到达时为有限的边缘资源定价，使系统长期效用（即社会福利）最大化，并非易事。定价方案需要同时考虑边缘资源稀缺性和 UDL 任务数据地理分散这两个特点。</p>
+<p>已有研究尝试处理上述两类问题。技术方面，云平台中常见的调度器[8]、[9]采用先进先出（FIFO）或主导资源公平调度（DRF）[10]等直观策略。但这类调度器要求预先固定配置，即工作节点/PS 数量和训练时长，因而缺乏调度灵活性[11]。针对边缘网络，近期工作主要研究任务卸载问题[12]–[14]。经济方面，常见做法是固定定价，即按任务训练时间对已用资源收取固定单位价格[8]、[15]。但固定价格无法反映市场供需关系的变化，因此经常出现定价过高或过低的情况，损害服务运营商利润和整个系统效用。由于 UDL 任务的训练时间不确定且取决于任务放置位置，固定定价并不适用。拍卖是一种自然的定价方式：它能自动设定合适价格，并将资源分配给估值最高的用户；用户还可以为任意资源组合或配置出价。拍卖机制也能有效保证真实性和个体理性。已有多种拍卖机制从不同角度研究定价和资源分配[16]–[21]，但这些机制并不适用于训练时间不确定的机器学习任务。更多相关工作见第 II 节。</p>
+<p>本文为 UDL 任务提出拍卖框架 Eris，以应对技术和经济两方面的挑战。Eris 在带宽消耗约束下，于每个 UDL 任务到达时进行动态调度，以最大化社会福利；原文称这等价于最小化平均任务完成时间，因为 UDL 任务的效用随任务完成时间增加而不增。另一方面，Eris 使用拍卖机制自动为有限边缘资源定价。Eris 主要由两个模块构成：1）在线调度算法，在每个 UDL 任务到达时决定训练数据量、执行时间窗口、并发工作节点的数量和位置，以及每个时间槽中的 PS 放置；2）精心设计的定价方案，根据当前资源使用情况随时间调整资源价格（包括带宽），以避免用户集中提交任务，并帮助运营商避免资源枯竭。据作者所知，这是首项针对边缘网络中 UDL 任务联合研究动态调度与定价的形式化工作。本文贡献如下：</p>
+<ol><li>通过刻画 UDL 任务的独特特征，将社会福利最大化问题建模为 NP 难的混合整数非线性规划（MINLP）。为处理该问题，作者利用指数数量的变量，将其重构为典型的背包类问题。</li><li>提出有效的拍卖调度算法 Eris。Eris 首先利用可解释为单位资源价格的对偶变量估算每个任务的资源成本；价格函数反映市场规则，并根据资源消耗计算。给定资源价格后，Eris 再通过动态规划为每个接受的任务计算最优调度。</li><li>严格证明 Eris 的若干性质，包括正确性、真实性、多项式运行时间和竞争比。</li><li>通过大量测试床实验和大规模模拟评估 Eris。测试床基于 MXNet 框架和 Kubernetes 实现。结果显示：i）测试床实验中，Eris 的社会福利接近最优，竞争比小于 1.5，远小于理论界；ii）与 Tiresias [11]、AntMan [22] 和 Liquid [23] 相比，Eris 的社会福利分别提高 44%、50% 和 20%；iii）在大规模模拟中，无论输入规模和价格函数如何变化，Eris 始终优于三个基线，这与实验观察一致。</li></ol>
+<p>本文其余部分安排如下：第 II 节介绍相关工作；第 III 节给出系统模型；第 IV 节介绍所提方法；第 V 节讨论其性质；第 VI 节评估所提方法；第 VII 节总结全文。</p>
+<h2 id="section-ii-相关工作">II. 相关工作</h2>
+<p><strong>边缘/云环境中的调度与放置。</strong> 在受能源限制的场景中，Saleem 等人[13]研究了面向移动性的任务调度，以最小化时延；Alameddine 等人[14]通过优化任务卸载与调度，尝试最大化被接纳的时延敏感任务数量。但上述工作通常通过虚拟机或云容器分配任务资源，而非为典型 PS 架构部署工作节点/PS，因此不适用于智能物联网应用。云网络中的任务调度和放置已研究数十年，Microsoft Azure [9]、Amazon AWS ML [15] 和 Google Cloud AI [8] 等云平台已提供相关服务。这些平台仍主要采用 FIFO 或 DRF [10] 等直观调度器，无法最大化资源利用率。近期调度器[24]–[28]关注提高资源利用率，但通常未考虑数据传输消耗；而在边缘网络中，带宽稀缺且昂贵，不能忽略这项消耗。作者此前的工作[29]识别了 UDL 任务的特点（训练数据分布在多个地理站点），并研究了动态部署工作节点和 PS 以最小化总训练时间。本文则研究一个不同的问题，重点是最大化整体效用（社会福利）。此外，为避免定价过高或过低，本文进一步提出基于市场规则的定制价格函数。</p>
+<p><strong>边缘/云环境中的拍卖机制。</strong> Wu 等人[16]提出一种特定拍卖机制，以最大化移动边缘计算（MEC）系统的社会福利。Mashhadi 等人[18]为 MEC 边缘服务器设计了真实性拍卖，在不损害移动设备能耗和时延要求的情况下最大化总体利润。Lin 等人[17]提出拍卖框架，在确保终端计算任务时延约束的同时，有效分配资源并最大化边缘服务器效用。文献[19]提出在线拍卖，以最大化云计算系统中云服务提供商的收入。Zhang 等人[20]首次在拍卖方案中讨论用户需求异质性。Li 等人[21]关注资源定价，并设计拍卖机制来权衡用户与云服务提供商的效用。Zhang 等人[30]研究时变云资源分配问题。总的来说，上述工作及其他拍卖机制[31]–[33]都不能直接用于 UDL 任务定价，因为这类任务的训练时间不确定，并且高度依赖任务放置位置。</p>
+<h2 id="section-iii-系统模型">III. 系统模型</h2>
+<h3 id="section-a-系统概述">A. 系统概述</h3>
+<p><strong>拍卖概述。</strong> 图 1 展示了拍卖场景，其中有两类实体：服务运营商（拍卖方）和用户（竞标者）。运营商拥有边缘网络和训练数据，并接收用户提交的 UDL 任务出价。运营商收到出价后，为任务制定调度策略并计算所需付款；随后为被接受的任务分配资源，并向用户收费。假设有 $I$ 个任务在 $T$ 个时间槽内到达并请求训练。记 $X$ 为整数集合 $\{1,2,\ldots,X\}$。表 I 列出重要符号。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-01.png" alt="图 1：无偏分布式学习系统。"></figure>
+<p class="caption" id="zh-fig-01-caption"><strong>图 1. 无偏分布式学习系统。</strong></p>
+<p><strong>服务运营商。</strong> 服务运营商拥有并管理边缘分布式学习系统中的资源。系统包含 $R$ 个地理分散的“站点”，例如边缘云端小站或边缘服务器[29]。每个站点为面向智能视频监控、智慧城市等应用的 UDL 任务收集并提供训练数据。此外，每个站点 $r$ 可提供 $C_r^k$ 单位的 $k$ 类资源，并通过边缘网络连接其他站点。令 $K$ 表示资源类型数，例如 GPU、CPU 和磁盘存储。由于边缘网络中的无线资源稀缺且昂贵，运营商将总数据传输速率限制为 $B$。</p>
+<p>新任务到达时，服务提供商需要作出多项决策：i）是否接受该任务；ii）将该任务的 PS 放在哪个位置；iii）为该任务分配多少工作节点；iv）如何在边缘站点之间传输该任务的训练数据。</p>
+<p><strong>用户。</strong> 用户在训练任务到达时提交出价。为便于分析，假设每个用户一次只提交一个任务，以下不再区分用户和任务。用户 $i$ 提交的出价信息为元组 $\Pi_i$：</p>
+<div class="paired-equation" id="pair-eq-001"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 3</span><span class="math">\[\Pi_i=\left\{a_i, f_i(\cdot), \{D_i^r\}_{\forall r}, E_i, \{w_i^k,s_i^k\}_{\forall k}\right\}.\tag{1}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\Pi_i=\left\{a_i, f_i(\cdot), \{D_i^r\}_{\forall r}, E_i, \{w_i^k,s_i^k\}_{\forall k}\right\}.\tag{1}\]</div></div></div>
+<p>其中，$a_i$ 表示任务 $i$ 的到达时间；$f_i(\cdot)$ 表示任务 $i$ 的特定效用函数，该函数非负，并随任务执行时长 $\hat t_i-a_i$ 增加而不增[34]、[35]。通常，用户会根据时延敏感要求（即完成时间）和工作负载特点定制 UDL 任务的效用函数。为清晰起见，假设数据块是数据单位。对任务 $i$，$D_i^r$ 表示站点 $r$ 上所需的数据量（数据块数）。为获得良好性能，所有数据都需要训练 $E_i$ 轮。$w_i^k$（$s_i^k$）表示任务 $i$ 的一个工作节点（PS）占用的 $k$ 类资源量，$k\in K$。令 $P_i$ 表示任务 $i$ 的工作节点处理能力，即任务 $i$ 的一个工作节点每个时间槽可处理的数据块数。</p>
+<p><strong>参数服务器架构。</strong> 为降低带宽消耗，本文采用数据并行训练和 PS 架构[36]，而不是将地理分散站点上的所有训练数据集中到一处训练[37]。工作节点和 PS 以虚拟机（VM）或容器的形式配置。假设每个 UDL 任务分配一个 PS；实际中，这可以代表同一站点内的多个 PS 实例。本文采用同步训练来保证模型收敛[38]，因为与异步训练相比，同步训练通常能获得准确度更高的模型[39]。一个时间槽通常长于一个训练轮次，因此每个时间槽都可以执行训练；例如，一个时间槽可以是 30 分钟或更长。为满足训练数据需求，每个时间槽开始时都要把训练数据（工作负载）重新分配到各站点，以便在当前时间槽处理。采用小批量梯度下降（Mini-batch Gradient Descent）[40]时，每个数据块会被拆分成若干等大小的小批次。工作节点迭代计算模型梯度（变化方向）并发送给 PS。PS 收到所有工作节点的模型参数后更新模型，再将参数发回所有工作节点。预设轮数的所有小批次处理完后，工作节点继续使用后续小批次计算梯度。令 $\lambda_i$ 表示每个时间槽内工作节点与 PS 之间传输参数的总大小（MB）。</p>
+<div class="note green"><strong>原文脚注 2。</strong> 与传统模式下每个深度学习任务关联自己的输入数据集不同，UDL 任务的数据集由边缘站点收集，以支持深度学习模型的无偏性[3]。</div>
+<p><strong>拍卖预备知识。</strong> 为了实现长期整体效用最大化，本文关注整个系统的效用，即社会福利最大化。为此，必须从用户处获得真实信息。现实中，用户具有利己倾向，会试图最大化自身收益。更具体地说，为提高收益，用户可能会在出价中谎报任务完成时间对应的真实估值函数 $v_i(\cdot)$。下面给出拍卖设计中的真实性和社会福利定义。</p>
+<p><strong>定义 1（真实性拍卖）。</strong> 当且仅当每个用户通过报告真实估值可使自身收益最大时，拍卖是真实的；即对所有 $f_i(\cdot)\ne v_i(\cdot)$，均有 $u_i(v_i(\cdot))\ge u_i(f_i(\cdot))$。</p>
+<p><strong>定义 2（社会福利）。</strong> 若任务 $i$ 的出价被接受，其收益为 $u_i(f_i(\cdot))=v_i(\cdot)-p_i$；否则为 0。运营商收入是所有被接受任务的总付款，即 $\sum_{i\in I}p_ix_i$。拍卖的社会福利定义为运营商和用户的效用总和，因此等于</p>
+<div class="paired-equation" id="pair-eq-002"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\sum_{i\in I}(v_i(\cdot)-p_i)x_i+\sum_{i\in I}p_ix_i
+=\sum_{i\in I}v_i(\cdot)x_i.\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{i\in I}(v_i(\cdot)-p_i)x_i+\sum_{i\in I}p_ix_i
+=\sum_{i\in I}v_i(\cdot)x_i.\]</div></div></div>
+<h3 id="section-b-问题表述">B. 问题表述</h3>
+<p>为明确起见，运营商的决策变量定义如下：i）$x_i$ 为二元变量，表示是否接受任务 $i$ 的出价（$x_i=1$ 表示接受，$x_i=0$ 表示拒绝）；ii）$z_i^r(t)$ 为二元变量，表示时间槽 $t$ 是否将任务 $i$ 的 PS 放置在站点 $r$；iii）$g_i^r(t)\in\mathbb N^+$，表示时间槽 $t$ 在站点 $r$ 为任务 $i$ 分配的工作节点数量；iv）$h_i^{rr'}(t)\in\mathbb N^+$，表示时间 $t$ 从站点 $r$ 向站点 $r'$ 传输的任务 $i$ 数据块数量；v）$p_i\ge0$，表示运营商接受用户 $i$ 的出价（$x_i=1$）后所需的付款。假设用户如实申报，即 $v_i(\cdot)=f_i(\cdot)$，则社会福利最大化问题如下：</p>
+<div class="paired-equation" id="pair-eq-003"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\max \sum_{i\in I}x_i f_i(\hat t_i-a_i),\tag{2}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\max \sum_{i\in I}x_i f_i(\hat t_i-a_i),\tag{2}\]</div></div></div>
+<p>约束为</p>
+<div class="paired-equation" id="pair-eq-004"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\sum_{t\in T}\sum_{r\in R}\sum_{r'\in R}h_i^{rr'}(t)
+=\sum_{r\in R}D_i^r x_i,\quad \forall i\in I;\tag{2a}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{t\in T}\sum_{r\in R}\sum_{r'\in R}h_i^{rr'}(t)
+=\sum_{r\in R}D_i^r x_i,\quad \forall i\in I;\tag{2a}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-005"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[P_i g_i^{r'}(t)\ge E_i\sum_{r\in R}h_i^{rr'}(t),
+\quad \forall i\in I,\forall r'\in R,\forall t\in T;\tag{2b}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[P_i g_i^{r'}(t)\ge E_i\sum_{r\in R}h_i^{rr'}(t),
+\quad \forall i\in I,\forall r'\in R,\forall t\in T;\tag{2b}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-006"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\sum_{r\in R}z_i^r(t)=x_i,\quad \forall i\in I,\forall t\in T;\tag{2c}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{r\in R}z_i^r(t)=x_i,\quad \forall i\in I,\forall t\in T;\tag{2c}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-007"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\sum_{i\in I}\sum_{r,r'\in R}
+\left(\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0)\right)
+\le B,\quad \forall t\in T;\tag{2d}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{i\in I}\sum_{r,r'\in R}
+\left(\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0)\right)
+\le B,\quad \forall t\in T;\tag{2d}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-008"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\sum_{i\in I}\left(w_i^k g_i^r(t)+s_i^k z_i^r(t)\right)
+\le C_r^k,\quad \forall k\in K,\forall r\in R,\forall t\in T;\tag{2e}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{i\in I}\left(w_i^k g_i^r(t)+s_i^k z_i^r(t)\right)
+\le C_r^k,\quad \forall k\in K,\forall r\in R,\forall t\in T;\tag{2e}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-009"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[\hat t_i=\arg\max_{t\in T}\left(\sum_{r\in R}g_i^r(t)>0\right),
+\quad \forall i\in I;\tag{2f}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\hat t_i=\arg\max_{t\in T}\left(\sum_{r\in R}g_i^r(t)>0\right),
+\quad \forall i\in I;\tag{2f}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-010"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[g_i^r(t)=h_i^{rr'}(t)=z_i^r(t)=0,
+\quad \forall t:t<a_i;\tag{2g}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[g_i^r(t)=h_i^{rr'}(t)=z_i^r(t)=0,
+\quad \forall t:t<a_i;\tag{2g}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-011"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[g_i^r(t),h_i^{rr'}(t)\in\{0,1,2,\ldots\},
+\quad \forall i\in I,\forall r,r'\in R,\forall t\in T;\tag{2h}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[g_i^r(t),h_i^{rr'}(t)\in\{0,1,2,\ldots\},
+\quad \forall i\in I,\forall r,r'\in R,\forall t\in T;\tag{2h}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-012"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 4</span><span class="math">\[x_i,z_i^r(t)\in\{0,1\},
+\quad \forall i\in I,\forall r\in R,\forall t\in T.\tag{2i}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[x_i,z_i^r(t)\in\{0,1\},
+\quad \forall i\in I,\forall r\in R,\forall t\in T.\tag{2i}\]</div></div></div>
+<p>约束 (2a) 保证传输的数据总量等于任务 $i$ 的训练数据量。特别地，$h_i^{rr'}(t)$ 表示时间槽 $t$ 站点 $r$ 上的本地训练数据，因此该部分数据无需在时间槽 $t$ 传输。约束 (2b) 保证任务 $i$ 在站点 $r'$ 部署的工作节点足以处理站点 $r'$ 中数据的 $E_i$ 轮训练。约束 (2c) 表示每个被接受的任务恰有一个 PS。约束 (2d) 限制训练数据传输量和站点间参数传输量不超过数据率上限 $B$。考虑到边缘网络中的干扰和衰落等动态因素，约束 (2d) 直接限制数据量，比不可控的传统带宽指标更稳定。以数据量间接约束带宽或传输功率等相关物理资源，可使系统运行在可行且现实的范围内。若 PS 和工作节点部署在同一站点，则不需要传输参数；通过指示函数 $\mathbb I(z_i^r(t)=0)$ 表示这种情况。约束 (2e) 描述站点部署工作节点和 PS 的资源约束。约束 (2f) 将任务完成时间定义为该任务仍需工作节点训练的最晚时间槽。</p>
+<div class="note blue"><strong>符号语义提示（约束 (2a)、(2d)）。</strong> 原文将 $h_i^{rr'}(t)$ 定义为从站点 $r$ 向 $r'$ 传输的数据量，但解释约束 (2a) 时又称其表示站点 $r$ 的“本地训练数据”，并说这部分无需传输；约束 (2d) 则对所有 $h_i^{rr'}(t)$ 项计入数据预算。译文保留原公式和说明。读者需结合 $r=r'$ 是否代表本地数据这一约定核对模型语义，原文在此未另行明确。</div>
+<p><strong>难点。</strong> 问题 (2) 是混合整数非线性规划（MINLP），属于 NP 难问题[41]、[42]。下面的重构问题 (3) 可说明这一点：它可在多项式时间内由经典背包问题转换得到。此外，问题 (2) 中整数变量彼此依赖，并包含非常规约束 (2f)。因此，在没有任何未来信息的情况下，必须在线决定工作节点和 PS 的部署以及数据传输。</p>
+<p id="table-i-title" class="caption"><strong>表 I. 符号列表。</strong></p>
+<div class="table-wrap"><table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody><tr><td>$I$</td><td>任务数量</td></tr><tr><td>$T$</td><td>时间槽数量</td></tr><tr><td>$a_i$</td><td>任务 $i$ 的到达时间</td></tr><tr><td>$x_i$</td><td>是否接受任务 $i$</td></tr><tr><td>$f_i(\cdot)$</td><td>任务 $i$ 的效用函数</td></tr><tr><td>$P_i$</td><td>任务 $i$ 的工作节点处理能力</td></tr><tr><td>$D_i^r$</td><td>任务 $i$ 在站点 $r$ 的训练数据量</td></tr><tr><td>$B$</td><td>每个时间槽的数据传输总量上限</td></tr><tr><td>$z_i^r(t)$</td><td>时间槽 $t$ 是否在站点 $r$ 放置任务 $i$ 的 PS</td></tr><tr><td>$g_i^r(t)$</td><td>时间槽 $t$ 站点 $r$ 的任务 $i$ 工作节点数</td></tr><tr><td>$C_r^k$</td><td>站点 $r$ 的 $k$ 类资源容量</td></tr><tr><td>$\lambda_i$</td><td>每个时间槽中任务 $i$ 的工作节点与 PS 间交换的参数数据量（MB）</td></tr><tr><td>$h_i^{rr'}(t)$</td><td>时间槽 $t$ 从站点 $r$ 向 $r'$ 传输的任务 $i$ 训练数据量</td></tr><tr><td>$\theta$</td><td>一个数据块的大小（MB）</td></tr><tr><td>$w_i^k,s_i^k$</td><td>任务 $i$ 的一个工作节点、一个 PS 占用的 $k$ 类资源量</td></tr><tr><td>$\hat t_i$</td><td>任务 $i$ 的完成时间</td></tr><tr><td>$\psi_i^l(t)$</td><td>任务 $i$ 按调度 $l$ 在时间槽 $t$ 传输的数据量</td></tr><tr><td>$\phi_{il}^{r,k}(t)$</td><td>任务 $i$ 按调度 $l$ 在时间槽 $t$ 于站点 $r$ 占用的 $k$ 类资源量</td></tr><tr><td>$\rho(t)$</td><td>时间槽 $t$ 已使用的数据传输量（数据与参数）</td></tr><tr><td>$\eta_r^k(t)$</td><td>时间槽 $t$ 站点 $r$ 已分配的 $k$ 类资源量</td></tr><tr><td>$\alpha(t)$</td><td>时间槽 $t$ 的数据传输单位价格</td></tr><tr><td>$\beta_r^k(t)$</td><td>时间槽 $t$ 站点 $r$ 的 $k$ 类资源单位价格</td></tr><tr><td>$\gamma_d,\gamma_k$</td><td>数据传输价格函数、$k$ 类资源价格函数的基数</td></tr></tbody></table></div>
+<h2 id="section-iv-算法设计">IV. 算法设计</h2>
+<p>本节提出用于调度 UDL 任务的拍卖式调度框架 Eris，目标是最大化社会福利。主要思路如下。</p>
+<ol><li>在第 IV-A 节，通过引入指数数量的变量，将问题 (2) 重构为整数线性规划（ILP），再构造对偶问题处理原始变量。利用互补松弛理论，将目标转化为计算每个任务的收益：收益为正的任务会被接受，否则会被拒绝。收益计算依赖资源定价及任务获得的资源分配。</li><li>在第 IV-B 节分析传统市场定价机制，并根据市场规则设计多种资源定价函数。</li><li>在第 IV-C 节讨论如何部署单个任务的工作节点和 PS 以降低资源消耗。Eris 将问题 (7) 进一步分解为一系列单时间槽问题 (8)，再用动态规划将总训练数据划分到 $[a_i,\hat t_i]$ 内的时间槽。对每个单时间槽问题，Eris 根据定制指标传输数据，按单个工作节点的资源成本贪心部署工作节点，最后将 PS 放在工作节点数量最多的站点以降低通信成本。</li></ol>
+<div class="note green"><strong>直觉（由浅入深）。</strong> Eris 把“接不接任务”和“接下后怎么排资源”连在一起：当前资源越紧张，对应价格越高；一个任务只有在其效用能够覆盖按当前价格计算的资源成本时，才有正收益并被接受。接受后，算法再为该任务寻找成本最低的可行数据传输和部署方案。</div>
+<h3 id="section-a-问题重构与拍卖框架">A. 问题重构与拍卖框架</h3>
+<p>运营商的最终目标是为每个任务找到可行调度。为处理问题 (2)，本文将三类整数变量 $z_i^r(t)$、$g_i^r(t)$ 和 $h_i^{rr'}(t)$ 编码进单一调度变量 $l$，重构为以下 0-1 整数线性规划：</p>
+<div class="paired-equation" id="pair-eq-013"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\max \sum_{i\in I}\sum_{l\in L_i}x_{il}f_i(\hat t_{il}-a_i),\tag{3}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\max \sum_{i\in I}\sum_{l\in L_i}x_{il}f_i(\hat t_{il}-a_i),\tag{3}\]</div></div></div>
+<p>约束为</p>
+<div class="paired-equation" id="pair-eq-014"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\sum_{i\in I}\sum_{l\in L_i}\psi_{il}(t)x_{il}\le B,
+\quad \forall t\in T;\tag{3a}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{i\in I}\sum_{l\in L_i}\psi_{il}(t)x_{il}\le B,
+\quad \forall t\in T;\tag{3a}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-015"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\sum_{i\in I}\sum_{l\in L_i}\phi_{il}^{r,k}(t)x_{il}\le C_r^k,
+\quad \forall k\in K,\forall r\in R,\forall t\in T;\tag{3b}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{i\in I}\sum_{l\in L_i}\phi_{il}^{r,k}(t)x_{il}\le C_r^k,
+\quad \forall k\in K,\forall r\in R,\forall t\in T;\tag{3b}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-016"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\sum_{l\in L_i}x_{il}\le1,\quad \forall i\in I;\tag{3c}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\sum_{l\in L_i}x_{il}\le1,\quad \forall i\in I;\tag{3c}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-017"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[x_{il}\in\{0,1\},\quad \forall l\in L_i,\forall i\in I.\tag{3d}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[x_{il}\in\{0,1\},\quad \forall l\in L_i,\forall i\in I.\tag{3d}\]</div></div></div>
+<p>在 ILP (3) 中，调度 $l$ 表示任务 $i$ 的一个部署结果，由整数变量 $z_i^r(t)$、$g_i^r(t)$ 和 $h_i^{rr'}(t)$ 构成。$L_i$ 表示任务 $i$ 所有可行调度的集合；这些调度满足约束 (2a)–(2c) 和 (2f)。为保持一致，将二元变量 $x_i$ 改写为 $x_{il}$，表示是否选择任务 $i$ 的调度 $l$；$\hat t_{il}$ 表示任务 $i$ 按调度 $l$ 的完成时间。$\psi_{il}(t)$ 表示调度 $l$ 下任务 $i$ 在时间槽 $t$ 从站点 $r$ 向 $r'$ 传输的数据量：</p>
+<div class="paired-equation" id="pair-eq-018"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\psi_{il}(t)=\sum_{r,r'\in R}\left(\theta h_{il}^{rr'}(t)
++\lambda_i g_{il}^r(t)\mathbb I(z_{il}^r(t)=0)\right).\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\psi_{il}(t)=\sum_{r,r'\in R}\left(\theta h_{il}^{rr'}(t)
++\lambda_i g_{il}^r(t)\mathbb I(z_{il}^r(t)=0)\right).\]</div></div></div>
+<p>$\phi_{il}^{r,k}(t)$ 表示任务 $i$ 按调度 $l$ 在时间槽 $t$ 于站点 $r$ 占用的 $k$ 类资源量：</p>
+<div class="paired-equation" id="pair-eq-019"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\phi_{il}^{r,k}(t)=w_i^k g_{il}^r(t)+s_i^k z_{il}^r(t).\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\phi_{il}^{r,k}(t)=w_i^k g_{il}^r(t)+s_i^k z_{il}^r(t).\]</div></div></div>
+<p>变量 $z_{il}^r(t)$、$g_{il}^r(t)$ 和 $h_{il}^{rr'}(t)$ 分别表示调度 $l$ 中相应变量的取值。约束 (3a)、(3b) 分别等价于约束 (2d)、(2e)；约束 (3c)、(3d) 对应约束 (2a)–(2c)。因此，ILP (3) 与问题 (2) 等价。</p>
+<p><strong>对偶问题。</strong> 每个任务的可行调度数量可能因组合结构而呈指数增长。为处理引入变量的指数规模，本文将二元变量 $x_{il}$ 放宽为 $x_{il}\ge0$，构造对偶问题 (4)。对偶变量 $\alpha(t)$、$\beta_r^k(t)$ 和 $\mu_i$ 分别对应约束 (3a)、(3b) 和 (3c)：</p>
+<div class="paired-equation" id="pair-eq-020"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\min \sum_{i\in I}\mu_i+\sum_{t\in T}B\alpha(t)
++\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}C_r^k\beta_r^k(t),\tag{4}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\min \sum_{i\in I}\mu_i+\sum_{t\in T}B\alpha(t)
++\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}C_r^k\beta_r^k(t),\tag{4}\]</div></div></div>
+<p>约束为</p>
+<div class="paired-equation" id="pair-eq-021"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\mu_i\ge f_i(\hat t_{il}-a_i)-\sum_{t\in T}\psi_{il}(t)\alpha(t)
+-\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}\phi_{il}^{r,k}(t)\beta_r^k(t),
+\quad \forall i\in I,\forall l\in L_i;\tag{4a}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\mu_i\ge f_i(\hat t_{il}-a_i)-\sum_{t\in T}\psi_{il}(t)\alpha(t)
+-\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}\phi_{il}^{r,k}(t)\beta_r^k(t),
+\quad \forall i\in I,\forall l\in L_i;\tag{4a}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-022"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 5</span><span class="math">\[\mu_i,\alpha(t),\beta_r^k(t)\ge0,
+\quad \forall i\in I,\forall r\in R,\forall t\in T.\tag{4b}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\mu_i,\alpha(t),\beta_r^k(t)\ge0,
+\quad \forall i\in I,\forall r\in R,\forall t\in T.\tag{4b}\]</div></div></div>
+<p><strong>设计依据。</strong> 将对偶变量 $\alpha(t)$ 解释为时间槽 $t$ 的单位数据传输价格，则 $\sum_{t\in T}\psi_{il}(t)\alpha(t)$ 是任务 $i$ 的数据传输成本。类似地，$\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}\phi_{il}^{r,k}(t)\beta_r^k(t)$ 是任务 $i$ 按调度 $l$ 占用资源的总成本，其中 $\beta_r^k(t)$ 是时间槽 $t$ 站点 $r$ 的 $k$ 类资源单位价格。因此，约束 (4a) 右侧（RHS）表示任务 $i$ 的效用减去总成本。$\mu_i$ 表示任务 $i$ 被接受后获得的收益。为了最小化对偶问题目标，根据最优调度将 $\mu_i$ 设为 0 与约束 (4a) 所有 RHS 中的最大值两者的较大者：</p>
+<div class="paired-equation" id="pair-eq-023"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\mu_i=\max\left\{0,\max_{l\in L_i}\operatorname{RHS}(4a)\right\}.\tag{5}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\mu_i=\max\left\{0,\max_{l\in L_i}\operatorname{RHS}(4a)\right\}.\tag{5}\]</div></div></div>
+<p>若 $\mu_i&gt;0$，运营商按最优调度 $l^<em>$ 接受任务 $i$ 并分配资源（$x_{il^</em>}=1$）；否則拒绝该任务（$x_{il}=0,\forall l\in L_i$）。其解释是，任务估值可以覆盖总成本，使任务所有者愿意训练任务；运营商也因此倾向于接收价值更高而资源消耗更少的任务。</p>
+<p id="algorithm-1-title"><strong>算法 1：拍卖框架 Eris</strong></p>
+<div class="table-wrap"><table><thead><tr><th>行</th><th>操作</th></tr></thead><tbody><tr><td>输入</td><td>$T,C_r^k,B,\forall k\in K,\forall r\in R$</td></tr><tr><td>输出</td><td>$x_i,g_i^r(t),z_i^r(t),h_i^{rr'}(t)$，对所有 $i,r,r',t$</td></tr><tr><td>1</td><td>初始化：$g_i^r(t)=z_i^r(t)=h_i^{rr'}(t)=0$，$\rho(t)=0$，$\eta_r^k(t)=0$，$\alpha(t)=\alpha(0)$，$\beta_r^k(t)=\beta_r^k(0)$。</td></tr><tr><td>2</td><td>对 $i=1,2,\ldots,I$ 逐个处理新到达任务：</td></tr><tr><td>3</td><td>$(l^*,\mu_i)=SA(a_i,E_i,\{D_i^r\}_{\forall r},\{\rho(t)\}_{\forall t},\{\eta_r^k(t)\}_{\forall r,k,t})$。</td></tr><tr><td>4</td><td>若 $\mu_i&gt;0$：</td></tr><tr><td>5</td><td>更新 $\rho(t)=\rho(t)+\psi_i(t)$，$\eta_r^k(t)=\eta_r^k(t)+\phi_i^{r,k}(t)$，$\alpha(t)=\alpha(\rho(t))$，$\beta_r^k(t)=\beta_r^k(\eta_r^k(t))$。</td></tr><tr><td>6</td><td>令 $x_i=1$，并按调度 $l^*$ 部署任务 $i$。</td></tr><tr><td>7–8</td><td>否则令 $x_i=0$，拒绝任务 $i$。</td></tr><tr><td>9–10</td><td>结束条件判断和任务循环。</td></tr></tbody></table></div>
+<p>在算法 1 中，子程序算法 2 为每个新到达任务计算最优调度 $l^*$（第 3 行）。若收益 $\mu_i$ 大于 0，运营商接受任务（$x_i=1$），并按精心设计的价格函数更新当前资源或数据价格（第 4–7 行），详见第 IV-B 节。</p>
+<div class="note green"><strong>算法 1 · 从入门到执行流程。</strong><p><strong>先看输入。</strong> $T$ 是未来调度时间范围，$C_r^k$ 和 $B$ 是各站点计算资源与每槽数据预算。算法不读取未来到达任务，只在新任务到达时处理它。</p><p><strong>第 1 行。</strong> 把已占用资源和数据量设为 0，并初始化价格。此时系统尚无已接受任务。</p><p><strong>第 2–3 行。</strong> 按到达顺序取出任务 $i$，把任务数据量和当前使用量 $\rho,\eta$ 交给 SA（算法 2）。SA 返回调度 $l^*$ 和净收益 $\mu_i$。</p><p><strong>第 4–6 行。</strong> 若 $\mu_i>0$，按 $l^*$ 接受并部署任务，再将其数据与资源占用加入账本，依据新的累计占用量更新价格。</p><p><strong>第 7–10 行。</strong> 若净收益不为正，就拒绝任务；然后继续处理下一个到达任务。这样每个到达事件都会得到一个接受/拒绝决定。</p><p><strong>结论能说明什么。</strong> 当前任务的估值覆盖按现行对偶价格计算的资源成本时才会被接受。算法的在线性来自逐个处理到达任务；资源价格随累计占用变化。</p></div>
+<div class="note blue"><strong>算法 1 的判定量。</strong> 式 (5) 可展开为 $\mu_i=\max\{0,\max_{l\in L_i}[f_i(\hat t_{il}-a_i)-\sum_t\psi_{il}(t)\alpha(t)-\sum_{t,r,k}\phi_{il}^{r,k}(t)\beta_r^k(t)]\}$。其中第一项是任务效用，后两项分别是数据传输成本和计算资源成本；“大于 0”依赖所选调度满足 (4a) 并可行使用剩余资源。</div>
+<h3 id="section-b-价格函数设计">B. 价格函数设计</h3>
+<p>在计算任务的最优调度之前，先考虑数据和资源的边际价格，即变量 $\alpha(t)$ 和 $\beta_r^k(t)$。在市场经济中，资源价格会随资源占用量增加。具体来说，当资源充足时，应降低资源价格以鼓励消耗；当资源需求超过供给时，服务提供商会提高价格以缓解供给压力。本文用指数函数表达这一市场规则。令 $\rho(t)$ 表示时间槽 $t$ 已传输的数据量，即</p>
+<div class="paired-equation" id="pair-eq-024"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\rho(t)=\sum_{i\in I_t}\sum_{r,r'\in R}
+\left(\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0)\right),\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\rho(t)=\sum_{i\in I_t}\sum_{r,r'\in R}
+\left(\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0)\right),\]</div></div></div>
+<p>其中 $I_t$ 表示任务 $i$ 到达前已接受任务的集合。另令 $\eta_r^k(t)$ 表示时间槽 $t$ 站点 $r$ 已分配的 $k$ 类资源量，即</p>
+<div class="paired-equation" id="pair-eq-025"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\eta_r^k(t)=\sum_{i\in I_t}\left(w_i^k g_i^r(t)+s_i^k z_i^r(t)\right).\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\eta_r^k(t)=\sum_{i\in I_t}\left(w_i^k g_i^r(t)+s_i^k z_i^r(t)\right).\]</div></div></div>
+<p>于是数据传输和资源价格函数定义为</p>
+<div class="paired-equation" id="pair-eq-026"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\alpha(\rho(t))=(\gamma_d)^{\rho(t)/B}-1,\qquad
+\beta_r^k(\eta_r^k(t))=(\gamma_k)^{\eta_r^k(t)/C_r^k}-1.\tag{6}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\alpha(\rho(t))=(\gamma_d)^{\rho(t)/B}-1,\qquad
+\beta_r^k(\eta_r^k(t))=(\gamma_k)^{\eta_r^k(t)/C_r^k}-1.\tag{6}\]</div></div></div>
+<p>若没有资源被占用（原文括注 $\rho(t)=0$）或没有数据传输（原文括注 $\eta_r^k(t)=0$），则 $\alpha(t)=\beta_r^k(t)=0$；此时所有任务都可以被接受，以鼓励更多用户参与，并增加运营商接受高效用任务的机会。若资源已无余量或数据预算耗尽，则 $\alpha(t)=\gamma_d-1$、$\beta_r^k(t)=\gamma_k-1$。原文接着要求这些值足够大，以避免运营商接受任何任务，即要求任务效用减去按满负荷价格计算的资源成本为负。原文给出的可行条件为</p>
+<div class="paired-equation" id="pair-eq-027"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\frac{f_i(\hat t_{il}-a_i)}{\sum_{t\in T}\psi_{il}(t)}\le\gamma_d-1,
+\qquad
+\frac{f_i(\hat t_{il}-a_i)}{\sum_{r\in R}\sum_{k\in K}\sum_{t\in T}\phi_{il}^{r,k}(t)}\le\gamma_k-1,
+\quad \forall i,\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\frac{f_i(\hat t_{il}-a_i)}{\sum_{t\in T}\psi_{il}(t)}\le\gamma_d-1,
+\qquad
+\frac{f_i(\hat t_{il}-a_i)}{\sum_{r\in R}\sum_{k\in K}\sum_{t\in T}\phi_{il}^{r,k}(t)}\le\gamma_k-1,
+\quad \forall i,\]</div></div></div>
+<p>并假设 $\gamma_d-1\ge1$、$\gamma_k-1\ge1$，同时写出相应的效用/资源量比值至少为 1 的条件。此处如何由这些假设推出上述价格条件，原文没有展开。作者的动机是：资源不足以继续处理任务时，提高价格可以阻止新任务进入，帮助运营商快速脱离高峰负载。</p>
+<h3 id="section-c-求解调度-l-的子问题">C. 求解调度 $l$ 的子问题</h3>
+<p>任务 $i$ 的最优调度子问题写为</p>
+<div class="paired-equation" id="pair-eq-028"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\begin{aligned}
+\max_{\hat t_i,g,z,h}\quad
+&f_i(\hat t_i-a_i)
+-\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}
+  (w_i^k g_i^r(t)+s_i^k z_i^r(t))\beta_r^k(t)\\
+&-\sum_{t\in T}\sum_{r,r'\in R}
+  (\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0))\alpha(t),
+\end{aligned}\tag{7}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\begin{aligned}
+\max_{\hat t_i,g,z,h}\quad
+&f_i(\hat t_i-a_i)
+-\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}
+  (w_i^k g_i^r(t)+s_i^k z_i^r(t))\beta_r^k(t)\\
+&-\sum_{t\in T}\sum_{r,r'\in R}
+  (\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0))\alpha(t),
+\end{aligned}\tag{7}\]</div></div></div>
+<p>满足</p>
+<div class="paired-equation" id="pair-eq-029"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\psi_i(t)\le B-\rho(t),\quad \forall t\in T;\tag{7a}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\psi_i(t)\le B-\rho(t),\quad \forall t\in T;\tag{7a}\]</div></div></div>
+<div class="paired-equation" id="pair-eq-030"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\phi_i^{r,k}(t)\le C_r^k-\eta_r^k(t),
+\quad \forall r\in R,\forall k\in K,\forall t\in T;\tag{7b}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\phi_i^{r,k}(t)\le C_r^k-\eta_r^k(t),
+\quad \forall r\in R,\forall k\in K,\forall t\in T;\tag{7b}\]</div></div></div>
+<p>以及约束 (2a)–(2c)、(2f)–(2i)，其中 $x_i=1$。约束 (7a)、(7b) 分别等价于约束 (3a)、(3b)。为求解问题 (7)，先固定并枚举完成时间 $\hat t_i$，再用动态规划把总工作负载 $D_i=\sum_rD_i^r$ 划分到 $t\in[a_i,\hat t_i]$ 的各个时间槽，得到一系列单时间槽子问题：</p>
+<div class="paired-equation" id="pair-eq-031"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 6</span><span class="math">\[\begin{aligned}
+\min\ \mathrm{cost}(t,D_i(t))=
+&\sum_{r,r'\in R}(\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0))\alpha(t)\\
+&+\sum_{r\in R}\sum_{k\in K}(w_i^k g_i^r(t)+s_i^k z_i^r(t))\beta_r^k(t),
+\end{aligned}\tag{8}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\begin{aligned}
+\min\ \mathrm{cost}(t,D_i(t))=
+&\sum_{r,r'\in R}(\theta h_i^{rr'}(t)+\lambda_i g_i^r(t)\mathbb I(z_i^r(t)=0))\alpha(t)\\
+&+\sum_{r\in R}\sum_{k\in K}(w_i^k g_i^r(t)+s_i^k z_i^r(t))\beta_r^k(t),
+\end{aligned}\tag{8}\]</div></div></div>
+<p>满足 (7a)–(7b)、(2b)–(2c)、(2g)–(2i)，其中 $x_i=1$。</p>
+<p id="algorithm-2-title"><strong>算法 2：调度算法 SA</strong></p>
+<div class="table-wrap"><table><thead><tr><th>行</th><th>操作</th></tr></thead><tbody><tr><td>输入</td><td>$a_i,E_i,D_i^r,\rho(t),\eta_r^k(t)$，对所有 $r,k,t$</td></tr><tr><td>输出</td><td>$l^*,\mu_i$</td></tr><tr><td>1</td><td>初始化 $l^*=\varnothing,\mu_i=0$。</td></tr><tr><td>2</td><td>对完成时间候选 $\hat t_i=a_i$ 到 $T$ 逐一枚举：</td></tr><tr><td>3</td><td>$(\mathrm{cost}^*,l)=DPC(\hat t_i,\sum_{r\in R}D_i^r)$。</td></tr><tr><td>4–6</td><td>若 $\mu_i&lt;f_i(\hat t_i-a_i)-\mathrm{cost}^<em>$，则更新 $\mu_i=f_i(\hat t_i-a_i)-\mathrm{cost}^</em>$、$l^*=l$。</td></tr><tr><td>7</td><td>结束对候选完成时间的枚举。</td></tr><tr><td>8</td><td>返回 $l^*,\mu_i$。</td></tr><tr><td>9</td><td><strong>函数 $DPC(T_i,D_i)$：</strong></td></tr><tr><td>10</td><td>初始化 $\mathrm{cost}_i=\infty,l=\varnothing$。</td></tr><tr><td>11</td><td>对 $d=0$ 到 $D_i$ 枚举：</td></tr><tr><td>12</td><td>$(\mathrm{cost}_t,\{g_i^r(T_i)\}_r,\{z_i^r(T_i)\}_r,\{h_i^{rr'}(T_i)\}_{r,r'})=DPC\_T(T_i,d)$。</td></tr><tr><td>13</td><td>$(\mathrm{cost},l')=DPC(T_i-1,D_i-d)$。</td></tr><tr><td>14–16</td><td>若 $\mathrm{cost}_i&gt;\mathrm{cost}_t+\mathrm{cost}$，则更新总成本，并将当前时间槽的 $g,z,h$ 并入调度 $l'$。</td></tr><tr><td>17–19</td><td>完成循环，返回 $\mathrm{cost},l$。</td></tr></tbody></table></div>
+<p>对于新到达任务 $i$，算法 2 在区间 $[a_i,T]$ 内枚举候选完成时间 $\hat t_i$。第 5 行通过函数 $DPC$ 为固定的 $\hat t_i$ 求最优调度；比较不同 $\hat t_i$ 对应的收益 $\mu_i$ 后返回最优调度 $l^*$（第 4–6 行）。第 9–18 行是动态规划函数：</p>
+<div class="paired-equation" id="pair-eq-032"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 7</span><span class="math">\[DPC(\hat t_i,D_i)=\min_{d\in[0,D_i]}\left\{DPC\_T(\hat t_i,d)+DPC(\hat t_i-1,D_i-d)\right\}.\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[DPC(\hat t_i,D_i)=\min_{d\in[0,D_i]}\left\{DPC\_T(\hat t_i,d)+DPC(\hat t_i-1,D_i-d)\right\}.\]</div></div></div>
+<p>在时间槽 $\hat t_i$ 内完成的工作负载 $d$ 从 0 到 $D_i$ 逐一枚举，以缩小调度规模（第 11–12 行）；剩余工作负载 $D_i-d$ 在区间 $[a_i,\hat t_i-1]$ 内处理（第 13 行）。第 14–16 行选择成本最低的相应调度。对更窄的窗口 $[a_i,\hat t_i-1]$，以同样方式递归枚举各时间槽中的工作负载，直到到达时间 $a_i$。部署算法见第 IV-D 节。</p>
+<div class="note green"><strong>算法 2 · 动态规划怎么读。</strong><p><strong>第一层：试完成时间。</strong> 从任务到达槽 $a_i$ 一直试到 $T$。每个候选 $\hat t_i$ 都回答“如果任务最晚在这里完成，所需资源成本最低是多少？”</p><p><strong>第二层：拆分总数据。</strong> 对当前槽 $T_i$，枚举在这一槽训练 $d$ 个数据块；剩余的 $D_i-d$ 个数据块交给更早的时间槽。$DPC\_T(T_i,d)$ 用算法 3 求当前槽的最低成本，$DPC(T_i-1,D_i-d)$ 求前序窗口的最低成本。</p><p><strong>第三层：选成本较低的拆法。</strong> 比较所有 $d$ 的“当前槽成本 + 前序成本”，保留最小值和对应的 $g,z,h$ 调度。到达时间之前没有时槽可用，递推从 $a_i$ 处结束。</p><p><strong>第四层：比较收益。</strong> 每个候选完成时间的效用减去最小成本，得到净收益；SA 保留收益最大的候选。算法 2 因而同时选择完成时点和时间槽间的数据分配。</p></div>
+<div class="note blue"><strong>动态规划递推的条件。</strong> $d$ 和 $D_i-d$ 必须是非负整数，且每个单槽解必须满足 (7a)–(7b)、每轮训练能力约束 (2b) 和 PS 唯一性约束 (2c)。若某一槽不可行，$DPC\_T$ 返回无穷成本；递推再从其他数据拆分中寻找可行解。原文按 $t=a_i,\ldots,T$ 作最优性归纳。</div>
+<h3 id="section-d-部署算法">D. 部署算法</h3>
+<p>求解问题 (8) 的关键是决定工作节点和 PS 的放置位置，以及数据传输方案，从而使总成本最小。作者称这可由算法 3 中的简单贪心算法最优解决，并将在定理 4 中证明。算法 3 在各站点之间重分配训练数据，以适配工作节点和 PS 的部署；它在时间槽 $t$ 决定工作节点、PS 和数据传输，以完成工作负载 $D_i(t)$。数据重分配依据定制指标 $\Omega_i^{rr'}(t)$。</p>
+<div class="paired-equation" id="pair-eq-033"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 7</span><span class="math">\[\Omega_i^{rr'}(t)=\theta\alpha(t)-\frac{E_i}{P_i}
+\sum_{k\in K}w_i^k\left(\beta_r^k(t)-\beta_{r'}^k(t)\right).\tag{9}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\Omega_i^{rr'}(t)=\theta\alpha(t)-\frac{E_i}{P_i}
+\sum_{k\in K}w_i^k\left(\beta_r^k(t)-\beta_{r'}^k(t)\right).\tag{9}\]</div></div></div>
+<p>第一项表示传输一个数据块的成本；第二项表示将一个数据块从站点 $r$ 移到站点 $r'$ 后减少的资源成本。其意图是：若减少的资源成本足以抵消传输成本，就把数据传到资源成本更低的站点。原文随后称，当 $\Omega_i^{rr'}(t)&lt;0$ 时停止数据传输，并解释为单块传输成本高于对应的资源节省；然而该符号解释与式 (9) 的“传输成本减资源节省”定义相反。算法 3 第 4 行则在 $\Omega_i^{rr'}(t)&lt;0$ 时计算传输量，符合“传输成本低于资源节省时传输”的解释。此处按原文保留两种表述，疑点见蓝色注记。</p>
+<div class="paired-equation" id="pair-eq-034"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 7</span><span class="math">\[\begin{aligned}
+h_i^{r_jr'_j}(t)=\min\Bigg\{&M_i^{r_j}(t)-\sum_{r'\in R}h_i^{r_jr'}(t),\\
+&\left\lfloor\frac{B-\rho(t)}{\theta}\right\rfloor,\\
+&D_i(t)-\sum_{j'=1}^{j-1}\left(M_i^{r_{j'}}(t)+\sum_{r\in R}h_i^{rr_{j'}}(t)\right),\\
+&\frac{P_i}{E_i}\min_{k\in K}\left\lfloor\frac{C_{r'_j}^k-\eta_{r'_j}^k(t)}{w_i^k}\right\rfloor
+-M_i^{r'_j}(t)-\sum_{r\in R}h_i^{rr'_j}(t)\Bigg\}.
+\end{aligned}\tag{10}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\begin{aligned}
+h_i^{r_jr'_j}(t)=\min\Bigg\{&M_i^{r_j}(t)-\sum_{r'\in R}h_i^{r_jr'}(t),\\
+&\left\lfloor\frac{B-\rho(t)}{\theta}\right\rfloor,\\
+&D_i(t)-\sum_{j'=1}^{j-1}\left(M_i^{r_{j'}}(t)+\sum_{r\in R}h_i^{rr_{j'}}(t)\right),\\
+&\frac{P_i}{E_i}\min_{k\in K}\left\lfloor\frac{C_{r'_j}^k-\eta_{r'_j}^k(t)}{w_i^k}\right\rfloor
+-M_i^{r'_j}(t)-\sum_{r\in R}h_i^{rr'_j}(t)\Bigg\}.
+\end{aligned}\tag{10}\]</div></div></div>
+<p>式 (10) 第一项表示站点 $r_j$ 上任务 $i$ 剩余数据量；第二项保证满足约束 (7a)；第三项表示当前仍需处理的剩余工作负载；最后一项表示站点 $r'_j$ 当前除已有训练数据外还能处理的数据块数。原文在式 (10) 及算法 3 中使用 $M_i^r(t)$，并将其解释为站点 $r$ 上任务 $i$ 的剩余数据量，但未在符号表中单独定义其递推式。</p>
+<p id="algorithm-3-title"><strong>算法 3：部署算法 $DPC\_T$</strong></p>
+<div class="table-wrap"><table><thead><tr><th>行</th><th>操作</th></tr></thead><tbody><tr><td>输入</td><td>时间槽 $t$、工作负载 $D_i(t)$</td></tr><tr><td>输出</td><td>$\mathrm{cost}_t,\{g_i^r(t)\}_r,\{z_i^r(t)\}_r,\{h_i^{rr'}(t)\}_{r,r'}$</td></tr><tr><td>1</td><td>初始化所有站点上的 $g_i^r(t)=0,z_i^r(t)=0,h_i^{rr'}(t)=0$。</td></tr><tr><td>2</td><td>按 $\Omega_i^{rr'}(t)$ 非降序排列所有站点对，记作 $\{r,r'\}_1,\{r,r'\}_2,\ldots,\{r,r'\}_{R(R-1)/2}$。</td></tr><tr><td>3–4</td><td>对 $j=1,\ldots,R(R-1)/2$，若 $\Omega_i^{r_jr'_j}(t)&lt;0$，则：</td></tr><tr><td>5</td><td>用式 (10) 计算 $h_i^{r_jr'_j}(t)$。</td></tr><tr><td>6–9</td><td>若 $h_i^{r_jr'_j}(t)&lt;0$（超出资源限制），将其设为 0，并排除所有包含站点 $r'_j$ 的站点对。</td></tr><tr><td>10–11</td><td>结束条件判断和站点对循环。</td></tr><tr><td>12</td><td>按 $\sum_{k\in K}w_i^k\beta_r^k(t)$ 非降序排列站点，记为 $r_1,r_2,\ldots,r_R$。</td></tr><tr><td>13–15</td><td>对站点 $r_j$ 部署工作节点：$\displaystyle g_i^{r_j}(t)=\min\left\{\left\lfloor\frac{E_i}{P_i}\left(M_i^{r_j}(t)+\sum_{r\in R}h_i^{rr_j}(t)\right)\right\rfloor,\min_{k\in K}\left\lfloor\frac{C_{r_j}^k-\eta_{r_j}^k(t)}{w_i^k}\right\rfloor,\left\lfloor\frac{E_iD_i(t)}{P_i}\right\rfloor-\sum_{r\in R}g_i^r(t)\right\}$。</td></tr><tr><td>16</td><td>在工作节点数量最多的站点 $\hat r=\arg\max_{r\in R}\{g_i^r(t)\}$ 放置 PS，即 $z_i^{\hat r}(t)=1$。</td></tr><tr><td>17–19</td><td>若 $\sum_rg_i^r(t)&lt;\lceil E_iD_i(t)/P_i\rceil$，或数据传输量与参数传输量之和超过剩余数据预算 $B-\rho(t)$，则返回 $+\infty$ 和当前配置。</td></tr><tr><td>20</td><td>计算总成本：$\displaystyle \mathrm{cost}_t=\sum_{r,r'\in R}\theta h_i^{rr'}(t)\alpha(t)+\sum_{r:r\ne\hat r}\lambda_i g_i^r(t)\alpha(t)+\sum_{r\in R}\sum_{k\in K}(w_i^kg_i^r(t)+s_i^kz_i^r(t))\beta_r^k(t)$。</td></tr><tr><td>21</td><td>返回 $\mathrm{cost}_t$ 及 $g,z,h$ 配置。</td></tr></tbody></table></div>
+<p>每个时间槽内，算法 3 先按指标排序站点对，依次决定是否传输数据；再按单个工作节点的资源成本排序站点，贪心部署工作节点。第 14 行根据工作负载、站点剩余资源和尚未部署的工作节点数计算各站点可部署数量。为降低复杂度，算法为每个站点预留 PS 资源，因为工作节点主要需要 GPU 训练，而 PS 主要用 CPU 聚合参数。随后将 PS 放在工作节点数量最多的站点，以降低参数交换成本。若工作节点数量不足或违反数据预算约束 (7a)，则该时间槽无法完成 $D_i(t)$ 的工作负载，返回无穷成本；否则返回总成本和调度。</p>
+<div class="note green"><strong>算法 3 · 从入门到执行流程。</strong><p><strong>第一步：找值得搬数据的站点对（第 2–11 行）。</strong> $\Omega_i^{rr'}(t)$ 把“多花的传输费”与“换到站点 $r'$ 后省下的资源费”作比较。算法按指标排序，只处理满足代码条件的站点对，再用式 (10) 计算实际可搬的数据块数。</p><p><strong>第二步：受四种限制取最小值（式 (10)）。</strong> 传输量不能超过来源站点剩余数据、当前时槽剩余传输预算、任务仍需处理的工作量，也不能超过目的站点工作节点可处理的容量。取这些上限中的最小值，避免一次传输违反任何一项限制。</p><p><strong>第三步：部署工作节点（第 12–15 行）。</strong> 按单个工作节点的资源价格由低到高排序站点。每个站点能放的工作节点数，取“数据所需数量、资源容量允许数量、任务剩余需求”三者的最小值。</p><p><strong>第四步：放置 PS 并验可行性（第 16–21 行）。</strong> 将 PS 放在工作节点数最多的站点，降低跨站点参数通信。若总工作节点不够，或数据/参数通信超预算，则返回无穷成本；否则把数据传输费、参数传输费和工作节点/PS 资源费相加，返回配置与总成本。</p><p><strong>结果能说明什么。</strong> $DPC\_T$ 给出某一时间槽、某一工作量下的一种可行部署候选及其价格成本；算法 2 再把多个时槽的候选组合成完整调度。定理 4 声称此贪心子程序最优，但证明省略了部分站点部署论证，且式 (9) 的符号解释有冲突，须结合蓝色核对提示阅读。</p></div>
+<div class="note blue"><strong>推导核对提示（式 (9) 与算法 3）。</strong> 按式 (9)，$\Omega=\text{传输成本}-\text{资源成本节省}$。因此 $\Omega<0$ 表示传输后总成本下降，这与算法 3 的“若 $\Omega<0$ 则计算传输量”一致；但紧邻式 (9) 的文字把 $\Omega<0$ 解释成“传输成本更高，因此停止传输”，方向相反。译文没有替原文改符号或改算法，仅将矛盾标出供读者核对。</div>
+<h2 id="section-v-理论分析">V. 理论分析</h2>
+<p>本节验证 Eris 的若干关键性质：正确性、个体理性、真实性、竞争比和时间复杂度。</p>
+<p id="定理-1" class="theorem-heading"><strong>定理 1。 所提出的拍卖 Eris 为原始子问题 (2) 产生可行解。</strong></p>
+<p><strong>证明。</strong> 先证明算法 3 能为子问题 (8) 得到可行解。对每个站点对，算法使用式 (10) 计算相应传输数据量，从而满足约束 (7a)、(2d) 和 (2h)。算法 3 第 14 行按约束 (7a)、(7b)、(2b) 和 (2e) 计算 $g_i^r(t)$；PS 放置也满足约束 (2c)。因此，算法 3 为子问题 (8) 产生可行解。函数 $DPC$ 可保证不违反约束 (2a)。算法 2 第 2–7 行枚举 $\hat t_i$，从而满足约束 (2f)。证毕。$\square$</p>
+<p id="定理-2" class="theorem-heading"><strong>定理 2（个体理性）。 Eris 能够实现个体理性。</strong></p>
+<p><strong>证明。</strong> 需要保证用户效用和服务提供商利润均非负。对用户而言，式 (5) 保证：若用户 $i$ 的效用 $\mu_i&gt;0$，运营商就按调度 $l^<em>$ 接受并分配任务（$x_{il^</em>}=1$）；否则拒绝（$x_{il}=0,\forall l\in L_i$）。对服务提供商而言，其利润为所有被接受任务的付款之和 $\sum_{i\in I}p_ix_i$。原文称该值总为正，因此结束证明。$\square$</p>
+<div class="note blue"><strong>结论条件提示（定理 2）。</strong> 从模型中 $p_i\ge0$ 可直接推出付款总和非负；若没有任务被接受，或某些已接受任务付款为零，则不能仅据此推出“严格为正”。原文写的是 “always be positive”（总为正），译文保留其论断，严格正性的条件未在此处给出。</div>
+<p id="定理-3" class="theorem-heading"><strong>定理 3（真实性）。 Eris 是真实性拍卖。</strong></p>
+<p><strong>证明。</strong> 原文称可通过分析出价元组中各个要素的真实性来验证。</p>
+<p><strong>关于到达时间 $a_i$ 的真实性。</strong> 用户 $i$ 没有动机报告一个更早的到达时间，因为任务不可能在报告的时间之前实际到达；若发生这种情况，服务运营商可以直接丢弃任务，也可增加惩罚机制来避免这种行为。若用户报告更晚的到达时间，虽然这不会影响运营商按预期调度任务，但会延长任务完成时间，因此用户也没有这样做的动机。原文据此结束这一部分证明。</p>
+<p><strong>关于效用函数 $f_i(\cdot)$ 的真实性。</strong> Eris 基于已发布的定价机制[43]。对每个被接受的任务 $i$，其付款为</p>
+<div class="paired-equation" id="pair-eq-035"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 9</span><span class="math">\[p_i=\sum_{t\in T}\sum_{r,r'\in R}\theta h_i^{rr'}(t)\alpha(t)
++\sum_{t\in T}\sum_{r:r\ne\hat r}\lambda_i g_i^r(t)\alpha(t)
++\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}
+  (w_i^k g_i^r(t)+s_i^kz_i^r(t))\beta_r^k(t).\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[p_i=\sum_{t\in T}\sum_{r,r'\in R}\theta h_i^{rr'}(t)\alpha(t)
++\sum_{t\in T}\sum_{r:r\ne\hat r}\lambda_i g_i^r(t)\alpha(t)
++\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}
+  (w_i^k g_i^r(t)+s_i^kz_i^r(t))\beta_r^k(t).\]</div></div></div>
+<p>原文指出，付款公式只体现任务训练的总成本，与效用函数 $f_i(\cdot)$ 无关；且根据定义 1，收益为估值减去付款，与效用函数 $f_i(\cdot)$ 无关。因此任务所有者不会谎报效用函数。</p>
+<p><strong>关于所需数据量 $D_i^r$ 和轮数 $E_i$ 的真实性。</strong> 无论所需数据量或训练轮数如何，若用户 $i$ 报告更大的数值，任务都需要更长时间才能完成；若报告更小的数值，则会损害用户利益，因为机器学习模型无法达到预设性能，即准确率阈值。因此，用户没有动机谎报数据量和轮数。</p>
+<p><strong>关于单个工作节点资源配置 $w_i^k$ 和 PS 资源配置 $s_i^k$ 的真实性。</strong> 类似地，用户没有动机谎报一个工作节点或 PS 占用的各类资源量，因为这会降低工作节点/PS 的计算能力并延长任务完成时间。直觉上，若用户申报具有更大计算能力的工作节点/PS（即更大的 $w_i^k$ 或 $s_i^k$），任务可以更快完成；但占用更多资源意味着向运营商支付更多费用。原文据此称资源配置的真实性得到验证，并得出 Eris 可实现真实性。证毕。$\square$</p>
+<div class="note blue"><strong>证明衔接提示（定理 3）。</strong> 原文对效用函数的论证称付款“与 $f_i$ 无关”，但出价中的 $f_i$ 会参与任务是否接受以及调度选择；被选中的完成时间和资源配置又会影响真实效用与付款。因此，仅凭付款公式不显含 $f_i$，尚不足以推出用户无法通过误报 $f_i$ 改变结果并提高真实收益。数据量、轮数、资源能力部分也依赖“更小数据会达不到准确率阈值”或“更多资源对应更高付款”等偏好假设；这些假设未在效用模型中形式化。译文保留作者结论，并标明证明中未展开的衔接条件。</div>
+<p id="定理-4" class="theorem-heading"><strong>定理 4。 算法 2 为原始问题 (7) 求得最优解；其中算法 3 为问题 (8) 返回最优解。</strong></p>
+<p><strong>证明：算法 3 的最优性。</strong> 先分析算法 3 的最优性。将算法 3 返回的调度记为 $l_{t,d}$，它包括数据重分配、工作节点部署和 PS 部署。$\left\lceil E_i d/P_i\right\rceil$ 表示任务 $i$ 在时间 $t$ 处理工作负载 $d$ 所需的最少工作节点数。假设存在另一个调度 $\hat l_{t,d}$，其成本低于 $l_{t,d}$。相应的数据传输、工作节点部署和 PS 部署分别记为 $\hat h_i^{rr'}(t)$、$\hat g_i^r(t)$ 和 $\hat z_i^r(t)$。总成本由数据传输成本、工作节点和 PS 的资源成本，以及参数交换成本组成。</p>
+<p>先根据指标 $\Omega_i^{rr'}(t)$ 讨论数据传输。</p>
+<ol><li>若 $\sum_{r,r'\in R}\hat h_i^{rr'}(t)=\sum_{r,r'\in R}h_i^{rr'}(t)$，则 $\hat l_{t,d}$ 中存在某个 $\hat h_i^{rr'}(t)$ 与 $h_i^{rr'}(t)$ 不同。由于传输总量相同，可通过从其他站点传输数据，把 $l_{t,d}$ 转换成 $\hat l_{t,d}$。依据指标 $\Omega_i^{rr'}(t)$，算法会贪心地将数据从资源成本最高的站点传到成本最低的站点。因此，即使传输总量不变，在 $\hat l_{t,d}$ 中从其他站点传输也只会增加成本。</li><li>若 $\sum_{r,r'\in R}\hat h_i^{rr'}(t)&gt;\sum_{r,r'\in R}h_i^{rr'}(t)$，则需要在边缘网络中传输更多数据，造成更高的数据传输成本。原文称，对第一种情况，从其他站点搬移数据即使不改变传输量也会增加成本；因此，更多传输量必然增加传输成本。</li></ol>
+<p>工作节点部署也可按类似理由证明最优，原文省略了部分细节。将 PS 部署在工作节点数量最多的站点可最小化参数交换成本。因此，$DPC\_T$ 对每个 $t\in[a_i,\hat t_i]$、$0\le d\le D_i$ 返回最优调度 $l_{t,d}$。</p>
+<p><strong>函数 $DPC$ 的最优性。</strong> 对每个完成时间，动态规划会在 $[a_i,\hat t_i]$ 内最优地将总工作负载分配到各时间槽。其最优性可对 $t=a_i,\ldots,T$ 作归纳证明。在时间 $a_i$，$DPC(a_i,d)=DPC\_T(a_i,d)$，对所有 $0\le d\le D_i$ 均成立，因此 $DPC(a_i,d)$ 可返回处理工作负载 $d$ 的最小成本。归纳假设为任意时间 $t$，$DPC(t,d)$ 都能以最小成本完成 $d\in[0,D_i]$ 的工作负载。根据动态规划递推式</p>
+<div class="paired-equation" id="pair-eq-036"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 9</span><span class="math">\[DPC(t+1,d)=\min_{d'\in[0,d]}\left\{DPC\_T(t+1,d')+DPC(t,d-d')\right\},\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[DPC(t+1,d)=\min_{d'\in[0,d]}\left\{DPC\_T(t+1,d')+DPC(t,d-d')\right\},\]</div></div></div>
+<p>可知，$DPC(t+1,d)$ 也能以最小成本在时间 $t+1$ 完成工作负载 $d$。因此，对任何任务，$DPC(\hat t_i,D_i)$ 都能在时间 $\hat t_i\in[a_i,T]$ 返回成本最低的调度。</p>
+<p><strong>算法 2 的最优性。</strong> $\hat t_i$ 是测试完成时间，而非最终完成时间。最优 $\hat t_i^<em>$ 是紧的，即在从 $a_i$ 到 $T$ 枚举 $\hat t_i$ 后，$\sum_{t\notin[a_i,\hat t_i^</em>]}g_i^r(t)=0$。假设任务 $i$ 的最终完成时间为 $\hat t_i^<em>$，对应最优调度 $l^</em>$。算法 2 从 $a_i$ 到 $T$ 枚举 $\hat t_i$，并在发现收益更大的新调度时更新最优调度。由于任务效用函数关于 $\hat t_i-a_i$ 非增，如果另一个调度成本相同但截止时间更晚，算法 2 不会更新当前最优调度。因此能记录最优调度。证毕。$\square$</p>
+<div class="note blue"><strong>推导条件提示（定理 4）。</strong> 上述贪心最优性证明依赖站点对排序指标确实能支配所有可行传输替换，以及工作节点逐站点贪心不会因多资源约束发生跨站点耦合；原文称“理由类似”并省略了后半部分细节。结合式 (9) 与算法 3 的符号冲突，读者应先确认原文指标方向，再核对该最优性论证。</div>
+<p id="定理-5" class="theorem-heading"><strong>定理 5。 竞争比定义为最优目标值与 Eris 找到的解的目标值之比的上界。对问题 (2)，Eris 是 $\gamma$-competitive，其中</strong></p>
+<div class="paired-equation" id="pair-eq-037"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 9</span><span class="math">\[\gamma=2\log(\gamma_d\gamma_k^*),\qquad
+\gamma_k^*=\max_k\{\gamma_k\}.\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\gamma=2\log(\gamma_d\gamma_k^*),\qquad
+\gamma_k^*=\max_k\{\gamma_k\}.\]</div></div></div>
+<p><strong>证明。</strong> 令 $OPT$ 表示问题 (3) 的最优目标值；它与问题 (2) 等价。$\Gamma_i$ 和 $\Lambda_i$ 分别表示算法 1 为任务 $i$ 调度后问题 (3) 和 (4) 的目标值。$\Gamma_0$ 和 $\Lambda_0$ 表示没有任务到达时的初始目标值，因此最终目标值为 $\Gamma_I$ 和 $\Lambda_I$。先给出引理。</p>
+<p id="引理-1" class="theorem-heading"><strong>引理 1。 若常数 $\gamma$ 满足</strong></p>
+<div class="paired-equation" id="pair-eq-038"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 9</span><span class="math">\[\Gamma_i-\Gamma_{i-1}\ge\frac{1}{\gamma}(\Lambda_i-\Lambda_{i-1}),
+\quad \forall i\in I,\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\Gamma_i-\Gamma_{i-1}\ge\frac{1}{\gamma}(\Lambda_i-\Lambda_{i-1}),
+\quad \forall i\in I,\]</div></div></div>
+<p>且 $\Gamma_0=\Lambda_0=0$，则算法 1 对总社会福利是 $\gamma$-competitive。</p>
+<p><strong>证明。</strong> 有</p>
+<div class="paired-equation" id="pair-eq-039"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 9</span><span class="math">\[\Gamma_I-\Gamma_0=\sum_{i\in I}(\Gamma_i-\Gamma_{i-1})
+\ge\frac{1}{\gamma}\sum_{i\in I}(\Lambda_i-\Lambda_{i-1})
+=\frac{1}{\gamma}(\Lambda_I-\Lambda_0).\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\Gamma_I-\Gamma_0=\sum_{i\in I}(\Gamma_i-\Gamma_{i-1})
+\ge\frac{1}{\gamma}\sum_{i\in I}(\Lambda_i-\Lambda_{i-1})
+=\frac{1}{\gamma}(\Lambda_I-\Lambda_0).\]</div></div></div>
+<p>根据弱对偶性，$\Lambda_I\ge OPT\ge\Gamma_I$。结合 $\Gamma_0=\Lambda_0=0$，得 $\Gamma_I\ge OPT/\gamma$。证毕。$\square$</p>
+<p>接下来构造满足引理条件的 $\gamma$。按任务是否被接受分两种情况。任务被拒绝时，$\Gamma_i-\Gamma_{i-1}=\Lambda_i-\Lambda_{i-1}=0$，不等式成立。以下考虑任务 $i$ 按调度 $l$ 被接受的情况。令 $\alpha^i(t)$ 表示接受任务 $i$ 后时间槽 $t$ 的数据传输单位价格，$\beta_r^{k,i}(t)$ 表示处理任务 $i$ 后时间槽 $t$ 站点 $r$ 的 $k$ 类资源单位价格，则</p>
+<div class="paired-equation" id="pair-eq-040"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 10</span><span class="math">\[\begin{aligned}
+\alpha^i(t)-\alpha^{i-1}(t)
+&=(\gamma_d)^{(\rho^{i-1}(t)+\psi_{il}(t))/B}
+ -(\gamma_d)^{\rho^{i-1}(t)/B}\\
+&=(\gamma_d)^{\rho^{i-1}(t)/B}
+ \left(2^{\log(\gamma_d)\psi_{il}(t)/B}-1\right).
+\end{aligned}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\begin{aligned}
+\alpha^i(t)-\alpha^{i-1}(t)
+&=(\gamma_d)^{(\rho^{i-1}(t)+\psi_{il}(t))/B}
+ -(\gamma_d)^{\rho^{i-1}(t)/B}\\
+&=(\gamma_d)^{\rho^{i-1}(t)/B}
+ \left(2^{\log(\gamma_d)\psi_{il}(t)/B}-1\right).
+\end{aligned}\]</div></div></div>
+<p>对任意 $x\in[0,1]$，利用不等式 $2^x-1\le x$，可得</p>
+<div class="paired-equation" id="pair-eq-041"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 10</span><span class="math">\[\alpha^i(t)-\alpha^{i-1}(t)
+\le(\alpha^{i-1}(t)+1)\log(\gamma_d)\frac{\psi_{il}(t)}{B}.\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\alpha^i(t)-\alpha^{i-1}(t)
+\le(\alpha^{i-1}(t)+1)\log(\gamma_d)\frac{\psi_{il}(t)}{B}.\]</div></div></div>
+<p>类似地，</p>
+<div class="paired-equation" id="pair-eq-042"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 10</span><span class="math">\[\beta_r^{k,i}(t)-\beta_r^{k,i-1}(t)
+\le(\beta_r^{k,i-1}(t)+1)\log(\gamma_k)
+\frac{\phi_{il}^{r,k}(t)}{C_r^k}.\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\beta_r^{k,i}(t)-\beta_r^{k,i-1}(t)
+\le(\beta_r^{k,i-1}(t)+1)\log(\gamma_k)
+\frac{\phi_{il}^{r,k}(t)}{C_r^k}.\]</div></div></div>
+<p>由于 $x_{il}=1$，根据算法 1，约束 (4a) 成立。问题 (4) 目标值的增量为</p>
+<div class="paired-equation" id="pair-eq-043"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 10</span><span class="math">\[\begin{aligned}
+\Lambda_i-\Lambda_{i-1}
+={}&\mu_i+\sum_{r\in R}\sum_{k\in K}\sum_{t\in T}
+C_r^k(\beta_r^{k,i}(t)-\beta_r^{k,i-1}(t))\\
+&+\sum_{t\in T}B(\alpha^i(t)-\alpha^{i-1}(t))\\
+\le{}&f_i(\hat t_{il}-a_i)
+-\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}
+\phi_{il}^{r,k}(t)\beta_r^{k,i-1}(t)
+-\sum_{t\in T}\psi_{il}(t)\alpha^{i-1}(t)\\
+&+\sum_{t\in T}B(\alpha^{i-1}(t)+1)\log(\gamma_d)
+\frac{\psi_{il}(t)}{B}\\
+&+\sum_{r\in R}\sum_{k\in K}\sum_{t\in T}
+C_r^k(\beta_r^{k,i-1}(t)+1)\log(\gamma_k)
+\frac{\phi_{il}^{r,k}(t)}{C_r^k}.
+\end{aligned}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\begin{aligned}
+\Lambda_i-\Lambda_{i-1}
+={}&\mu_i+\sum_{r\in R}\sum_{k\in K}\sum_{t\in T}
+C_r^k(\beta_r^{k,i}(t)-\beta_r^{k,i-1}(t))\\
+&+\sum_{t\in T}B(\alpha^i(t)-\alpha^{i-1}(t))\\
+\le{}&f_i(\hat t_{il}-a_i)
+-\sum_{t\in T}\sum_{r\in R}\sum_{k\in K}
+\phi_{il}^{r,k}(t)\beta_r^{k,i-1}(t)
+-\sum_{t\in T}\psi_{il}(t)\alpha^{i-1}(t)\\
+&+\sum_{t\in T}B(\alpha^{i-1}(t)+1)\log(\gamma_d)
+\frac{\psi_{il}(t)}{B}\\
+&+\sum_{r\in R}\sum_{k\in K}\sum_{t\in T}
+C_r^k(\beta_r^{k,i-1}(t)+1)\log(\gamma_k)
+\frac{\phi_{il}^{r,k}(t)}{C_r^k}.
+\end{aligned}\]</div></div></div>
+<p>令 $\gamma_k^*=\max_k\{\gamma_k\}$，整理得到</p>
+<div class="paired-equation" id="pair-eq-044"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 11</span><span class="math">\[\begin{aligned}
+\Lambda_i-\Lambda_{i-1}\le{}&f_i(\hat t_{il}-a_i)
++\log(\gamma_k^*)\sum_{r,k,t}\phi_{il}^{r,k}(t)\\
+&+(\log(\gamma_k^*)-1)\sum_{r,k,t}
+\phi_{il}^{r,k}(t)\beta_r^{k,i-1}(t)\\
+&+\log(\gamma_d)\sum_t\psi_{il}(t)
++(\log(\gamma_d)-1)\sum_t\psi_{il}(t)\alpha^{i-1}(t).
+\end{aligned}\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\begin{aligned}
+\Lambda_i-\Lambda_{i-1}\le{}&f_i(\hat t_{il}-a_i)
++\log(\gamma_k^*)\sum_{r,k,t}\phi_{il}^{r,k}(t)\\
+&+(\log(\gamma_k^*)-1)\sum_{r,k,t}
+\phi_{il}^{r,k}(t)\beta_r^{k,i-1}(t)\\
+&+\log(\gamma_d)\sum_t\psi_{il}(t)
++(\log(\gamma_d)-1)\sum_t\psi_{il}(t)\alpha^{i-1}(t).
+\end{aligned}\]</div></div></div>
+<p>由 $f_i(\hat t_{il}-a_i)-\sum_t\psi_{il}(t)\alpha^{i-1}(t)-\sum_{t,r,k}\phi_{il}^{r,k}(t)\beta_r^{k,i-1}(t)=\mu_i\ge0$，可得效用分别不小于数据传输成本和资源占用成本。再结合价格设计部分所用的假设</p>
+<div class="paired-equation" id="pair-eq-045"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 11</span><span class="math">\[\frac{f_i(\hat t_{il}-a_i)}{\sum_t\psi_{il}(t)}\ge1,
+\qquad
+\frac{f_i(\hat t_{il}-a_i)}{\sum_{t,r,k}\phi_{il}^{r,k}(t)}\ge1,\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\frac{f_i(\hat t_{il}-a_i)}{\sum_t\psi_{il}(t)}\ge1,
+\qquad
+\frac{f_i(\hat t_{il}-a_i)}{\sum_{t,r,k}\phi_{il}^{r,k}(t)}\ge1,\]</div></div></div>
+<p>便有</p>
+<div class="paired-equation" id="pair-eq-046"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 10</span><span class="math">\[\Lambda_i-\Lambda_{i-1}
+\le2\left(\log(\gamma_d)+\log(\gamma_k^*)\right)f_i(\hat t_{il}-a_i).\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\Lambda_i-\Lambda_{i-1}
+\le2\left(\log(\gamma_d)+\log(\gamma_k^*)\right)f_i(\hat t_{il}-a_i).\]</div></div></div>
+<p>另一方面，$\Gamma_i-\Gamma_{i-1}=f_i(\hat t_{il}-a_i)$。结合引理 1，可知算法 1 的竞争比为 $\gamma=2\log(\gamma_d\gamma_k^<em>)$，其中 $\gamma_k^</em>=\max_k\{\gamma_k\}$。证毕。$\square$</p>
+<div class="note blue"><strong>竞争比的条件提示（定理 5）。</strong> 从 $\mu_i\ge0$ 只能直接得到效用不小于总的对偶计价成本；证明接下来还使用了效用与数据量、资源量之比均至少为 1 的条件。这些条件与第 IV-B 节的价格/负载假设相关，但是否对所有任务和可行调度成立，需要由应用参数保证。原文没有将它们作为普遍结论重新证明，因此 $\gamma$-competitive 结论应连同这些条件理解。</div>
+<div class="note blue"><strong>目标等价性提示（第 IV 节引言）。</strong> 原文称最大化社会福利等价于最小化平均任务完成时间，并给出的理由是单个任务效用随完成时间非增。一般而言，非增性本身不足以推出这两个优化目标等价；还需要效用函数的具体形式或额外条件。译文保留原文说法，并将逻辑条件留作核对点。</div>
+<div class="note blue"><strong>变量与边界条件提示（式 (6) 周边）。</strong> 第 IV-B 节先定义 $\rho(t)$ 为已用数据传输量、$\eta_r^k(t)$ 为已分配资源量；算法 1 的更新式也分别以 $\psi_i(t)$ 和 $\phi_i^{r,k}(t)$ 更新这两个量。但式 (6) 后的边界情形文字把“无资源使用”对应为 $\rho(t)=0$、把“无数据传输”对应为 $\eta_r^k(t)=0$，与前述定义对调；此外，原文以“或”连接两个条件，却直接推出 $\alpha(t)=\beta_r^k(t)=0$，没有说明另一类资源同时为零的条件。价格比值条件后也没有推导如何由“比值至少为 1”推出“比值不超过 $\gamma-1$”。译文保留公式和变量，以上逻辑缺口不替作者补齐。</div>
+<p id="定理-6" class="theorem-heading"><strong>定理 6。 Eris 的时间复杂度为 $O(ITD_i(R^2K+D_i))$，属于伪多项式时间。</strong></p>
+<p><strong>证明。</strong> 先分析算法 3 的复杂度。第 2 行对站点对排序需要 $O(R\log R)$ 时间；第 3–11 行对每个站点对计算 $h_i^{r_jr'_j}(t)$，需要 $O(R^2K)$ 步。算法 2 第 12 行对站点排序需要 $O(RK\log R)$ 步。随后计算各站点工作节点数量并决定 PS 放置，最多需要 $O(RK)$ 时间。因此，使用算法 3 求解多个单时间槽问题 (8) 的时间复杂度为 $O(D_iR^2K)$。</p>
+<p>在函数 $DPC$ 中，任务 $i$ 的状态 $(t,d)$ 数量为 $O(TD_i)$。若记录所有 $t\in T,d\in[0,D_i]$ 的中间结果 $DPC\_T(t,d)$ 和 $DPC(t,d)$，避免重复计算，则函数 $DPC$ 会执行 $O(D_i)$ 次。因此，$DPC(\hat t_i,D_i)$ 需要 $O(TD_i^2)$ 步。算法 2 第 2–7 行为每个到达任务枚举 $\hat t_i$ 的复杂度为 $O(TD_iR^2K+TD_i^2)$。因此，算法 1 为所有机器学习任务作出部署决策的复杂度为 $O(ITD_iR^2K+ITD_i^2)$。总的来说，Eris 的时间复杂度为 $O(ITD_i(R^2K+D_i))$。证毕。$\square$</p>
+<h2 id="section-vi-实现与评估">VI. 实现与评估</h2>
+<p>本节先介绍测试床实现（第 VI-A 节），再说明测试床配置、模拟器和三个基线算法（第 VI-B 节），最后给出 Eris 的性能（第 VI-C 节）。</p>
+<h3 id="section-a-实现">A. 实现</h3>
+<p>作者使用 Kubernetes 1.19 和 Apache MXNet 实现分布式机器学习系统。图 2 展示测试床整体架构。测试床由 9 台物理机器组成，每台配备 12 个 CPU 核心、1 块 GeForce RTX 2060 GPU、16 GB RAM、500 GB 硬盘和双端口 1 GbE 网卡。另设一台物理机作为中央调度器（主节点）。跨机器共享的 Hadoop 分布式文件系统（HDFS）负责存储和传输所有训练数据及相应参数。默认数据块大小为 2 MB，即 $\theta=2\text{ MB}$。每个时间槽都会将模型参数检查点保存到 HDFS [11]、[26]，以捕捉训练期间部署变化。为了连续训练，所有工作节点都需要从 HDFS 重新加载最近一个时间槽保存的模型参数检查点。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-02.png" alt="图 2：测试床实现。"></figure>
+<p class="caption" id="zh-fig-02-caption"><strong>图 2. 测试床实现。</strong></p>
+<h3 id="section-b-实验配置">B. 实验配置</h3>
+<p id="table-ii-title" class="caption"><strong>表 II. 实验使用的深度学习任务。</strong></p>
+<div class="table-wrap"><table><thead><tr><th>模型</th><th>数据集</th><th>样本数 / 数据块数</th><th>批大小 / 张量大小（MB）</th></tr></thead><tbody><tr><td>ResNet-50 [44]</td><td>CIFAR10</td><td>60,000 / 27</td><td>64 / 97.4</td></tr><tr><td>ResNet-101</td><td>CIFAR10</td><td>60,000 / 27</td><td>64 / 169.9</td></tr><tr><td>GoogLeNet [45]</td><td>Caltech101</td><td>9,145 / 115</td><td>128 / 25.9</td></tr><tr><td>LeNet [46]</td><td>Caltech101</td><td>9,145 / 115</td><td>128 / 28.3</td></tr><tr><td>AlexNet</td><td>Tiny-ImageNet [47]</td><td>100,000 / 150</td><td>128 / 237.9</td></tr><tr><td>Inception-BN</td><td>Tiny-ImageNet</td><td>100,000 / 150</td><td>128 / 42.9</td></tr></tbody></table></div>
+<p><strong>测试床配置。</strong> 表 II 列出六类深度学习任务。每个任务的工作节点或 PS 都部署在 Docker 容器中。每个工作节点/PS 的资源在整数区间中随机选择：GPU 为 [0,1]，CPU 核心为 [1,3]，RAM 为 [2,6] GB。任务训练轮数 $E_i$ 设为 20 或 30。通过预训练获得工作节点处理能力 $P_i$。每次实验持续 50 个时间槽，每个时间槽为 20 分钟。实验中假设有 10 个任务在最初 40 个时间槽内随机到达，每个任务通常需要运行 2 至 4 小时。其他设置与下述模拟器一致。</p>
+<p><strong>模拟器。</strong> 作者使用 MATLAB 模拟器，在更大规模场景下评估 Eris，并利用测试床任务轨迹。默认设置为 50 个站点（$R$）和 100 个任务（$I$）；任务在 150 个时间槽（$T$）内随机到达。模拟所有任务事件，包括任务到达、完成时间和相应资源占用。为适应大规模设置，提高每个站点的资源配置：24 个 CPU 核心、4 个 GPU 和 32 GB RAM。每个时间槽的总数据传输预算设为 20 GB。效用函数设为</p>
+<div class="paired-equation" id="pair-eq-047"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 11</span><span class="math">\[f_i(\hat t_i-a_i)=\frac{3000\tau_i}{1+e^{(\hat t_i-a_i)/3}},\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[f_i(\hat t_i-a_i)=\frac{3000\tau_i}{1+e^{(\hat t_i-a_i)/3}},\]</div></div></div>
+<p>其中 $\tau_i\in[1,2]$ 为时延敏感因子。相应地，$\gamma_d$ 和 $\gamma_k$ 均设为 1000，即价格函数为</p>
+<div class="paired-equation" id="pair-eq-048"><div class="source-left"><span class="formula-label">原文公式 · PDF p. 11</span><span class="math">\[\alpha(\rho(t))=1000^{\rho(t)/B}-1,\qquad
+\beta_r^k(\eta_r^k(t))=1000^{\eta_r^k(t)/C_r^k}-1.\]</span></div><div class="translation-right"><div class="formula-label">译文公式</div><div class="math">\[\alpha(\rho(t))=1000^{\rho(t)/B}-1,\qquad
+\beta_r^k(\eta_r^k(t))=1000^{\eta_r^k(t)/C_r^k}-1.\]</div></div></div>
+<p><strong>基线算法。</strong> 为评估 Eris 的优势，作者实现了以下三个代表性调度器：</p>
+<ul><li><strong>Tiresias [11]：</strong> 一种抢占式调度器，尝试最小化平均任务完成时间。它根据资源数量（例如 GPU 数）和任务剩余工作负载的乘积为任务分配资源。</li><li><strong>AntMan [22]：</strong> 一种集群调度器，将任务分为机会型任务和资源保证型任务。AntMan 优先调度资源保证型任务，为其分配充足 GPU 资源；对机会型任务，则尽可能利用空闲资源。若资源保证型任务排队时间过长，会自动作为机会型任务执行。</li><li><strong>Liquid [23]：</strong> 一种面向网络效率的集群调度器。Liquid 根据网络通信成本和资源调度方案进行权衡，以获得较优配置，其目标形式为 $\min \lambda^*\mathrm{cost}_k+(1-\lambda)\sum_j\mathrm{scheduling\_plan}_j$；其中 $\mathrm{scheduling\_plan}_j$ 主要表示任务使用的工作节点数。</li></ul>
+<p>AntMan 和 Liquid 会根据任务到达时间 $a_i$ 的工作节点单位价格 $\sum_{k\in K}w_i^k\beta_r^k(a_i)$，为每个新到达任务分配固定数量的工作节点和 PS。为减少数据传输消耗，它们会将每个新任务的训练数据平均且贪心地重新分配到各站点。对 Tiresias，存在任务因频繁抢占而收益为负的极端情况；模拟时通过剔除这类负收益任务来处理。</p>
+<h3 id="section-c-评估结果">C. 评估结果</h3>
+<p><strong>1）测试床实验中的 Eris。</strong> 实验比较四种算法及最优解的总社会福利（图 3）。结果显示，Eris 仍取得较好的性能；最优解由 MATLAB 优化工具箱求得。此外，作者用拒绝任务数这一补充指标评估调度算法在资源受限时的效率。图 4 显示，在资源条件相同的情况下，Eris 能更优地为机器学习任务分配资源，因此能接受更多任务、拒绝更少任务。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-03.png" alt="图 3：总社会福利。"></figure>
+<p class="caption" id="zh-fig-03-caption"><strong>图 3. 总社会福利。</strong></p>
+<figure class="paper-figure"><img src="assets/figures/fig-04.png" alt="图 4：提交任务数。"></figure>
+<p class="caption" id="zh-fig-04-caption"><strong>图 4. 提交任务数。</strong></p>
+<p>图 5 展示 Eris 相对于基线的性能比，定义为离线最优解社会福利与目标算法社会福利之比。该比值大于 1；越接近 1 表示算法相对最优解表现越好，越远离 1 则表现越差。图 5 中 Eris 的性能比小于 1.5，与定理 5 的理论分析一致。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-05.png" alt="图 5：性能比。"></figure>
+<p class="caption" id="zh-fig-05-caption"><strong>图 5. 性能比。</strong></p>
+<p>图 6 展示三个相应数据集上的准确率。作者将训练轮数从 20–30（默认值）增加到 40，以说明动态部署工作节点不会影响训练过程，且仍能保证良好性能。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-06.png" alt="图 6：训练准确率。"></figure>
+<p class="caption" id="zh-fig-06-caption"><strong>图 6. 训练准确率。</strong></p>
+<p><strong>2）大规模模拟中的 Eris。</strong> 作者评估 Eris 在数百个站点的集群中提交大量任务时的可扩展性。图 8、图 9 分别展示不同任务数 $I$ 和站点数 $R$ 下的总社会福利。可以看到，Eris 尤其在大规模场景下优于三种调度器。因此，作者认为，无论输入规模如何，Eris 都始终优于三种基线。图 8 中所有算法的社会福利随站点数增加而提高，这是可用资源增加的结果。相反，图 9 显示社会福利随 $I$ 增大而下降：固定时间内提交的任务越多，资源短缺越严重，完成的任务就越少。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-07.png" alt="图 7：资源利用率。"></figure>
+<p class="caption" id="zh-fig-07-caption"><strong>图 7. 资源利用率。</strong></p>
+<figure class="paper-figure"><img src="assets/figures/fig-08.png" alt="图 8：不同站点数 $R$ 下的社会福利。"></figure>
+<p class="caption" id="zh-fig-08-caption"><strong>图 8. 不同 $R$ 下的社会福利。</strong></p>
+<figure class="paper-figure"><img src="assets/figures/fig-09.png" alt="图 9：不同任务数 $I$ 下的社会福利。"></figure>
+<p class="caption" id="zh-fig-09-caption"><strong>图 9. 不同 $I$ 下的社会福利。</strong></p>
+<p>图 7 更细致地展示 Eris 执行期间测试床每个时间槽的归一化资源利用率。归一化利用率是资源利用量除以整个测试床的容量。图中主要展示 GPU、CPU 和 RAM。CPU 和 RAM 占用相对稳定，因为价格机制尽可能避免极端情况；由于 GPU 数量不足，归一化 GPU 利用率有时达到 100%。</p>
+<p>图 10 展示所有算法下服务提供商的利润。站点数增加时利润下降，任务数增加时利润上升。作者解释说，计算能力更强的提供商会力求尽快完成任务，以吸引未来更多用户，即使这意味着利润下降；因此，提交任务数量增加时，相应利润也会上升。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-10.png" alt="图 10：服务提供商利润。"></figure>
+<p class="caption" id="zh-fig-10-caption"><strong>图 10. 服务提供商利润。</strong></p>
+<p>此外，为分析价格函数的影响，作者考察了不同估计参数 $\gamma_d,\gamma_k$ 下的社会福利，并令二者取相同值。图 11 显示，$\gamma_d$（或 $\gamma_k$）越高，社会福利越低。这是因为 $\gamma_d$（或 $\gamma_k$）越大，式 (6) 中单位资源价格 $\alpha(t)$（或 $\beta_r^k(t)$）上涨越快。价格突然升高可能排除本应被接受的任务，从而降低社会福利。</p>
+<figure class="paper-figure"><img src="assets/figures/fig-11.png" alt="图 11：不同 $\gamma_d,\gamma_k$ 下的社会福利。"></figure>
+<p class="caption" id="zh-fig-11-caption"><strong>图 11. 不同 $\gamma_d,\gamma_k$ 下的社会福利。</strong></p>
+<h2 id="section-vii-结论">VII. 结论</h2>
+<p>无偏分布式学习（UDL）是一种新兴学习范式，可用于保证智能物联网服务质量。为应对 UDL 建模与实现的新挑战，本文提出在线拍卖调度算法 Eris。Eris 通过改变工作节点和 PS 的数量，为 UDL 任务计算最优调度，以最大化社会福利；同时根据当前资源消耗动态调整资源价格。这是首项研究调度与定价联合问题、以支持具有特定技术要求（机器学习模型无偏性）的新兴 AI 应用的工作。严格的理论分析表明，Eris 在多项式运行时间内实现良好的性能比。评估结果展示了 Eris 的优势：与三个代表性基线相比，Eris 的社会福利最高可提升 44%。</p>
+<div class="note green"><strong>阅读建议。</strong> 初读算法时，可先看算法 1 的任务接收/定价主流程，再看算法 2 的完成时间枚举与动态规划，最后看算法 3 的数据重分配和站点部署；证明中的对偶变量和竞争比可以在理解这条执行路径后再读。</div>
+<h2 id="section-参考文献">参考文献</h2>
+<p>参考文献 [1]–[47] 保留原文英文书目信息，见项目文件 <code>references-original.md</code>。保留原题名、期刊/会议名称、卷期页码和 DOI/URL，便于检索和复核。</p>
+<h2 id="section-作者简介">作者简介</h2>
+<p><strong>Jinlong Pang</strong> 于 2019 年在中国武汉大学动力与机械学院和计算机学院分别获得学士学位，2022 年在武汉大学网络空间安全学院获得硕士学位。目前在加州大学圣克鲁兹分校计算机科学与工程系攻读博士学位。研究兴趣包括网络经济学、激励机制和算法优化，尤其是机器学习领域中的分布式机器学习与联邦学习。</p>
+<p><strong>Ziyi Han</strong> 于 2021 年在中国武汉大学网络空间安全学院获得学士学位，目前在该院攻读硕士学位。研究兴趣包括边缘计算、在线学习和网络优化。</p>
+<p><strong>Ruiting Zhou（IEEE Member）</strong> 于 2018 年在加拿大卡尔加里大学计算机科学系获得博士学位，现任东南大学计算机科学与工程学院副教授。研究兴趣包括云计算、机器学习和移动网络优化。她在 IEEE INFOCOM、ACM MOBIHOC、IEEE/ACM Transactions on Networking、IEEE Journal on Selected Areas in Communications、IEEE Transactions on Mobile Computing 等重要会议和期刊发表过论文。她担任 INFOCOM workshop-ICCN 2019–2023 的 TPC 主席，并为多个国际会议和期刊担任审稿人。</p>
+<p><strong>Renli Zhang</strong> 于 2020 年在中国武汉大学获得信息安全学士学位，目前在武汉大学网络空间安全学院攻读硕士学位。研究兴趣包括无人机辅助无线网络、网络优化和在线调度。</p>
+<p><strong>John C. S. Lui（IEEE Fellow）</strong> 在加州大学洛杉矶分校获得计算机科学博士学位，现任香港中文大学计算机科学与工程系钟鸣李教授。毕业后曾加入 IBM 实验室，参与文件系统和并行 I/O 架构的研发项目，之后加入香港中文大学计算机科学与工程系。研究兴趣包括在线学习算法及应用（如多臂老虎机和强化学习）、网络科学与网络系统中的机器学习、大规模数据分析、网络/系统安全、网络经济学、大规模存储系统和性能评估理论。他是 IFIP WG 7.3 民选成员、ACM Fellow、邱氏基金会高级研究员及香港工程科学院院士。</p>
+<p><strong>Hao Chen</strong> 于 2012 年在东南大学获得电子科学与工程博士学位，目前是华为南京研究所高级工程师。研究兴趣包括云计算环境中的存储网络和资源管理。</p><div id="references-original"><p class="reference-entry">[1] Z. Zhou, X. Chen, E. Li, L. Zeng, K. Luo, and J. Zhang, “Edge intelligence: Paving the last mile of artificial intelligence with edge computing,” Proc. IEEE, vol. 107, no. 8, pp. 1738–1762, Aug. 2019.</p>
+<p class="reference-entry">[2] A. Torralba and A. A. Efros, “Unbiased look at dataset bias,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2011, pp. 1521–1528.</p>
+<p class="reference-entry">[3] X. Lyu, C. Ren, W. Ni, H. Tian, R. P. Liu, and E. Dutkiewicz, “Optimal online data partitioning for geo-distributed machine learning in edge of wireless networks,” IEEE J. Sel. Areas Commun., vol. 37, no. 10, pp. 2393–2406, Oct. 2019.</p>
+<p class="reference-entry">[4] G. Zhu, D. Liu, Y. Du, C. You, J. Zhang, and K. Huang, “Toward an intelligent edge: Wireless communication meets machine learning,” IEEE Commun. Mag., vol. 58, no. 1, pp. 19–25, Jan. 2020.</p>
+<p class="reference-entry">[5] J. Chen, K. Li, Q. Deng, K. Li, and S. Y. Philip, “Distributed deep learning model for intelligent video surveillance systems with edge computing,” IEEE Trans. Ind. Inform., early access, Apr. 04, 2019, doi: 10.1109/TII.2019.2909473.</p>
+<p class="reference-entry">[6] X. Wang, Z. Ning, and L. Wang, “Offloading in Internet of Vehicles: A fogenabled real-time traffic management system,” IEEE Trans. Ind. Inform., vol. 14, no. 10, pp. 4568–4578, Oct. 2018.</p>
+<p class="reference-entry">[7] Y. Liu, M. Peng, G. Shou, Y. Chen, and S. Chen, “Toward edge intelligence: Multiaccess edge computing for 5G and Internet of Things,” IEEE Internet Things J., vol. 7, no. 8, pp. 6722–6747, Aug. 2020.</p>
+<p class="reference-entry">[8] Google Cloud TPU, 2017. [Online]. Available: https://cloud.google.com/ tpu</p>
+<p class="reference-entry">[9] Microsoft Azure machine learning, 2017. [Online]. Available: https:// azure.microsoft.com/en-us/overview/machine-learning/</p>
+<p class="reference-entry">[10] A. Ghodsi, M. Zaharia, B. Hindman, A. Konwinski, S. Shenker, and I. Stoica, “Dominant resource fairness: Fair allocation of multiple resource types,” in Proc. 8th USENIX Conf. Netw. Syst. Des. Implementation, 2011, pp. 323–336.</p>
+<p class="reference-entry">[11] J. Gu et al., “Tiresias: A GPU cluster manager for distributed deep learning,” in Proc. 16th USENIX Conf. Netw. Syst. Des. Implementation, 2019, pp. 485–500.</p>
+<p class="reference-entry">[12] Y. K. Tun, Y. M. Park, N. H. Tran, W. Saad, S. R. Pandey, and C. S. Hong, “Energy-efficient resource management in UAV-assisted mobile edge computing,” IEEE Commun. Lett., vol. 25, no. 1, pp. 249–253, Jan. 2021.</p>
+<p class="reference-entry">[13] U. Saleem, Y. Liu, S. Jangsher, Y. Li, and T. Jiang, “Mobility-aware joint task scheduling and resource allocation for cooperative mobile edge computing,” IEEE Trans. Wireless Commun., vol. 20, no. 1, pp. 360–374, Jan. 2021.</p>
+<p class="reference-entry">[14] H. A. Alameddine, S. Sharafeddine, S. Sebbah, S. Ayoubi, and C. Assi, “Dynamic task offloading and scheduling for low-latency IoT services in multi-access edge computing,” IEEE J. Sel. Areas Commun., vol. 37, no. 3, pp. 668–682, Mar. 2019.</p>
+<p class="reference-entry">[15] Amazon SageMaker, 2018. [Online]. Available: https://aws.amazon.com/ sagemaker/developer-resources/</p>
+<p class="reference-entry">[16] B. Wu, X. Chen, Y. Chen, and Y. Lu, “A truthful auction mechanism for resource allocation in mobile edge computing,” in Proc. IEEE 22nd Int. Symp. World Wireless Mobile Multimedia Netw., 2021, pp. 21–30.</p>
+<p class="reference-entry">[17] J. Lin, L. Huang, H. Zhang, X. Yang, and P. Zhao, “A novel latencyguaranteed based resource double auction for market-oriented edge computing,” Comput. Netw., vol. 189, 2021, Art. no. 107873.</p>
+<p class="reference-entry">[18] F. Mashhadi, S. A. S. Monroy, A. Bozorgchenani, and D. Tarchi, “Optimal auction for delay and energy constrained task offloading in mobile edge computing,” Comput. Netw., vol. 183, 2020, Art. no. 107527.</p>
+<p class="reference-entry">[19] W. Shi, L. Zhang, C. Wu, Z. Li, and F. C. Lau, “An online auction framework for dynamic resource provisioning in cloud computing,” in Proc. ACM Int. Conf. Meas. Model. Comput. Syst., 2014, pp. 71–83.</p>
+<p class="reference-entry">[20] H. Zhang, H. Jiang, B. Li, F. Liu, A. V. Vasilakos, and J. Liu, “A framework for truthful online auctions in cloud computing with heterogeneous user demands,” IEEE Trans. Comput., vol. 65, no. 3, pp. 805–818, Mar. 2016.</p>
+<p class="reference-entry">[21] S. Li, J. Huang, and B. Cheng, “A price-incentive resource auction mechanism balancing the interests between users and cloud service provider,” IEEE Trans. Netw. Service Manag., vol. 18, no. 2, pp. 2030–2045, Jun. 2021.</p>
+<p class="reference-entry">[22] W. Xiao et al., “AntMan: Dynamic scaling on GPU clusters for deep learning,” in Proc. 14th USENIX Conf. Operating Syst. Des. Implementation, 2020, Art. no. 30.</p>
+<p class="reference-entry">[23] R. Gu et al., “Liquid: Intelligent resource estimation and network-efficient scheduling for deep learning jobs on distributed GPU clusters,” IEEE Trans. Parallel Distrib. Syst., vol. 33, no. 11, pp. 2808–2820, Nov. 2022.</p>
+<p class="reference-entry">[24] Y. Bao, Y. Peng, C. Wu, and Z. Li, “Online job scheduling in distributed machine learning clusters,” in Proc. IEEE Conf. Comput. Commun., 2018, pp. 495–503.</p>
+<p class="reference-entry">[25] Q. Zhang, R. Zhou, C. Wu, L. Jiao, and Z. Li, “Online scheduling of heterogeneous distributed machine learning jobs,” in Proc. 21st Int. Symp. Theory Algorithmic Found. Protocol Des. Mobile Netw. Mobile Comput., 2020, pp. 111–120.</p>
+<p class="reference-entry">[26] Y. Peng, Y. Bao, Y. Chen, C. Wu, and C. Guo, “Optimus: An efficient dynamic resource scheduler for deep learning clusters,” in Proc. 13th EuroSys Conf., 2018, Art. no. 3.</p>
+<p class="reference-entry">[27] R. Zhou et al., “Online scheduling algorithm for heterogeneous distributed machine learning jobs,” IEEE Trans. Cloud Comput., vol. 11, no. 2, pp. 1514–1529, Second Quarter 2023.</p>
+<p class="reference-entry">[28] R. Zhou, N. Wang, Y. Huang, J. Pang, and H. Chen, “DPS: Dynamic pricing and scheduling for distributed machine learning jobs in edge-cloud networks,” IEEE Trans. Mobile Comput., vol. 22, no. 11, pp. 6377–6393, Nov. 2023.</p>
+<p class="reference-entry">[29] J. Pang, Z. Han, R. Zhou, H. Tan, and Y. Cao, “Online scheduling algorithms for unbiased distributed learning over wireless edge networks,” J. Syst. Archit., vol. 131, 2022, Art. no. 102673.</p>
+<p class="reference-entry">[30] J. Zhang, X. Yang, N. Xie, X. Zhang, A. V. Vasilakos, and W. Li, “An online auction mechanism for time-varying multidimensional resource allocation in clouds,” Future Gener. Comput. Syst., vol. 111, pp. 27–38, 2020.</p>
+<p class="reference-entry">[31] J. Pang, J. Yu, R. Zhou, and J. C. Lui, “An incentive auction for heterogeneous client selection in federated learning,” IEEE Trans. Mobile Comput., vol. 22, no. 10, pp. 5733–5750, Oct. 2023.</p>
+<p class="reference-entry">[32] R. Zhou, J. Pang, Z. Wang, J. C. Lui, and Z. Li, “A truthful procurement auction for incentivizing heterogeneous clients in federated learning,” in Proc. IEEE 41st Int. Conf. Distrib. Comput. Syst., 2021, pp. 183–193.</p>
+<p class="reference-entry">[33] Z. Han, R. Zhou, J. Pang, Y. Cao, and H. Tan, “Online scheduling unbiased distributed learning over wireless edge networks,” in Proc. IEEE 27th Int. Conf. Parallel Distrib. Syst., 2021, pp. 599–606.</p>
+<p class="reference-entry">[34] L. Chen, W. Cui, B. Li, and B. Li, “Optimizing coflow completion times with utility max-min fairness,” in Proc. IEEE Conf. Comput. Commun., 2016, pp. 1–9.</p>
+<p class="reference-entry">[35] Z. Huang, B. Balasubramanian, M. Wang, T. Lan, M. Chiang, and D. H. Tsang, “Need for speed: CORA scheduler for optimizing completiontimes in the cloud,” in Proc. IEEE Conf. Comput. Commun., 2015, pp. 891–899.</p>
+<p class="reference-entry">[36] M. Li et al., “Scaling distributed machine learning with the parameter server,” in Proc. 11th USENIX Conf. Operating Syst. Des. Implementation, 2014, pp. 583–598.</p>
+<p class="reference-entry">[37] I. Cano, M. Weimer, D. Mahajan, C. Curino, and G. M. Fumarola, “Towards geo-distributed machine learning,” 2016, arXiv:1603.09035.</p>
+<p class="reference-entry">[38] F. Yan, O. Ruwase, Y. He, and T. Chilimbi, “Performance modeling and scalability optimization of distributed deep learning systems,” in Proc. 21th ACM SIGKDD Int. Conf. Knowl. Discov. Data Mining, 2015, pp. 1355–1364.</p>
+<p class="reference-entry">[39] F. N. Iandola, M. W. Moskewicz, K. Ashraf, and K. Keutzer, “FireCaffe: Near-linear acceleration of deep neural network training on compute clusters,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2016, pp. 2592–2600.</p>
+<p class="reference-entry">[40] G. Hinton, N. Srivastava, and K. Swersky, “Neural networks for machine learning lecture 6a overview of mini-batch gradient descent,” Cited on, vol. 14, no. 8, pp. 2, 2012.</p>
+<p class="reference-entry">[41] A. Schrijver, Theory of Linear and Integer Programming. Hoboken, NJ, USA: Wiley, 1998.</p>
+<p class="reference-entry">[42] R. M. Karp, “Reducibility among combinatorial problems,” in Complexity of Computer Computations. Berlin, Germany: Springer, 1972, pp. 85–103.</p>
+<p class="reference-entry">[43] Z. Huang and A. Kim, “Welfare maximization with production costs: A primal dual approach,” in Proc. 26th Annu. ACM-SIAM Symp. Discrete Algorithms, 2015, pp. 59–72.</p>
+<p class="reference-entry">[44] S. Xie, R. Girshick, P. Dollár, Z. Tu, and K. He, “Aggregated residual transformations for deep neural networks,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2017, pp. 5987–5995.</p>
+<p class="reference-entry">[45] C. Szegedy et al., “Going deeper with convolutions,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2015, pp. 1–9.</p>
+<p class="reference-entry">[46] K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” 2014, arXiv:1409.1556.</p>
+<p class="reference-entry">[47] Tiny ImageNet visual recognition challenge, 2019. [Online]. Available: http://tiny-imagenet.herokuapp.com/</p></div></main>
+<aside class="glossary-panel"><h2>术语说明</h2><details class="term-note" id="term-edge-intelligence"><summary>edge intelligence（边缘智能）</summary><p><strong>edge intelligence（边缘智能）：</strong>在网络边缘利用本地数据与算力提供智能服务的范式。</p><small>译法：translate-with-English · 首见：摘要</small></details><details class="term-note" id="term-unbiased-model"><summary>unbiased model（无偏模型）</summary><p><strong>unbiased model（无偏模型）：</strong>原文指适用性较高、可在所有站点进行有效推理的模型；不将其外推为统计学中所有含义的“无偏”。</p><small>译法：translate-with-English · 首见：摘要/脚注 1</small></details><details class="term-note" id="term-udl"><summary>unbiased distributed learning (UDL)（无偏分布式学习（UDL））</summary><p><strong>unbiased distributed learning (UDL)（无偏分布式学习（UDL））：</strong>训练数据由多个边缘站点提供、目标模型面向各站点应用的分布式学习任务。</p><small>译法：translate-with-English · 首见：摘要</small></details><details class="term-note" id="term-edge-site"><summary>edge site（边缘站点）</summary><p><strong>edge site（边缘站点）：</strong>采集并提供训练数据、计算资源的地理分散站点。</p><small>译法：translate · 首见：第 I 节</small></details><details class="term-note" id="term-parameter-server"><summary>parameter server (PS)（参数服务器（PS））</summary><p><strong>parameter server (PS)（参数服务器（PS））：</strong>汇总工作节点梯度、更新并分发模型参数的节点。</p><small>译法：translate-with-English · 首见：摘要</small></details><details class="term-note" id="term-worker"><summary>worker（工作节点（worker））</summary><p><strong>worker（工作节点（worker））：</strong>处理本地训练数据并计算梯度的计算节点。</p><small>译法：translate-with-English · 首见：摘要</small></details><details class="term-note" id="term-social-welfare"><summary>social welfare（社会福利）</summary><p><strong>social welfare（社会福利）：</strong>本文按运营商和用户效用之和定义，化简为被接受任务估值之和。</p><small>译法：translate · 首见：摘要/定义 2</small></details><details class="term-note" id="term-online-scheduling"><summary>online scheduling（在线调度）</summary><p><strong>online scheduling（在线调度）：</strong>任务到达时作决定，不使用未来到达信息。</p><small>译法：translate · 首见：索引词</small></details><details class="term-note" id="term-primal-dual"><summary>primal-dual framework（原始—对偶框架）</summary><p><strong>primal-dual framework（原始—对偶框架）：</strong>将原始分配问题与对偶价格联系起来，以计算任务收益和资源价格。</p><small>译法：translate-with-English · 首见：摘要</small></details><details class="term-note" id="term-dual-variable-dual-price"><summary>dual variable / dual price（对偶变量 / 对偶价格）</summary><p><strong>dual variable / dual price（对偶变量 / 对偶价格）：</strong>$\alpha(t)$、$\beta_r^k(t)$ 对应数据和站点资源约束，解释为单位资源价格。</p><small>译法：translate · 首见：第 IV-A 节</small></details><details class="term-note" id="term-truthfulness"><summary>truthfulness（真实性）</summary><p><strong>truthfulness（真实性）：</strong>拍卖性质：如实申报最大化用户收益。本文保留作者的定义和证明结论，并标出证明条件。</p><small>译法：translate · 首见：定义 1</small></details><details class="term-note" id="term-individual-rationality"><summary>individual rationality（个体理性）</summary><p><strong>individual rationality（个体理性）：</strong>用户参与机制后的效用不低于不参与时的基准效用。</p><small>译法：translate · 首见：定理 2</small></details><details class="term-note" id="term-competitive-ratio"><summary>competitive ratio（竞争比）</summary><p><strong>competitive ratio（竞争比）：</strong>在线算法目标值与离线最优目标值之间的性能界；具体采用原文定理 5 的定义。</p><small>译法：translate · 首见：摘要</small></details><details class="term-note" id="term-data-chunk"><summary>data chunk（数据块）</summary><p><strong>data chunk（数据块）：</strong>本文用于度量训练数据的离散单位，默认大小为 $\theta=2$ MB。</p><small>译法：translate · 首见：第 III-A 节</small></details><details class="term-note" id="term-epoch"><summary>epoch（训练轮次）</summary><p><strong>epoch（训练轮次）：</strong>对任务所需训练数据完成一次规定遍历的轮次。</p><small>译法：translate · 首见：第 III-A 节</small></details><details class="term-note" id="term-synchronous-training"><summary>synchronous training（同步训练）</summary><p><strong>synchronous training（同步训练）：</strong>每轮等待工作节点完成相应计算/通信后再更新模型。</p><small>译法：translate · 首见：第 III-A 节</small></details><details class="term-note" id="term-dynamic-programming-dp"><summary>dynamic programming (DP)（动态规划（DP））</summary><p><strong>dynamic programming (DP)（动态规划（DP））：</strong>通过子问题递推，在候选完成时间内划分总训练工作负载。</p><small>译法：translate-with-English · 首见：第 IV-C 节</small></details><details class="term-note" id="term-mixed-integer-nonlinear-program-minlp"><summary>mixed integer nonlinear program (MINLP)（混合整数非线性规划（MINLP））</summary><p><strong>mixed integer nonlinear program (MINLP)（混合整数非线性规划（MINLP））：</strong>同时包含整数决策与非线性结构的优化问题。</p><small>译法：translate-with-English · 首见：第 III-B 节</small></details><details class="term-note" id="term-integer-linear-program-ilp"><summary>integer linear program (ILP)（整数线性规划（ILP））</summary><p><strong>integer linear program (ILP)（整数线性规划（ILP））：</strong>通过枚举可行调度，将多类整数变量编码为调度选择变量后的线性规划。</p><small>译法：translate-with-English · 首见：第 IV-A 节</small></details><details class="term-note" id="term-eris"><summary>Eris（Eris）</summary><p><strong>Eris（Eris）：</strong>作者提出的在线拍卖调度算法名称，不翻译。</p><small>译法：keep-English · 首见：标题</small></details><details class="term-note" id="term-dpc-dpc-t"><summary>DPC / DPC_T（DPC / DPC_T）</summary><p><strong>DPC / DPC_T（DPC / DPC_T）：</strong>算法 2 的动态规划函数和算法 3 的单时间槽部署子程序名，原样保留。</p><small>译法：keep-English · 首见：第 IV-C/D 节</small></details></aside>
+</div>
+<script>
+const bodyEl=document.body;
+document.getElementById('formula-mode').addEventListener('click',function(){const on=bodyEl.classList.toggle('show-source-formulas');this.setAttribute('aria-pressed',String(on));});
+document.getElementById('toc-toggle').addEventListener('click',function(){const on=bodyEl.classList.toggle('hide-toc');this.setAttribute('aria-pressed',String(!on));});
+document.getElementById('terms-toggle').addEventListener('click',function(){const on=bodyEl.classList.toggle('hide-terms');this.setAttribute('aria-pressed',String(!on));});
+document.getElementById('read-mode').addEventListener('click',function(){bodyEl.classList.remove('show-source-formulas');document.getElementById('formula-mode').setAttribute('aria-pressed','false');this.setAttribute('aria-pressed','true');});
+document.getElementById('formula-mode').addEventListener('click',function(){document.getElementById('read-mode').setAttribute('aria-pressed','false');});
+</script>
+</body></html>

@@ -1,35 +1,159 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>sparrowren 的博客</title>
-  <style>
-    body {
-      max-width: 760px;
-      margin: 60px auto;
-      padding: 0 24px;
-      font-family: system-ui, sans-serif;
-      line-height: 1.8;
-      color: #333;
-      background: #fafafa;
-    }
-    h1 { color: #2563eb; }
-    article {
-      margin-top: 32px;
-      padding: 24px;
-      background: white;
-      border-radius: 12px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>拍卖与边缘智能 · 论文精读</title>
+<meta name="description" content="在线拍卖与边缘智能方向的论文精读：中文全文译本 + 原文 PDF。">
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#16181d; --ink-2:#5a6169; --ink-3:#8b929b;
+  --line:#e4e7ec; --accent:#2f6feb; --accent-soft:#eef3fe; --warn:#b45309; --warn-soft:#fef6e7;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.7 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px;margin:0 auto;padding:56px 24px 96px}
+header.top{margin-bottom:40px}
+h1{font-size:30px;line-height:1.35;margin:0 0 10px;letter-spacing:-.01em}
+.sub{color:var(--ink-2);font-size:15px;margin:0}
+.stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;color:var(--ink-3);font-size:13px}
+.stats b{color:var(--ink);font-weight:600}
+h2.sec{font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--ink-3);
+  text-transform:uppercase;margin:44px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;
+  transition:border-color .15s, box-shadow .15s;
+}
+.card:hover{border-color:#cdd5e0;box-shadow:0 2px 12px rgba(22,24,29,.05)}
+.card h3{margin:0 0 6px;font-size:18px;line-height:1.45;letter-spacing:-.005em}
+.card h3 .zh{display:block;font-size:14px;font-weight:500;color:var(--ink-2);margin-top:5px}
+.meta{font-size:12.5px;color:var(--ink-3);margin:0 0 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.meta .dot{color:#cfd5dd}
+.card p.desc{margin:0 0 16px;font-size:14.5px;color:var(--ink-2)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tag{font-size:11.5px;padding:2.5px 9px;border-radius:99px;background:#f1f3f6;color:var(--ink-2);border:1px solid var(--line)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
+  padding:8px 15px;border-radius:8px;text-decoration:none;border:1px solid var(--line);
+  color:var(--ink);background:#fff;transition:all .15s;
+}
+.btn:hover{background:#fafbfc;border-color:#cdd5e0}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#2a63d4;border-color:#2a63d4}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px;letter-spacing:.02em}
+.badge.on{background:#e8f5ee;color:#116644}
+.badge.off{background:var(--warn-soft);color:var(--warn)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:none}
+.row .t{font-size:14.5px;font-weight:500}
+.row .s{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--ink-3);line-height:1.8}
+footer a{color:var(--ink-2)}
+@media(max-width:600px){.wrap{padding:32px 16px 64px}h1{font-size:23px}.card{padding:18px}}
+</style>
 </head>
 <body>
-  <h1>sparrowren 的博客</h1>
-  <p>欢迎！这里记录我的学习、研究和生活。</p>
+<div class="wrap">
+  <header class="top">
+    <h1>拍卖与边缘智能 · 论文精读</h1>
+    <p class="sub">在线拍卖机制、资源调度与边缘智能方向的论文，中文全文译本与原文 PDF 均按段落对照，便于逐段精读。</p>
+    <div class="stats">
+      <span>共 <b>6</b> 篇精读</span>
+      <span>已完成中文译本 <b>4</b> 篇</span>
+      <span>近期原文 <b>4</b> 篇</span>
+    </div>
+  </header>
 
-  <article>
-    <h2>我的第一篇博客</h2>
-    <p>今天，我的个人博客上线了！</p>
-  </article>
+  <h2 class="sec">精读论文</h2>
+  <div class="grid">
+      <article class="card">
+        <h3>An Online Auction Framework for Dynamic Resource Provisioning in Cloud Computing<span class="zh">云计算中动态资源供给的在线拍卖框架</span></h3>
+        <p class="meta">IEEE/ACM Transactions on Networking<span class="dot">·</span>2016<span class="dot">·</span><span class="badge on">中文全文译本</span></p>
+        <p class="desc">把云资源的动态供给建模为在线组合拍卖：卖家离线到达、买家在线到达，用原始对偶方法把 LP 分解成可增量求解的子问题，得到竞争比约 3.30 的在线机制。包含逐符号推导与 LP 分解的完整重推。</p>
+        <div class="tags"><span class="tag">组合拍卖</span><span class="tag">在线机制设计</span><span class="tag">原始对偶</span><span class="tag">竞争比 3.30</span></div>
+        <div class="btns"><a class="btn primary" href="papers/ton2016-online-auction/">阅读中文译本</a><a class="btn" href="papers/ton2016-online-auction/source.pdf" target="_blank">原文 PDF <span style="opacity:.5">↗</span></a></div>
+      </article>
+      <article class="card">
+        <h3>Eris: An Online Auction for Scheduling Unbiased Distributed Learning Over Edge Networks<span class="zh">Eris：面向边缘网络无偏分布式学习调度的在线拍卖</span></h3>
+        <p class="meta">IEEE<span class="dot">·</span><span class="badge on">中文全文译本</span></p>
+        <p class="desc">针对边缘网络上的无偏分布式学习调度设计在线拍卖机制，在保证参与方激励相容的同时优化社会福利与资源利用率。含 11 张原文图与实验复现。</p>
+        <div class="tags"><span class="tag">在线拍卖</span><span class="tag">分布式学习调度</span><span class="tag">社会福利</span><span class="tag">无偏性</span></div>
+        <div class="btns"><a class="btn primary" href="papers/eris/">阅读中文译本</a><a class="btn" href="papers/eris/source.pdf" target="_blank">原文 PDF <span style="opacity:.5">↗</span></a></div>
+      </article>
+      <article class="card">
+        <h3>Serving Long-Context LLMs at the Mobile Edge: Test-Time Reinforcement Learning-Based Model Caching and Inference Offloading<span class="zh">移动边缘侧长上下文大模型服务：基于测试时强化学习的模型缓存与推理卸载</span></h3>
+        <p class="meta">IEEE<span class="dot">·</span><span class="badge on">中文全文译本</span></p>
+        <p class="desc">移动边缘场景下如何服务长上下文 LLM：联合决策模型缓存与推理卸载，用测试时强化学习在线适配。附原文逐页链接、术语表与公式审计记录。</p>
+        <div class="tags"><span class="tag">模型缓存</span><span class="tag">推理卸载</span><span class="tag">测试时强化学习</span><span class="tag">长上下文</span></div>
+        <div class="btns"><a class="btn primary" href="papers/serving-longcontext/">阅读中文译本</a><a class="btn" href="papers/serving-longcontext/source.pdf" target="_blank">原文 PDF <span style="opacity:.5">↗</span></a></div>
+      </article>
+      <article class="card">
+        <h3>Cached Model-as-a-Resource: Provisioning Large Language Model Agents for Edge Intelligence in Space-Air-Ground Integrated Networks<span class="zh">缓存即模型资源：面向空天地一体化网络边缘智能的大模型智能体供给</span></h3>
+        <p class="meta">IEEE Transactions on Networking<span class="dot">·</span>2026<span class="dot">·</span><span class="badge on">中文全文译本</span></p>
+        <p class="desc">提出「cached model-as-a-resource」概念，面向空天地一体化网络的 LLM 智能体供给，建立联合模型缓存与推理的优化框架，并用 DQMSB 拍卖分解求解。</p>
+        <div class="tags"><span class="tag">模型即资源</span><span class="tag">联合缓存与推理</span><span class="tag">DQMSB 拍卖</span><span class="tag">SAGIN</span></div>
+        <div class="btns"><a class="btn primary" href="papers/cached-model-as-a-resource/">阅读中文译本</a><a class="btn" href="papers/cached-model-as-a-resource/source.pdf" target="_blank">原文 PDF <span style="opacity:.5">↗</span></a></div>
+      </article>
+      <article class="card">
+        <h3>Edge AI Inference as a Service via Dynamic Resources From Repeated Auctions<span class="zh">基于重复拍卖的动态资源：边缘 AI 推理即服务</span></h3>
+        <p class="meta">IEEE Transactions on Mobile Computing<span class="dot">·</span>2025<span class="dot">·</span><span class="badge off">仅原文</span></p>
+        <p class="desc">用重复拍卖把边缘 AI 推理做成服务，重点在预算压力变量与投标更新机制的引理推导。目前站内只有原文，中文译本整理中。</p>
+        <div class="tags"><span class="tag">重复拍卖</span><span class="tag">预算压力</span><span class="tag">边缘推理</span><span class="tag">待补译本</span></div>
+        <div class="btns"><a class="btn" href="papers/edge-ai-inference-tmc2025/source.pdf" target="_blank">原文 PDF <span style="opacity:.5">↗</span></a></div>
+      </article>
+      <article class="card">
+        <h3>Toward Market-Assisted AI Cloud Inference for Streamed Data via Model Ensembles From Auctions<span class="zh">面向流式数据的市场辅助 AI 云推理：基于拍卖的模型集成</span></h3>
+        <p class="meta">IEEE<span class="dot">·</span><span class="badge off">仅原文</span></p>
+        <p class="desc">用拍卖挑选模型集成来服务流式数据的云端推理，在时延与精度之间做市场化的资源配置。目前站内只有原文。</p>
+        <div class="tags"><span class="tag">模型集成</span><span class="tag">流式推理</span><span class="tag">拍卖定价</span><span class="tag">待补译本</span></div>
+        <div class="btns"><a class="btn" href="papers/toward-market-assisted-ai-cloud-inference/source.pdf" target="_blank">原文 PDF <span style="opacity:.5">↗</span></a></div>
+      </article>
+  </div>
+
+  <h2 class="sec">近期论文 · 原文</h2>
+  <div class="card">
+      <div class="row">
+        <div>
+          <div class="t">Budget-Aware Blockchain Auction</div>
+          <div class="s">预算感知的区块链拍卖（作者手稿）</div>
+        </div>
+        <a class="btn" href="recent/Budget_Aware_Blockchain_Auction_Author_Manuscript.pdf" target="_blank">PDF ↗</a>
+      </div>
+      <div class="row">
+        <div>
+          <div class="t">Cloud-Edge LLM Auction (ICDCS 2026)</div>
+          <div class="s">云边协同 LLM 拍卖（ICDCS 2026 作者版）</div>
+        </div>
+        <a class="btn" href="recent/ICDCS2026_CloudEdge_LLM_Auction_Author_Version.pdf" target="_blank">PDF ↗</a>
+      </div>
+      <div class="row">
+        <div>
+          <div class="t">Edge LLM Scheduling (IEEE TSC 2026)</div>
+          <div class="s">边缘 LLM 调度（IEEE TSC 2026 作者版）</div>
+        </div>
+        <a class="btn" href="recent/IEEE_TSC2026_EdgeLLM_Scheduling_Author_Version.pdf" target="_blank">PDF ↗</a>
+      </div>
+      <div class="row">
+        <div>
+          <div class="t">mzCache (arXiv:2609.01338)</div>
+          <div class="s">mzCache（arXiv 预印本）</div>
+        </div>
+        <a class="btn" href="recent/mzCache_arXiv_2609.01338.pdf" target="_blank">PDF ↗</a>
+      </div>
+  </div>
+
+  <footer>
+    本站为个人学术阅读笔记，原文版权归原作者与出版方所有，译本仅供学习交流。<br>
+    阅读器支持目录跳转、段落对照与原文页码定位；公式由 MathJax 渲染。<br>
+    <a href="blog/">博客首页</a>
+  </footer>
+</div>
 </body>
 </html>
